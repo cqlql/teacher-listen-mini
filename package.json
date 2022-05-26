@@ -27,9 +27,7 @@
     "dev:quickapp": "npm run build:quickapp -- --watch",
     "download:iconfont": "node config/utils/iconfont-download.js",
     "doctor": "taro doctor",
-    "lint": "npx eslint --fix --ext .js,.vue,.ts src",
-    "docs:dev": "cd ./vuepress&&npm run docs:dev",
-    "docs:build": "cd ./vuepress&&npm run docs:build"
+    "lint": "npx eslint --fix --ext .js,.vue,.ts src"
   },
   "browserslist": [
     "last 3 versions",
