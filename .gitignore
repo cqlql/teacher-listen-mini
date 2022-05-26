@@ -1,0 +1,12 @@
+/dist/
+deploy_versions/
+.temp/
+.cache/
+.rn_temp/
+node_modules/
+.DS_Store
+
+# vuepress
+vuepress/docs/.vuepress/components/data.json
+vuepress/dist/robots.txt
+vuepress/dist/sitemap.xml

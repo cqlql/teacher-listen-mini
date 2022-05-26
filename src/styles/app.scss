@@ -1,0 +1,112 @@
+page {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #333;
+  font-size: 14px;
+}
+
+.h5-span {
+  display: inline;
+}
+
+.nut-tabs1 {
+  .nut-tabs__titles {
+    background-color: #fff;
+    height: 50px;
+  }
+  .nut-tabs__titles-item {
+    // flex-direction: column;
+    // text-align: center;
+    // border-bottom: 3px solid #fff;
+
+    &.active {
+      color: #3aa6ff;
+      // border-color: #3aa6ff;
+    }
+  }
+  .nut-tabs__titles-item__line {
+    // background-image: linear-gradient(-90deg, #3aa0ff 0%, #3bd8ff 100%);
+  }
+  .nut-tabs__titles-item.active .nut-tabs__titles-item__line {
+    width: 100%;
+    // height: 100%;
+  }
+  .nut-tabs__titles-item__text {
+    position: relative;
+  }
+}
+
+.nut-tabs2 {
+  & > .nut-tabs__titles {
+    height: 35px;
+    padding: 0;
+
+    .nut-tabs__titles-item {
+      // text-align: center;
+      // border-bottom: 3px solid #fff;
+
+      &.active {
+        color: #fff;
+        // border-color: #3aa6ff;
+      }
+    }
+    .nut-tabs__titles-item__line {
+      top: 0;
+      width: 0;
+      background-image: linear-gradient(-90deg, #3aa0ff 0%, #3bd8ff 100%);
+    }
+    .nut-tabs__titles-item.active .nut-tabs__titles-item__line {
+      width: 100%;
+      height: 100%;
+    }
+    .nut-tabs__titles-item__text {
+      position: relative;
+    }
+  }
+}
+
+.nut-tabs3 {
+  & > .nut-tabs__titles {
+    padding: 0;
+    height: 35px;
+    background-color: #f8f8f8;
+    .nut-tabs__titles-item__line {
+      height: 4px;
+      background: #ffb21f;
+      bottom: 0;
+      // transform: none;
+      // left: 0;
+      // right: 0;
+      width: 0;
+    }
+    .nut-tabs__titles-item.active .nut-tabs__titles-item__line {
+      // width: 0;
+      width: 100%;
+    }
+  }
+}
+
+.nut-tabs3.blue {
+  & > .nut-tabs__titles {
+    .nut-tabs__titles-item__line {
+      background: $primary-color;
+    }
+  }
+}
+
+// .btn-text-space {
+//   letter-spacing: 5px;
+//   text-indent: 5px;
+// }
+
+.btn-linear-gradient {
+  background-image: linear-gradient(0deg, #3aa0ff 0%, #3bd8ff 100%),
+    linear-gradient(#42abe1, #42abe1);
+  color: #fff;
+  border: none;
+}
+
+.safe-padding-bottom {
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}

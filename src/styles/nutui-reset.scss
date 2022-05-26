@@ -1,0 +1,21 @@
+.nut-checkbox__label {
+  margin-left: 5px;
+}
+
+.nut-tag--primary.nut-tag--plain {
+  color: $primary-color !important;
+  background: #fff;
+  border: 1px solid $primary-color !important;
+}
+
+// .nut-button--large {
+//   font-size: 18px;
+// }
+
+.nut-tag--warning {
+  background-color: #ffb21f;
+}
+.nut-tag--info {
+  background-color: #eae7e7;
+  color: #696969;
+}

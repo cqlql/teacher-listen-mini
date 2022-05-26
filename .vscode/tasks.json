@@ -1,0 +1,27 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "docs:dev",
+      "problemMatcher": [],
+      "label": "npm: docs:dev",
+      "detail": "cd ./vuepress&&npm run docs:dev"
+    },
+    {
+      "type": "npm",
+      "script": "build:weapp",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "npm: build:weapp",
+      "detail": "taro build --type weapp"
+    },
+    {
+      "type": "npm",
+      "script": "download:iconfont",
+      "problemMatcher": [],
+      "label": "npm: download:iconfont",
+      "detail": "node config/utils/iconfont-download.js"
+    }
+  ]
+}
