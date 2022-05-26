@@ -14,10 +14,9 @@ export default hopeTheme({
 
   // logo: '/logo.svg',
 
-  // repo: 'https://gitee.com/cqlql/teacher-listen-mini/tree/master/vuepress',
-  repo: 'https://gitee.com/cqlql/teacher-listen-mini/tree/master/vuepress',
+  repo: 'cqlql/teacher-listen-mini',
 
-  // docsDir: 'docs',
+  docsDir: 'docs',
 
   editLinkPattern: 'https://gitee.com/cqlql/teacher-listen-mini/edit/master/vuepress/docs/:path',
 

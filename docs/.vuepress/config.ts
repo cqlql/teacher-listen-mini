@@ -10,8 +10,6 @@ export default defineUserConfig({
 
   base: '/teacher-listen-mini/',
 
-  dest: path.resolve(__dirname, '../../dist'),
-
   head: [
     [
       'link',
