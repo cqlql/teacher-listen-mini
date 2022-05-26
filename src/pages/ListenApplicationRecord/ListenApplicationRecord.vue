@@ -1,6 +1,9 @@
 <template>
   <div class="OpenClassApply">
-    <BtnFixedBottom @click="toCreateListen">我要开课</BtnFixedBottom>
+    <BtnFixedBottom @click="toCreateListen">
+      <div>我要</div>
+      开课</BtnFixedBottom
+    >
     <!-- <a class="OpenClassApply_add" @click="toCreateListen"> 我要开课 </a> -->
     <nut-tabs class="nut-tabs2" v-model="tabVal">
       <nut-tabpane title="待审批" pane-key="pending">

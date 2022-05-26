@@ -1,5 +1,5 @@
 export default {
-  navigationBarTitleText: '公开课',
+  navigationBarTitleText: '我要听课',
 
   // 导航栏背景颜色
   // navigationBarBackgroundColor: '#81b3fd',

@@ -17,6 +17,7 @@
         <AddedOpenClassList :active="tabVal === 'my'" type="my" />
       </nut-tabpane>
     </nut-tabs> -->
+      <BtnFixedBottom @click="toCreateListen">添加校外课</BtnFixedBottom>
     </div>
   </ToastProvider>
 </template>
@@ -28,6 +29,8 @@ import AllOpenClass from './comps/AllOpenClass.vue'
 import AddedOpenClassList from './comps/AddedOpenClassList.vue'
 import TabsColorBlack from '@/components/Tabs/TabsColorBlack.vue'
 import ToastProvider from '@/components/ToastProvider/ToastProvider.vue'
+import BtnFixedBottom from '@/components/BtnFixedBottom.vue'
+import Taro from '@tarojs/taro'
 
 // const tabVal = ref<'my' | 'all'>('all')
 const tabVal = ref(0)
@@ -40,6 +43,12 @@ const tabList = ref([
     name: '已添加的课',
   },
 ])
+
+function toCreateListen() {
+  Taro.navigateTo({
+    url: '/pages/CreateOutsideClass/CreateOutsideClass',
+  })
+}
 </script>
 
 <style lang="scss">

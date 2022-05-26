@@ -1,6 +1,8 @@
 <script lang="ts" setup></script>
 <template>
-  <a class="BtnFixedBottom"> <slot></slot> </a>
+  <a class="BtnFixedBottom">
+    <span><slot></slot></span>
+  </a>
 </template>
 
 <style lang="scss">
@@ -12,7 +14,7 @@
   height: 46px;
   z-index: 1;
   background-color: #81b3fd;
-  opacity: 0.63;
+  // opacity: 0.63;
   font-size: 12px;
   color: #fff;
   text-align: center;
@@ -21,6 +23,6 @@
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  padding: 8px;
+  // padding: 8px;
 }
 </style>
