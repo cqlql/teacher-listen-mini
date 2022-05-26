@@ -1,0 +1,5 @@
+
+User-agent:*
+Disallow:
+
+Sitemap: http://docs.cqlql.top/teacher-listen-mini/sitemap.xml

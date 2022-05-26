@@ -1,0 +1,9 @@
+import{_ as s}from"./plugin-vue_export-helper.21dcd24c.js";import{o as n,c as a,i as e}from"./app.a03a0581.js";const t={},o={class:"language-typescript ext-ts line-numbers-mode"},c=e(`<pre class="language-typescript"><code><span class="token keyword">import</span> useRouterParams <span class="token keyword">from</span> <span class="token string">&#39;@/hooks/useRouterParams&#39;</span>
+
+<span class="token comment">// \u67D0 url:</span>
+<span class="token comment">// pages/EvaluationRecord/EvaluationRecord?id=10086</span>
+
+<span class="token comment">// \u83B7\u53D6</span>
+<span class="token keyword">let</span> routeQuery <span class="token operator">=</span> <span class="token generic-function"><span class="token function">useRouterParams</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token punctuation">{</span> id<span class="token operator">:</span> <span class="token builtin">string</span> <span class="token punctuation">}</span><span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>routeQuery<span class="token punctuation">.</span>id<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div>`,2),p=[c];function i(l,r){return n(),a("div",o,p)}var k=s(t,[["render",i],["__file","\u83B7\u53D6\u9875\u9762 url \u53C2\u6570.html.vue"]]);export{k as default};
