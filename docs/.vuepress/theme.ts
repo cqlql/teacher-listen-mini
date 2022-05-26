@@ -14,11 +14,13 @@ export default hopeTheme({
 
   // logo: '/logo.svg',
 
-  repo: 'cqlql/teacher-listen-mini',
+  // github
+  // repo: 'cqlql/teacher-listen-mini',
+  // docsDir: 'docs',
 
-  docsDir: 'docs',
-
-  editLinkPattern: 'https://gitee.com/cqlql/teacher-listen-mini/edit/master/vuepress/docs/:path',
+  // gitee
+  repo: 'https://gitee.com/cqlql/teacher-listen-mini.git',
+  editLinkPattern: 'https://gitee.com/cqlql/teacher-listen-mini/edit/docs/docs/:path',
 
   // navbar
   // navbar: navbar,
