@@ -1,6 +1,7 @@
 import { httpV1, httpV3 } from '@/utils/http'
 import { post, get } from '@/utils/request'
 import type {
+  AddTempOpenCourseParams,
   AddUserCourse,
   ApproveOpenClassParams,
   ApproveOpenClassResult,
@@ -25,7 +26,7 @@ import type {
   userCourseList,
 } from './model/courseModel'
 
-/**获取听课、授课记录 */
+/** 获取听课、授课记录 */
 export function coursesRecordList(data: CoursesRecordListParams): Promise<CoursesRecordListResult> {
   return httpV1.get({
     url: '/lecture/v1/coursesrecordlist',
@@ -33,7 +34,7 @@ export function coursesRecordList(data: CoursesRecordListParams): Promise<Course
   })
 }
 
-/**最近一周听课任务 参数range_type=latest_week最近一周,参数默认值（可不提交） */
+/** 最近一周听课任务 参数range_type=latest_week最近一周,参数默认值（可不提交） */
 export function getLessonCount(): Promise<LessonCountResult> {
   return get('/lecture/v1/lesson_count')
   // return new Promise((resolve) => {
@@ -51,17 +52,22 @@ export function getLessonCount(): Promise<LessonCountResult> {
   // })
 }
 
-/**申请公开课 */
+/** 申请公开课 */
 export function requestOpenCourse(data: RequestOpenCourseParams) {
   return post('/lecture/v1/requestOpenCourse', data)
 }
 
-/**编辑公开课 */
+/** 编辑校外课 */
 export function editOpenCourse(data: EditOpenCourseParams) {
   return post('/lecture/v1/EditOpenCourse', data)
 }
 
-/**获取公开课列表（已申请）*/
+/** 添加/编辑校外课 */
+export function addTempOpenCourse(data: AddTempOpenCourseParams) {
+  return post('/lecture/v1/addTempOpenCourse', data)
+}
+
+/** 获取公开课列表（已申请）*/
 export function openCourseList(
   data: CourseListParams,
 ): Promise<{ listenList: OpenCourseItemResult[] }> {
@@ -91,7 +97,7 @@ export function reqIsLeader(): Promise<{ is_leader: boolean }> {
   return get('/lecture/v1/isLeader')
 }
 
-/**当前用户课程，包括自己的和计划听的 */
+/** 当前用户课程，包括自己的和计划听的 */
 export function getUserCourse(data?: GetUserCourseParams): Promise<{
   courselist: userCourseList
 }> {
@@ -101,7 +107,7 @@ export function getUserCourse(data?: GetUserCourseParams): Promise<{
   })
 }
 
-/**添加听课计划 */
+/** 添加听课计划 */
 export function addUserCourse(data: AddUserCourse): Promise<{ usercourse: any[] }> {
   return post('/lecture/v1/addUserCourse', data)
 }
@@ -114,7 +120,7 @@ export function delUserCourse(id: string) {
   return get('/lecture/v1/delUserCourse', { id })
 }
 
-/**听课评价 新增（过程记录和打分） */
+/** 听课评价 新增（过程记录和打分） */
 export function lessonRecord(data: LessonRecordReqData) {
   return post('/lecture/v1/lessonrecord', data)
 }
@@ -123,7 +129,7 @@ export function subscore(course_id: string) {
   return get('/lecture/v1/subscore', { course_id })
 }
 
-/**获取-维度列表 */
+/** 获取-维度列表 */
 export function dimensionList(data: DimensionListParams): Promise<DimensionListResult> {
   return get('/lecture/v1/dimensionlist', data)
 }
@@ -163,17 +169,15 @@ export function getAttachList(courseId: string): Promise<GetAttachListResult> {
 }
 
 /**
- * 听课记录详情
+ * 授课记录详情
  *
  */
-// export function allRecordList(courseId: string): Promise<GetAttachListResult> {
-//   return httpV1.get({
-//     url: '/lecture/v1/allrecordlist',
-//     data: {
-//       course_id: courseId,
-//     },
-//   })
-// }
+export function allRecordList(data: { course_id: string }): Promise<GetAttachListResult> {
+  return httpV1.get({
+    url: '/lecture/v1/allrecordlist',
+    data: data,
+  })
+}
 
 /**
  * 听课记录详情

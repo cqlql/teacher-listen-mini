@@ -1,7 +1,7 @@
-import { requestOpenCourse, editOpenCourse } from '@/api/course'
+import { addTempOpenCourse } from '@/api/course'
 import type {
+  AddTempOpenCourseParams,
   AttachmentParams,
-  EditOpenCourseParams,
   RequestOpenCourseForm,
   RequestOpenCourseParams,
 } from '@/api/model/courseModel'
@@ -10,12 +10,9 @@ import { setStorage } from '@/utils/storage'
 import Taro from '@tarojs/taro'
 import type { Ref } from 'vue'
 import { reactive, ref } from 'vue'
-
-type FunStr = (p: string) => void
+import useToastInject from '@/hooks/useToastInject'
 
 type Params = {
-  toastSuccess: FunStr
-  toastFail: FunStr
   subjectData: Ref<SubjectDataType>
 }
 
@@ -24,15 +21,17 @@ export interface openCourseParams extends RequestOpenCourseParams {
   course_id?: string
 }
 
-// 编辑或者更新
-function requestAddOrUpdate(params: openCourseParams) {
+// 新增或者编辑
+function requestAddOrUpdate(params: AddTempOpenCourseParams) {
   if (params.course_id) {
-    return editOpenCourse(params as EditOpenCourseParams)
+    // return editOpenCourse(params as EditOpenCourseParams)
   }
-  return requestOpenCourse(params)
+  return addTempOpenCourse(params)
 }
 
-export default function useCreateListen({ toastFail, toastSuccess, subjectData }: Params) {
+export default function useCreateListen({ subjectData }: Params) {
+  const { toastFail, toastSuccess } = useToastInject()
+
   const isLoading = ref(false)
 
   const promptPopup = reactive({

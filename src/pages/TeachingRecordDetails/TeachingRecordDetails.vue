@@ -2,6 +2,12 @@
 import InfoBox from '@/components/InfoBox.vue'
 import CardPlus from '@/components/CardPlus.vue'
 import ChartBarCustom from '@/components/ChartBarCustom.vue'
+import { allRecordList } from '@/api/course'
+
+console.log('dev 开发中 授课记录详情')
+allRecordList({
+  course_id: '',
+})
 </script>
 <template>
   <div class="ListenRecordDetails">

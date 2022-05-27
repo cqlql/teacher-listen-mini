@@ -506,3 +506,17 @@ export interface CoursesRecordListResultItem {
 export interface CoursesRecordListResult {
   coursesList: CoursesRecordListResultItem[]
 }
+
+export interface AddTempOpenCourseParams {
+  course_id?: string
+  course_name: string
+  subject_id: string
+  period: string
+  teach_target: string
+  lesson_date: string
+  start_time: string
+  user_name: string
+  class_room_name?: string
+  /* false 校外课 true 校内课 */
+  is_self: 'true' | 'false'
+}

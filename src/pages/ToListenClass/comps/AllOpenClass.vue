@@ -43,13 +43,17 @@ import SelectSubjectDialog from './SelectSubjectDialog.vue'
 import DatePicker from './DatePicker.vue'
 import type { TopSearchParams } from '../types'
 
-const classType = ref('open')
+const classType = ref<'open' | 'pushDoor'>('open')
 const topSearchParams = reactive<TopSearchParams>({
   subject: '',
   subjectShortName: '',
   date: '',
   search() {},
 })
+
+if (process.env.NODE_ENV !== 'production') {
+  classType.value = 'pushDoor'
+}
 
 defineProps<{
   active: boolean

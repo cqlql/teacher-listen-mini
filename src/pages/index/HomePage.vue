@@ -27,8 +27,10 @@ if (process.env.NODE_ENV !== 'production') {
   // url ='/pages/ListenEvaluation/ListenEvaluation?user_id=466954&course_id=6485930388991485693&subject_id=1&grade_id=1108&live_url=http://live1.wuhubtv.com/channel1/sd/live.m3u8'
   // 听课记录详情
   // url = '/pages/ListenRecordDetails/ListenRecordDetails?id=5679704728818079286&name=test&dateTime=2022-05-25 15:49:00&className=八年级6班&teacher=钟洁娜'
+  // 添加校外课
+  url = '/pages/CreateOutsideClass/CreateOutsideClass'
 
-  tabUrl = '/pages/ToListenClass/ToListenClass'
+  // tabUrl = '/pages/ToListenClass/ToListenClass'
 
   if (url) {
     Taro.navigateTo({ url })
