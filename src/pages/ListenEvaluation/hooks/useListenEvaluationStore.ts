@@ -185,7 +185,7 @@ export default function useListenEvaluationStore(): ListenEvaluationStore {
 
   return {
     save,
-    liveClassUrl: routeParams.live_url,
+    liveClassUrl: decodeURIComponent(routeParams.live_url),
     evaluationScore: evaluationScore,
     processRecordStore,
   }

@@ -24,12 +24,14 @@ if (process.env.NODE_ENV !== 'production') {
   let tabUrl = ''
 
   // 新增听课记录
-  // url ='/pages/ListenEvaluation/ListenEvaluation?user_id=466954&course_id=6485930388991485693&subject_id=1&grade_id=1108&live_url=http://live1.wuhubtv.com/channel1/sd/live.m3u8'
+  url =
+    '/pages/ListenEvaluation/ListenEvaluation?user_id=466954&course_id=6485930388991485693&subject_id=1&grade_id=1108&live_url=' +
+    encodeURIComponent('http://live1.wuhubtv.com/channel1/sd/live.m3u8')
   // 听课记录详情
   // url = '/pages/ListenRecordDetails/ListenRecordDetails?id=5679704728818079286&name=test&dateTime=2022-05-25 15:49:00&className=八年级6班&teacher=钟洁娜'
   // 授课记录详情
-  url =
-    '/pages/TeachingRecordDetails/TeachingRecordDetails?id=1198266997879021517&name=语文测试课&dateTime=2022-05-25 12:00:00&className=一年级1班&teacher=陈理'
+  // url =
+  //   '/pages/TeachingRecordDetails/TeachingRecordDetails?id=1198266997879021517&name=语文测试课&dateTime=2022-05-25 12:00:00&className=一年级1班&teacher=陈理'
   // 添加校外课
   // url = '/pages/CreateOutsideClass/CreateOutsideClass'
 
@@ -68,7 +70,11 @@ function toProcessRecord(course: {
   //   `/pages/ListenEvaluation/ListenEvaluation?user_id=${currentUserId}&course_id=${course.course_id}&subject_id=${course.subject_id}&grade_id=${course.grade_id}&live_url=${course.live_url}`,
   // )
   Taro.navigateTo({
-    url: `/pages/ListenEvaluation/ListenEvaluation?user_id=${currentUserId}&course_id=${course.course_id}&subject_id=${course.subject_id}&grade_id=${course.grade_id}&live_url=${course.live_url}`,
+    url: `/pages/ListenEvaluation/ListenEvaluation?user_id=${currentUserId}&course_id=${
+      course.course_id
+    }&subject_id=${course.subject_id}&grade_id=${course.grade_id}&live_url=${encodeURIComponent(
+      course.live_url,
+    )}`,
   })
 }
 
