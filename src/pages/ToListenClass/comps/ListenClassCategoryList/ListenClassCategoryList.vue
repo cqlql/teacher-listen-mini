@@ -49,7 +49,7 @@ function onAddUserCourse(item: OpenCourseItemResult, list: OpenCourseItemResult[
         >
         <span class="cell name">{{ item.user_name }}</span>
         <span class="cell" v-if="type === 'teacher'">{{ item.grade_name + item.class_name }}</span>
-        <span class="cell">第一节</span>
+        <span class="cell">{{ item.lesson_name }}</span>
         <span class="cell">
           <nut-button plain type="primary" size="mini" @click="onAddUserCourse(item, list, index)"
             >添加到听课</nut-button
