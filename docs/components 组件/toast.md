@@ -6,7 +6,7 @@ title: Toast 轻提醒
 
 实现根页面的所有子页面组件都能方便调用 toast
 
-某根页面
+某根页面 Provider
 
 ```vue
 <script lang="ts" setup>
@@ -14,14 +14,12 @@ import ToastProvider from '@/components/ToastProvider/ToastProvider.vue'
 </script>
 <template>
   <ToastProvider>
-    <div>
-      <SomethingComp />
-    </div>
+    <SomethingComp />
   </ToastProvider>
 </template>
 ```
 
-根页面中的某深层次组件 SomethingComp
+根页面中的某深层次组件 SomethingComp 使用 toast
 
 ```vue
 <script lang="ts" setup>
