@@ -239,6 +239,7 @@ export type userCourseList = {
   grade_name: string
   is_self: string
   lesson_date: string
+  /**直播听课url */
   live_url: string
   /**课程名 */
   name: string
@@ -478,6 +479,9 @@ export interface CoursesRecordListResultItem {
   name: string
   /**"2017-05-13T00:00:00+08:00", //授课时间 */
   lesson_date: string
+
+  // 直播听课地址
+  live_url: string
 
   start_time: string
   /**"语文", //节时名称 */

@@ -27,7 +27,7 @@ if (process.env.NODE_ENV !== 'production') {
   let url = ''
 
   // 新增听课记录
-  // url ='/pages/ListenEvaluation/ListenEvaluation?user_id=466954&course_id=5679704728818079286&subject_id=1&grade_id=1108'
+  // url ='/pages/ListenEvaluation/ListenEvaluation?user_id=466954&course_id=6485930388991485693&subject_id=1&grade_id=1108&live_url=http://live1.wuhubtv.com/channel1/sd/live.m3u8'
   // 听课记录详情
   // url = '/pages/ListenRecordDetails/ListenRecordDetails?id=5679704728818079286&name=test&dateTime=2022-05-25 15:49:00&className=八年级6班&teacher=钟洁娜'
 
@@ -53,10 +53,14 @@ function toProcessRecord(course: {
   course_id: string
   subject_id: string
   grade_id: string
+  live_url: string
 }) {
   const currentUserId = getStorage('userId')
+  // console.log(
+  //   `/pages/ListenEvaluation/ListenEvaluation?user_id=${currentUserId}&course_id=${course.course_id}&subject_id=${course.subject_id}&grade_id=${course.grade_id}&live_url=${course.live_url}`,
+  // )
   Taro.navigateTo({
-    url: `/pages/ListenEvaluation/ListenEvaluation?user_id=${currentUserId}&course_id=${course.course_id}&subject_id=${course.subject_id}&grade_id=${course.grade_id}`,
+    url: `/pages/ListenEvaluation/ListenEvaluation?user_id=${currentUserId}&course_id=${course.course_id}&subject_id=${course.subject_id}&grade_id=${course.grade_id}&live_url=${course.live_url}`,
   })
 }
 

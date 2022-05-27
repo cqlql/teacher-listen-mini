@@ -18,6 +18,7 @@ export interface RouteParams {
   subject_id: string
   grade_id: string
   user_id: string
+  live_url: string
 }
 
 function useSave(
@@ -163,21 +164,18 @@ export default function useListenEvaluationStore(): ListenEvaluationStore {
   //   }
   // }
 
+  const { course_id: courseId } = routeParams
+
   const processRecordStore = useProcessRecordStore()
   const { evaluationScore, editInit: evaluationScoreEditInit } =
     useEvaluationScoreStore(routeParams)
 
   const { save } = useSave(routeParams, processRecordStore, evaluationScore)
 
-  /**
-   * dev
-   * 编辑初始、待实现
-   * https://doc.shenduedu.com/#/%E5%B0%8F%CF%80%E6%99%BA%E5%90%AC/%E5%85%AC%E5%BC%80%E8%AF%BE/%E5%90%AC%E8%AF%BE%E8%AF%84%E4%BB%B7%E6%88%91%E7%9A%84%E8%AF%84%E4%BB%B7
-   *
-   **/
+  // 编辑初始
   getEvaluationList({
     /**课程ID */
-    course_id: routeParams.course_id,
+    course_id: courseId,
     /**评课人ID */
     user_id: routeParams.user_id,
   }).then((res) => {
@@ -187,6 +185,7 @@ export default function useListenEvaluationStore(): ListenEvaluationStore {
 
   return {
     save,
+    liveClassUrl: routeParams.live_url,
     evaluationScore: evaluationScore,
     processRecordStore,
   }

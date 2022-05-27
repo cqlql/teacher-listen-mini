@@ -11,6 +11,8 @@ provide('listenEvaluationStore', listenEvaluationStore)
 
 provide('processRecordStore', listenEvaluationStore.processRecordStore)
 
+const { liveClassUrl } = listenEvaluationStore
+
 const tabIndex = ref(0)
 // if (process.env.NODE_ENV !== 'production') {
 //   tabIndex.value = 1
@@ -26,8 +28,13 @@ const tabOptions = ref([
 ])
 </script>
 <template>
-  <div @click="clickOutside">
-    <TabsColorBlack class="ListenEvaluation" v-model="tabIndex" :options="tabOptions">
+  <div class="ListenEvaluation" :class="{ hasLive: liveClassUrl }" @click="clickOutside">
+    <div class="video">
+      <!-- <video src="http://39.134.115.163:8080/PLTV/88888910/224/3221225618/index.m3u8"></video> -->
+      <video :src="liveClassUrl"></video>
+    </div>
+
+    <TabsColorBlack v-model="tabIndex" :options="tabOptions">
       <template #pane0>
         <ProcessRecord></ProcessRecord>
       </template>
@@ -54,6 +61,28 @@ const tabOptions = ref([
   .nut-tabpane {
     padding: 0;
     position: relative;
+  }
+
+  & > .video {
+    margin-top: 35px;
+    display: none;
+    video {
+      width: 100%;
+    }
+  }
+
+  &.hasLive {
+    & > .video {
+      display: block;
+    }
+    .nut-tabs__titles {
+      position: absolute;
+      width: 100%;
+      top: 0;
+    }
+    .nut-tabs__content {
+      top: 260px;
+    }
   }
 }
 </style>

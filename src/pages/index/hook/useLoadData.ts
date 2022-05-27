@@ -22,6 +22,7 @@ function useGetList(weekDate: Ref<Dayjs>) {
       grade_name: '',
       class_name: '',
       class_room_name: '',
+      live_url: '',
       files: [
         {
           id: '',
@@ -115,6 +116,7 @@ function useGetList(weekDate: Ref<Dayjs>) {
           files: item.LA,
           status,
           type,
+          live_url: item.live_url,
         }
       }))
     })
