@@ -3,15 +3,46 @@ import InfoBox from '@/components/InfoBox.vue'
 import CardPlus from '@/components/CardPlus.vue'
 import ChartBarCustom from '@/components/ChartBarCustom.vue'
 import { allRecordList } from '@/api/course'
+import useRouterParams from '@/hooks/useRouterParams'
+import type { EvaluationDataItem } from '../ListenEvaluationRecord/types'
+import { ref } from 'vue'
 
-console.log('dev 开发中 授课记录详情')
+let courseInfo = useRouterParams<EvaluationDataItem>()
+console.log('🚀 -- courseInfo', courseInfo)
+
+let courseInfoData = [
+  {
+    label: '授课名称',
+    value: courseInfo.name,
+  },
+
+  {
+    label: '授课人',
+    value: courseInfo.teacher,
+  },
+
+  {
+    label: '授课班级',
+    value: courseInfo.className,
+  },
+
+  {
+    label: '授课时间',
+    value: courseInfo.dateTime,
+  },
+]
+
+const numberListen = ref(0)
 allRecordList({
-  course_id: '',
+  course_id: courseInfo.id,
+}).then((res) => {
+  console.log(res)
+  numberListen.value = res.lessonRecordList.length
 })
 </script>
 <template>
   <div class="ListenRecordDetails">
-    <InfoBox></InfoBox>
+    <InfoBox title="课程信息" :data="courseInfoData"></InfoBox>
     <CardPlus title2="授课评价">
       <template #title2Right>
         <navigator class="navigator" url="/pages/ListeningTeacherList/ListeningTeacherList"
@@ -19,7 +50,9 @@ allRecordList({
         >
       </template>
       <template #title>
-        <div> 听评课人数： <em>16</em> 人 </div>
+        <div>
+          听评课人数： <em>{{ numberListen }}</em> 人
+        </div>
       </template>
       <ChartBarCustom></ChartBarCustom>
     </CardPlus>
