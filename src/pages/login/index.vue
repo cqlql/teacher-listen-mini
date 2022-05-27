@@ -47,6 +47,7 @@
 
     <nut-popup
       position="right"
+      pop-class="campus-select-popup"
       v-model:visible="popupVisible"
       :style="{ height: '100%', width: '80%' }"
     >
@@ -163,6 +164,12 @@ if (process.env.NODE_ENV !== 'production') {
 
   .l-placeholder {
     color: $gray-7;
+  }
+}
+
+.campus-select-popup {
+  & > .h5-div {
+    height: 100%;
   }
 }
 
