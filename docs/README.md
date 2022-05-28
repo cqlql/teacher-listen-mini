@@ -7,8 +7,6 @@ tagline: false
 
 ## 待办
 
-我要听课 pages/ToListenClass/ToListenClass => SearchBarSelect
-
 ## 导航
 
 <HomeView></HomeView>
