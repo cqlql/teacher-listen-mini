@@ -66,7 +66,7 @@ function fileHandler(params: HandlerParams) {
 
 readdir({
   initValue: navbarConfig,
-  rootPath: path.resolve(__dirname, '../'),
+  rootPath: path.join(rootPath, docsDir),
   ignore: ['.vuepress', '.config', 'image'],
   callback: (params) => {
     let { dirname, parentDir, parentDirname, isDirectory } = params
