@@ -1,7 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import mdTop from './utils/md-top'
-import readdir from './utils/readdir'
+import readdir from './readdir'
 import fm from 'front-matter'
 
 const rootPath = process.cwd()
@@ -98,7 +97,7 @@ readdir({
 })
 
 fs.writeFileSync(
-  path.resolve(__dirname, './components/data.json'),
+  path.resolve(__dirname, '../components/data.json'),
   JSON.stringify(navbarConfig),
   'utf8',
 )

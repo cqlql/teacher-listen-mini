@@ -1,6 +1,6 @@
 /* 这是 vuepress 版的导航生成 */
 import path from 'path'
-import readdir from './utils/readdir'
+import readdir from './readdir'
 
 const settingMap = {
   'c sharp': {
