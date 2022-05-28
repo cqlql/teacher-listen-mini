@@ -22,7 +22,7 @@ function dirHandler(params: HandlerParams) {
   let dirConfigPath = path.join(rootPath, docsDir, fullLink, '.config')
 
   const resultConfig = {
-    text: '',
+    text: dirname,
     icon: '',
     prefix: parentDirname ? `${dirname}/` : `/${dirname}/`,
     sort: 0,
@@ -32,7 +32,7 @@ function dirHandler(params: HandlerParams) {
     fs.openSync(dirConfigPath, 'r')
 
     const { title, icon, sort } = JSON.parse(fs.readFileSync(dirConfigPath, 'utf8'))
-    resultConfig.text = title || dirname
+    resultConfig.text = title || resultConfig.text
     resultConfig.icon = icon || resultConfig.icon
     resultConfig.sort = sort || resultConfig.sort
   } catch (e) {}
@@ -45,7 +45,7 @@ function fileHandler(params: HandlerParams) {
   let filePath = path.join(rootPath, docsDir, fullLink)
 
   const resultConfig = {
-    text: '',
+    text: dirname.replace(/\.md$/g, ''),
     link: dirname,
     icon: '',
     fullLink: fullLink,
@@ -57,7 +57,7 @@ function fileHandler(params: HandlerParams) {
 
     let { title, icon, sort } = fm(fs.readFileSync(filePath, 'utf8')).attributes as any
 
-    resultConfig.text = title || dirname.replace(/\.md$/g, '')
+    resultConfig.text = title || resultConfig.text
     resultConfig.icon = icon || resultConfig.icon
     resultConfig.sort = sort || resultConfig.sort
   } catch (e) {}
