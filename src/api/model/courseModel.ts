@@ -80,7 +80,7 @@ export interface RequestOpenCourseParams {
   class_room_name?: string
   /**'4679665164583612636'; // 科组ID */
   subject_group_id: string
-  attachments: AttachmentParams[]
+  oca: AttachmentParams[]
   // dii: DimensionParams[];
   // is_prior: boolean; // false 普通公开课　true 区级优质观摩课
 }
@@ -121,6 +121,25 @@ export interface RequestOpenCourseForm {
 
   /**附件 */
   files: FileObject[]
+}
+
+/**校外课 form */
+export interface RequestOutsideCourseForm {
+  /**公开课名称ID */
+  course_id?: string
+  /**'公开课测试'; // 公开课名称 */
+  course_name: string
+  /**学段ID */
+  period: string
+  /**'1'; // 科目ID */
+  subject_id: string
+  /**'2018-01-10 10:20:00''; // 开课日期时间 */
+  dateTime: string
+
+  /** 授课班级 */
+  teach_target: string
+  /**授课地点 */
+  class_room_name: string
 }
 
 // 申请公开课记录结果项
@@ -512,11 +531,12 @@ export interface AddTempOpenCourseParams {
   course_name: string
   subject_id: string
   period: string
+  /**授课班级 */
   teach_target: string
   lesson_date: string
   start_time: string
-  user_name: string
-  class_room_name?: string
+  user_name?: string
+  class_room_name: string
   /* false 校外课 true 校内课 */
   is_self: 'true' | 'false'
 }

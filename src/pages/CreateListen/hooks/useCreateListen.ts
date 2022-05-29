@@ -94,7 +94,7 @@ export default function useCreateListen({ toastFail, toastSuccess, subjectData }
       class_room_name: formVal.class_room_id ? undefined : formVal.class_room_name,
       /**'4679665164583612636'; // 科组ID */
       subject_group_id: formVal.subject_group_id,
-      attachments: formVal.files.map<AttachmentParams>((file, index) => {
+      oca: formVal.files.map<AttachmentParams>((file, index) => {
         return {
           name: file.name, // 附件名
           url: file.url, // 附件url

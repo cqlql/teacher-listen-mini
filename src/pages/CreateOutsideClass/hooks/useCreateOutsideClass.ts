@@ -1,9 +1,8 @@
 import { addTempOpenCourse } from '@/api/course'
 import type {
   AddTempOpenCourseParams,
-  AttachmentParams,
-  RequestOpenCourseForm,
   RequestOpenCourseParams,
+  RequestOutsideCourseForm,
 } from '@/api/model/courseModel'
 import type { SubjectDataType } from '@/pages/CreateListen/hooks/useGradeSubectData'
 import { setStorage } from '@/utils/storage'
@@ -38,27 +37,23 @@ export default function useCreateListen({ subjectData }: Params) {
     visible: false,
     content: '',
   })
-  const form = ref<RequestOpenCourseForm>({
+  const form = ref<RequestOutsideCourseForm>({
     /**公开课名称ID */
     // course_id: '',
     /**'公开课测试'; // 公开课名称 */
     course_name: '',
+    /**授课老师 */
+    // user_name: '',
     /**学段ID */
     period: '',
     /**'1'; // 科目ID */
     subject_id: '',
-    /** 年级班级ID : ['5601661057566615964','5015483610072272084']  */
-    gradeClass: [],
     /**'2018-01-10 10:20:00''; // 开课日期时间 */
     dateTime: '',
-    /**'1016730'; // 教室ID, 与 `class_room_name`选一个参数提交 */
-    class_room_id: '',
-    /**'录播室'; // 教室名（上课地点） */
+    // 授课班级
+    teach_target: '',
+    /**授课地点 */
     class_room_name: '',
-    /**'4679665164583612636'; // 科组ID */
-    subject_group_id: '',
-
-    files: [],
   })
 
   async function confirm() {
@@ -70,35 +65,19 @@ export default function useCreateListen({ subjectData }: Params) {
     const res = await requestAddOrUpdate({
       /**公开课名称ID */
       course_id: formVal.course_id,
-
       /**'公开课测试'; // 公开课名称 */
       course_name: formVal.course_name,
       /**学段ID */
       period: formVal.period,
       /**'1'; // 科目ID */
       subject_id: formVal.subject_id,
-      /**'5601661057566615964'; // 年级ID */
-      grade_id: formVal.gradeClass[0],
-      /**'5015483610072272084'; // 班级ID */
-      class_id: formVal.gradeClass[1],
       /**'2018-01-10'; // 开课日期 */
       lesson_date: startTime[0],
       /**'10:20:00'; // 开课时间 */
       start_time: startTime[1],
-      /**'1016730'; // 教室ID, 与 `class_room_name`选一个参数提交 */
-      class_room_id: formVal.class_room_id,
-      /**'录播室'; // 教室名（上课地点） */
-      class_room_name: formVal.class_room_id ? undefined : formVal.class_room_name,
-      /**'4679665164583612636'; // 科组ID */
-      subject_group_id: formVal.subject_group_id,
-      attachments: formVal.files.map<AttachmentParams>((file, index) => {
-        return {
-          name: file.name, // 附件名
-          url: file.url, // 附件url
-          file_type: file.type, // 附件类型
-          display_order: index, // 显示顺序
-        }
-      }),
+      teach_target: formVal.teach_target,
+      class_room_name: formVal.class_room_name,
+      is_self: 'false',
     }).finally(() => {
       isLoading.value = false
     })

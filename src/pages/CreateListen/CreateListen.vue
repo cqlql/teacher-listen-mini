@@ -31,24 +31,22 @@ useEditInit(form)
 
 // 自动填充
 if (process.env.NODE_ENV !== 'production') {
-  // console.s = function () {
-  form.value = {
-    course_name: 'test',
-    period: '1001',
-    subject_id: '1',
-    gradeClass: ['1108', '5221494985625568497'],
-    dateTime: require('dayjs')(new Date()).add(1, 'hour').format('YYYY-MM-DD HH:mm:ss'),
-    class_room_id: '17',
-    class_room_name: '六（7）班',
-    subject_group_id: '5380719862234113228',
-    files: [
-      {
-        name: 'GKtmpMHEsNuR3b8b12cbf9436ae636d67b108dbdfe27.webp',
-        url: 'https://s3-cn-south-1.qiniucs.com/smallpi/3b8b12cbf9436ae636d67b108dbdfe27.webp?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FlOuHhYOGakSvFFka9eBRf5emNuGpEcCEZmtNsLd%2F20220304%2Fcn-south-1%2Fs3%2Faws4_request&X-Amz-Date=20220304T033536Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=6a85cea80d11f607d414c192c7f402d2f3eabb729ce0a65a049a512225432a1f',
-        type: '51',
-      },
-    ],
-  }
+  // form.value = {
+  //   course_name: 'test',
+  //   period: '1001',
+  //   subject_id: '1',
+  //   gradeClass: ['1108', '5221494985625568497'],
+  //   dateTime: require('dayjs')(new Date()).add(1, 'hour').format('YYYY-MM-DD HH:mm:ss'),
+  //   class_room_id: '17',
+  //   class_room_name: '六（7）班',
+  //   subject_group_id: '5380719862234113228',
+  //   files: [
+  //     {
+  //       name: 'GKtmpMHEsNuR3b8b12cbf9436ae636d67b108dbdfe27.webp',
+  //       url: 'https://s3-cn-south-1.qiniucs.com/smallpi/3b8b12cbf9436ae636d67b108dbdfe27.webp?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FlOuHhYOGakSvFFka9eBRf5emNuGpEcCEZmtNsLd%2F20220304%2Fcn-south-1%2Fs3%2Faws4_request&X-Amz-Date=20220304T033536Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=6a85cea80d11f607d414c192c7f402d2f3eabb729ce0a65a049a512225432a1f',
+  //       type: '51',
+  //     },
+  //   ],
   // }
 }
 </script>

@@ -3,6 +3,7 @@
     position="right"
     :visible="visible"
     :style="{ height: '100%', width: '80%' }"
+    pop-class="SelectListPopup-popup"
     @close="close"
   >
     <div class="SelectListPopup">
@@ -112,6 +113,11 @@ function close() {
 </script>
 
 <style lang="scss">
+.SelectListPopup-popup {
+  & > .h5-div {
+    height: 100%;
+  }
+}
 .SelectListPopup {
   position: relative;
   height: 100%;

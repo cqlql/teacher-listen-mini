@@ -43,8 +43,6 @@
 
 <script lang="ts" setup>
 import {
-  Radio as NutRadio,
-  RadioGroup as NutRadiogroup,
   Checkbox as NutCheckbox,
   CheckboxGroup as NutCheckboxgroup,
   TextArea as NutTextarea,

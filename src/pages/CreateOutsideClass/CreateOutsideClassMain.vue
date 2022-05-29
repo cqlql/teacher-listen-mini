@@ -5,15 +5,12 @@ import FormList from '@/components/Form/FormList.vue'
 // import SelectPlus from '@/components/Select/SelectPlus.vue';
 import InputPlus from '@/components/InputPlus.vue'
 import SelectCheck from '@/components/SelectCheck/SelectCheck.vue'
-import SelectTeachingLocation from './components/SelectTeachingLocation.vue'
-import DatePicker from '@/components/DatePicker/DatePicker.vue'
-// import FileUpload from '@/components/FileUpload/FileUpload.vue'
-import SelectClass from './components/SelectClass/SelectClass.vue'
 
 import useCreateOutsideClass from './hooks/useCreateOutsideClass'
 import useEditInit from './hooks/useEditInit'
 import ButtonBlock from '@/components/Button/ButtonBlock.vue'
 import useGradeSubectData from '../CreateListen/hooks/useGradeSubectData'
+import DatetimePicker from '@/components/DatePicker/DatetimePicker.vue'
 
 // import dayjs from 'dayjs'
 
@@ -29,21 +26,13 @@ useEditInit(form)
 if (process.env.NODE_ENV !== 'production') {
   // console.s = function () {
   form.value = {
-    course_name: 'test',
+    course_name: '校外课 test' + require('dayjs')().format('YYYY-MM-DD HH:mm'),
     period: '1001',
     subject_id: '1',
-    gradeClass: ['1108', '5221494985625568497'],
+    teach_target: '二年级三班',
     dateTime: require('dayjs')(new Date()).add(1, 'hour').format('YYYY-MM-DD HH:mm:ss'),
-    class_room_id: '17',
-    class_room_name: '六（7）班',
-    subject_group_id: '5380719862234113228',
-    files: [
-      {
-        name: 'GKtmpMHEsNuR3b8b12cbf9436ae636d67b108dbdfe27.webp',
-        url: 'https://s3-cn-south-1.qiniucs.com/smallpi/3b8b12cbf9436ae636d67b108dbdfe27.webp?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FlOuHhYOGakSvFFka9eBRf5emNuGpEcCEZmtNsLd%2F20220304%2Fcn-south-1%2Fs3%2Faws4_request&X-Amz-Date=20220304T033536Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=6a85cea80d11f607d414c192c7f402d2f3eabb729ce0a65a049a512225432a1f',
-        type: '51',
-      },
-    ],
+
+    class_room_name: '实验室',
   }
   // }
 }
@@ -55,6 +44,9 @@ if (process.env.NODE_ENV !== 'production') {
       <FormItem label="课程名称">
         <InputPlus v-model="form.course_name" placeholder="请输入课程名称" />
       </FormItem>
+      <!-- <FormItem label="授课老师">
+        <InputPlus v-model="form.user_name" placeholder="请输入授课老师" />
+      </FormItem> -->
       <FormItem label="学段">
         <SelectCheck
           v-model="form.period"
@@ -73,18 +65,17 @@ if (process.env.NODE_ENV !== 'production') {
           placeholder="请选择科目"
         />
       </FormItem>
-      <FormItem label="授课对象">
-        <SelectClass v-model="form.gradeClass" placeholder="请选择授课对象" />
+      <FormItem label="授课班级">
+        <InputPlus v-model="form.teach_target" placeholder="请输入授课班级" />
       </FormItem>
       <FormItem label="授课时间">
-        <DatePicker v-model="form.dateTime" placeholder="请选择授课时间" />
+        <DatetimePicker v-model="form.dateTime" placeholder="请选择授课时间" />
       </FormItem>
+      <!-- <FormItem label="授课学校">
+        <DatePicker v-model="form.school_name" placeholder="请选择授课时间" />
+      </FormItem> -->
       <FormItem label="授课地点">
-        <SelectTeachingLocation
-          v-model:value="form.class_room_id"
-          v-model:label="form.class_room_name"
-          placeholder="输入或选择授课地点"
-        />
+        <InputPlus v-model="form.class_room_name" placeholder="请输入授课地点" />
       </FormItem>
     </FormList>
     <div class="CreateListen_bot-btn">
