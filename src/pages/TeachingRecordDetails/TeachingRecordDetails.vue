@@ -2,13 +2,13 @@
 import InfoBox from '@/components/InfoBox.vue'
 import CardPlus from '@/components/CardPlus.vue'
 import ChartBarCustom from '@/components/ChartBarCustom.vue'
-import { allRecordList } from '@/api/course'
+import { getAttachList, getTeachRecordDetails } from '@/api/course'
 import useRouterParams from '@/hooks/useRouterParams'
 import type { EvaluationDataItem } from '../ListenEvaluationRecord/types'
+import type { Ref } from 'vue'
 import { ref } from 'vue'
 
 let courseInfo = useRouterParams<EvaluationDataItem>()
-console.log('🚀 -- courseInfo', courseInfo)
 
 let courseInfoData = [
   {
@@ -32,17 +32,39 @@ let courseInfoData = [
   },
 ]
 
+const files = ref<{ name: string }[]>([])
+
 const numberListen = ref(0)
-allRecordList({
+
+const evaluationChart: Ref<ChartBarCustomItem[]> = ref([])
+
+// 加载授课文件列表
+getAttachList(courseInfo.id).then((res) => {
+  let attrs: { name: string }[] = []
+  res.attachList.forEach((att) => {
+    attrs.push(att)
+  })
+  files.value = attrs
+})
+
+getTeachRecordDetails({
   course_id: courseInfo.id,
 }).then((res) => {
-  console.log(res)
-  numberListen.value = res.lessonRecordList.length
+  let list: ChartBarCustomItem[] = []
+  res.evaluation_count.forEach((item) => {
+    item.evaluation_counts.forEach((childItem) => {
+      list.push({
+        name: childItem.dimension_item_name,
+        count: Number(childItem.count),
+      })
+    })
+  })
+  evaluationChart.value = list
 })
 </script>
 <template>
   <div class="ListenRecordDetails">
-    <InfoBox title="课程信息" :data="courseInfoData"></InfoBox>
+    <InfoBox title="课程信息" filesTitle="授课文件" :data="courseInfoData" :files="files"></InfoBox>
     <CardPlus title2="授课评价">
       <template #title2Right>
         <navigator class="navigator" url="/pages/ListeningTeacherList/ListeningTeacherList"
@@ -54,7 +76,7 @@ allRecordList({
           听评课人数： <em>{{ numberListen }}</em> 人
         </div>
       </template>
-      <ChartBarCustom></ChartBarCustom>
+      <ChartBarCustom :data="evaluationChart"></ChartBarCustom>
     </CardPlus>
   </div>
 </template>

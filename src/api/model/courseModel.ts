@@ -489,6 +489,9 @@ export interface CoursesRecordListParams {
   search_name?: string
   start_date?: string
   end_date?: string
+
+  /**目标用户 */
+  user_id: string
 }
 
 export interface CoursesRecordListResultItem {

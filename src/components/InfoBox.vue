@@ -1,13 +1,20 @@
 <script lang="ts" setup>
-// import IconLink from './IconLink.vue'
+import IconLink from './IconLink.vue'
 
-defineProps<{
-  title: string
-  data: {
-    label: string
-    value: string
-  }[]
-}>()
+withDefaults(
+  defineProps<{
+    title: string
+    filesTitle: string
+    data: {
+      label: string
+      value: string
+    }[]
+    files?: { name: string }[]
+  }>(),
+  {
+    files: () => [],
+  },
+)
 </script>
 <template>
   <div class="InfoBox">
@@ -18,17 +25,14 @@ defineProps<{
         <div class="val">{{ item.value }}</div>
       </div>
       <!-- 附件 -->
-      <!-- <div class="item">
-        <div class="lb">名称：</div>
+      <div v-if="files.length" class="item">
+        <div class="lb">{{ filesTitle }}：</div>
         <div class="childList">
-          <div class="childItem">
-            <IconLink icon="pdf" type="custom">xxx.pdf</IconLink>
-          </div>
-          <div class="childItem">
-            <IconLink icon="pdf" type="custom">xxx.pdf</IconLink>
+          <div v-for="(file, index) of files" :key="index" class="childItem">
+            <IconLink icon="pdf" type="custom">{{ file.name }}</IconLink>
           </div>
         </div>
-      </div> -->
+      </div>
     </div>
   </div>
 </template>

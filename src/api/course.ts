@@ -172,11 +172,30 @@ export function getAttachList(courseId: string): Promise<GetAttachListResult> {
  * 授课记录详情
  *
  */
-export function allRecordList(data: {
+// export function allRecordList(data: {
+//   course_id: string
+// }): Promise<{ lessonRecordList: LessonRecordResult[] }> {
+//   return httpV1.get({
+//     url: '/lecture/v1/allrecordlist',
+//     data: data,
+//   })
+// }
+
+interface GetTeachRecordDetailsResult {
+  evaluation_count: {
+    dimension_name: string
+    evaluation_counts: {
+      count: string
+      dimension_item_name: string
+    }[]
+  }[]
+}
+
+export function getTeachRecordDetails(data: {
   course_id: string
-}): Promise<{ lessonRecordList: LessonRecordResult[] }> {
+}): Promise<GetTeachRecordDetailsResult> {
   return httpV1.get({
-    url: '/lecture/v1/allrecordlist',
+    url: '/lecture/v1/evaluation_count_by_dimension_item',
     data: data,
   })
 }

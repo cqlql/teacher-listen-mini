@@ -1,14 +1,29 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { computed } from 'vue'
+
+const props = defineProps<{
+  data: ChartBarCustomItem[]
+}>()
+
+const max = computed(() => {
+  let max = 0
+  props.data.forEach((item) => {
+    let count = item.count
+    if (count > max) max = count
+  })
+  return max
+})
+</script>
 <template>
   <div class="CustomChartBar">
-    <div v-for="v of 10" :key="v" class="row">
+    <div v-for="(item, key) of data" :key="key" class="row">
       <div class="icon-cont">
-        <nut-icon name="tips"></nut-icon>
+        <!-- <nut-icon name="tips"></nut-icon> -->
       </div>
-      <div class="name">目标</div>
+      <div class="name">{{ item.name }}</div>
       <div class="bar-cont">
-        <div class="bar" :style="{ width: v * 10 + '%' }">
-          <span class="v">3</span>
+        <div class="bar" :style="{ width: (item.count / max) * 100 + '%' }">
+          <span class="v">{{ item.count }}</span>
         </div>
       </div>
     </div>
