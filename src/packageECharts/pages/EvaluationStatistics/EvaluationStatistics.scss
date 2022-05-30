@@ -1,0 +1,37 @@
+.EvaluationStatistics {
+  .nut-tabs__titles {
+    background-color: #fff;
+    height: 40px;
+  }
+
+  .nut-tabs__content {
+    display: none;
+  }
+  .box {
+    // height: 100px;
+  }
+  .tit-bar {
+    padding: 10px 10px 0;
+  }
+  .charBar {
+    height: 300px;
+  }
+
+  .teaching {
+    padding: 0 10px;
+
+    .personnel-list {
+      display: inline-flex;
+      gap: 10px;
+      flex-wrap: wrap;
+
+      .nut-tag {
+        border-radius: 50px;
+        padding: 2px 6px;
+      }
+    }
+    .CustomChartBar {
+      padding-top: 20px;
+    }
+  }
+}

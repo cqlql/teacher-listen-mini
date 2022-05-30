@@ -30,12 +30,12 @@
       <nut-cell
         title="我的评课统计"
         is-link
-        @click="to('/packageECharts/pages/EvaluationStatistics/EvaluationStatistics')"
+        @click="to('/packageECharts/pages/EvaluationStatistics/MyEvaluationStatistics')"
       ></nut-cell>
       <nut-cell
         title="科组评课统计"
         is-link
-        @click="to('/packageECharts/pages/EvaluationStatistics/EvaluationStatistics')"
+        @click="to('/packageECharts/pages/EvaluationStatistics/department/EvaluationStatistics')"
       ></nut-cell>
       <nut-cell
         title="科组听评课记录"
