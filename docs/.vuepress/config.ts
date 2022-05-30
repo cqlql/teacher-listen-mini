@@ -4,6 +4,7 @@ import { searchPlugin } from '@vuepress/plugin-search'
 import theme from './theme'
 
 export default defineUserConfig({
+  port: 3005,
   lang: 'zh-CN',
   title: '智听小程序开发文档',
   // description: 'welcome',
