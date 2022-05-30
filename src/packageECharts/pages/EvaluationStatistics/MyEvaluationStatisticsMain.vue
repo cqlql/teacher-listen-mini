@@ -3,93 +3,34 @@ import CardPlus from '@/components/CardPlus.vue'
 import EChart from '@/packageECharts/components/EChart.vue'
 import ChartBarCustom from '@/components/ChartBarCustom.vue'
 import { ref } from 'vue'
-import { getEvaluationStatistics, getListenAndTeachStatistics } from '@/api/course'
 import { getStorage } from '@/utils/storage'
 import { Empty } from '@nutui/nutui-taro'
-import type { ChartBarCustomItem } from '@/components/ChartBarCustom'
 import type { GetListenAndTeachStatisticsParams } from '@/api/model/courseModel'
 import useToastInject from '@/hooks/useToastInject'
+import useCountStatistics from './hooks/useCountStatistics'
+import useEvaluationStatistics from './hooks/useEvaluationStatistics'
 const { toastLoading, toastClose } = useToastInject()
-const rangeType = ref<GetListenAndTeachStatisticsParams['range_type']>('this_semester')
 
+const rangeType = ref<GetListenAndTeachStatisticsParams['range_type']>('this_semester')
 const userId = getStorage('userId')
 
-const chartOption = ref()
-const empty = ref(false)
+const {
+  empty: countEmpty,
+  update: countUpdate,
+  chartOptions: countChartOptions,
+} = useCountStatistics(userId)
 
-const chartBarData = ref<ChartBarCustomItem[]>([])
-
-function updateEChart() {
-  toastLoading()
-  getListenAndTeachStatistics({
-    user_id: userId,
-    range_type: rangeType.value,
-  })
-    .then((res) => {
-      let list = res.course_frequence_list
-      if (list.length) {
-        let item = list[0]
-        chartOption.value = {
-          legend: {
-            bottom: '0',
-          },
-          series: [
-            {
-              // name: 'Access From',
-              type: 'pie',
-              radius: '80%',
-              // top: '0',
-              center: ['50%', '45%'],
-              label: {
-                position: 'inside',
-                formatter: '{c}',
-                color: '#fff',
-              },
-              data: [
-                { value: item.listen_num, name: '听课次数' },
-                { value: item.teaching_num, name: '授课次数' },
-              ],
-              // emphasis: {
-              //   itemStyle: {
-              //     shadowBlur: 10,
-              //     shadowOffsetX: 0,
-              //     shadowColor: 'rgba(0, 0, 0, 0.5)',
-              //   },
-              // },
-            },
-          ],
-        }
-      } else {
-        empty.value = true
-      }
-    })
-    .finally(() => {
-      toastClose()
-    })
-}
-
-function updateChartBar() {
-  getEvaluationStatistics({
-    user_id: userId,
-
-    range_type: rangeType.value,
-  }).then((res) => {
-    let list: ChartBarCustomItem[] = []
-    res.evaluation_count.forEach((item) => {
-      item.evaluation_counts.forEach((childItem) => {
-        list.push({
-          name: childItem.dimension_item_name,
-          count: Number(childItem.count),
-        })
-      })
-    })
-    chartBarData.value = list
-  })
-}
+const {
+  empty: chartBarEmpty,
+  chartBarData,
+  update: updateChartBar,
+} = useEvaluationStatistics(userId)
 
 function tabChange() {
-  updateEChart()
-  updateChartBar()
+  toastLoading()
+  Promise.all([countUpdate(rangeType.value), updateChartBar(rangeType.value)]).finally(() => {
+    toastClose()
+  })
 }
 
 tabChange()
@@ -101,10 +42,9 @@ tabChange()
       <nut-tabpane pane-key="this_month" title="本月"></nut-tabpane>
       <nut-tabpane pane-key="this_week" title="本周"></nut-tabpane>
     </nut-tabs>
-    <!-- <button @click="test">换数据</button> -->
     <CardPlus title2="听授课次数统计：">
-      <Empty v-if="empty"></Empty>
-      <EChart v-else ref="vEChart" :option="chartOption"> </EChart>
+      <Empty v-if="countEmpty"></Empty>
+      <EChart v-else ref="vEChart" :option="countChartOptions"> </EChart>
     </CardPlus>
 
     <CardPlus title2="授课评价统计：">
@@ -114,8 +54,9 @@ tabChange()
             <nut-tag type="warning" class="item" v-for="v of 5" :key="v">张三</nut-tag>
             <nut-tag type="info" class="item" v-for="v of 5" :key="v">张三</nut-tag>
           </div> -->
+          <Empty v-if="chartBarEmpty"></Empty>
 
-          <ChartBarCustom :data="chartBarData"></ChartBarCustom>
+          <ChartBarCustom v-else :data="chartBarData"></ChartBarCustom>
         </div>
       </div>
     </CardPlus>
