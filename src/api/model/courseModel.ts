@@ -543,3 +543,14 @@ export interface AddTempOpenCourseParams {
   /* false 校外课 true 校内课 */
   is_self: 'true' | 'false'
 }
+
+export interface GetListenAndTeachStatisticsParams {
+  /** 时间范围  */
+  range_type: 'this_semester' | 'this_month' | 'this_week' | 'first_semester' | 'second_semester'
+  /** 分页查询起始位置  */
+  offset?: string
+  /** 分页查询每页条数  */
+  list_mun?: string
+  /** 指定教师用户ID查询 */
+  user_id?: string
+}

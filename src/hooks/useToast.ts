@@ -7,7 +7,7 @@ export interface UseToast {
   toastFail: (msg: string) => void
   toastWarn: (msg: string) => void
   toastSuccess: (msg: string) => void
-  toastLoading: (msg: string) => void
+  toastLoading: (msg?: string) => void
   toastClose: () => void
   loading: Ref<boolean>
 }
@@ -15,7 +15,7 @@ export interface UseToast {
 export default function useToast(): UseToast {
   const loading = ref(false)
   const loadingMsg = '努力加载中...'
-  const duration = 2000
+  const duration = 2000 // 展示时长，0 为不会自动消失
 
   const toast = reactive<ToastOptions>({
     msg: '',

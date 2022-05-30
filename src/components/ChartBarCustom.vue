@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
+import type { ChartBarCustomItem } from './ChartBarCustom'
 
 const props = defineProps<{
   data: ChartBarCustomItem[]

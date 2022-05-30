@@ -15,6 +15,7 @@ import type {
   GetAttachListResult,
   GetEvaluationListParams,
   GetEvaluationListResult,
+  GetListenAndTeachStatisticsParams,
   GetUserCourseParams,
   LessonCountResult,
   LessonRecordReqData,
@@ -168,10 +169,6 @@ export function getAttachList(courseId: string): Promise<GetAttachListResult> {
   })
 }
 
-/**
- * 授课记录详情
- *
- */
 export function allRecordList(data: {
   course_id: string
 }): Promise<{ lessonRecordList: LessonRecordResult[] }> {
@@ -191,8 +188,14 @@ interface GetTeachRecordDetailsResult {
   }[]
 }
 
-export function getTeachRecordDetails(data: {
-  course_id: string
+/**
+ * 授课评价统计
+ *
+ */
+export function getEvaluationStatistics(data: {
+  course_id?: string
+  user_id?: string
+  range_type?: GetListenAndTeachStatisticsParams['range_type']
 }): Promise<GetTeachRecordDetailsResult> {
   return httpV1.get({
     url: '/lecture/v1/evaluation_count_by_dimension_item',
@@ -211,5 +214,25 @@ export function getRecordList(data: { course_id: string; user_id: string }): Pro
   return httpV3.get({
     url: '/lecture/v1/list',
     data: data,
+  })
+}
+
+interface GetListenAndTeachStatisticsResult {
+  course_frequence_list: {
+    listen_num: string
+    teaching_num: string
+    total_num: string
+    user_id: string
+    user_name: string
+  }[]
+}
+
+/**听授课次数统计 */
+export function getListenAndTeachStatistics(
+  data: GetListenAndTeachStatisticsParams,
+): Promise<GetListenAndTeachStatisticsResult> {
+  return httpV1.get({
+    url: '/lecture/v1/statsCoursesFrequenceOfACampus',
+    data,
   })
 }

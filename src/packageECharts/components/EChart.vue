@@ -11,6 +11,7 @@ export default {
   props: {
     getOption: Function,
     option: Object,
+    loading: Boolean,
   },
   watch: {
     option(option) {
@@ -18,7 +19,18 @@ export default {
         this.chart.setOption(option)
       }
     },
+    loading(loading) {
+      let { chart } = this
+      if (chart) {
+        if (loading) {
+          chart.showLoading()
+        } else {
+          chart.hideLoading()
+        }
+      }
+    },
   },
+  mounted() {},
   methods: {
     onInit(canvas, width, height, dpr) {
       const chart = echarts.init(canvas, null, {
@@ -27,6 +39,10 @@ export default {
         devicePixelRatio: dpr, // new
       })
       canvas.setChart(chart)
+
+      if (this.loading) {
+        chart.showLoading()
+      }
 
       let option = this.option
       if (option) {

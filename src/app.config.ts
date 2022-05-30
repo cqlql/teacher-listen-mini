@@ -52,9 +52,10 @@ export default {
     {
       root: 'packageECharts',
       pages: [
-        // 'pages/ECharts/ECharts',
         // 评课统计
         'pages/EvaluationStatistics/EvaluationStatistics',
+        // 我的评课统计
+        'pages/EvaluationStatistics/MyEvaluationStatistics',
       ],
     },
   ],
