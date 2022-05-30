@@ -2,7 +2,7 @@
 import InfoBox from '@/components/InfoBox.vue'
 import CardPlus from '@/components/CardPlus.vue'
 import ChartBarCustom from '@/components/ChartBarCustom.vue'
-import { getAttachList, getTeachRecordDetails } from '@/api/course'
+import { allRecordList, getAttachList, getTeachRecordDetails } from '@/api/course'
 import useRouterParams from '@/hooks/useRouterParams'
 import type { EvaluationDataItem } from '../ListenEvaluationRecord/types'
 import type { Ref } from 'vue'
@@ -45,6 +45,12 @@ getAttachList(courseInfo.id).then((res) => {
     attrs.push(att)
   })
   files.value = attrs
+})
+
+allRecordList({
+  course_id: courseInfo.id,
+}).then((res) => {
+  numberListen.value = res.lessonRecordList.length
 })
 
 getTeachRecordDetails({
