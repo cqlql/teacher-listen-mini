@@ -35,7 +35,7 @@
       <nut-cell
         title="科组评课统计"
         is-link
-        @click="to('/packageECharts/pages/EvaluationStatistics/department/EvaluationStatistics')"
+        @click="to('/packageECharts/pages/EvaluationStatistics/DepartmentEvaluationStatistics')"
       ></nut-cell>
       <nut-cell
         title="科组听评课记录"

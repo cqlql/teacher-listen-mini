@@ -57,7 +57,7 @@ export default {
         // 我的评课统计
         'pages/EvaluationStatistics/MyEvaluationStatistics',
         // 科组评课统计
-        'pages/EvaluationStatistics/department/EvaluationStatistics',
+        'pages/EvaluationStatistics/DepartmentEvaluationStatistics',
       ],
     },
   ],

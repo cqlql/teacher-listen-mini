@@ -24,9 +24,13 @@ import IconLink from '@/components/IconLink.vue'
 import SearchBarSelect from '@/components/SearchBarSelect.vue'
 import SearchBarSelect2 from '@/components/SearchBarSelect2.vue'
 import BottomOkButtons from '@/components/Button/BottomOkButtons.vue'
+import SelectCheck from '@/components/SelectCheck/SelectCheck.vue'
 </script>
 <template>
   <div style="margin: 10px">
+    <BoxView title="SelectCheck">
+      <SelectCheck></SelectCheck>
+    </BoxView>
     <BoxView title="CardPlus">
       <div style="background: #f6f6f6">
         <CardPlus title2="查看详情">

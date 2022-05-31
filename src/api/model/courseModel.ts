@@ -553,4 +553,6 @@ export interface GetListenAndTeachStatisticsParams {
   list_mun?: string
   /** 指定教师用户ID查询 */
   user_id?: string
+  /** 科组ID*/
+  group_id?: string
 }

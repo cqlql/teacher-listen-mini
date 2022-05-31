@@ -1,14 +1,15 @@
 import { getListenAndTeachStatistics } from '@/api/course'
 import type { GetListenAndTeachStatisticsParams } from '@/api/model/courseModel'
+import type { Ref } from 'vue'
 import { ref } from 'vue'
 
-export default function useCountStatistics(userId) {
+export default function useCountStatistics(groupId: Ref<string>) {
   const empty = ref(false)
   const chartOptions = ref<any>()
 
   function update(rangeType: GetListenAndTeachStatisticsParams['range_type']) {
     return getListenAndTeachStatistics({
-      user_id: userId,
+      group_id: groupId.value,
       range_type: rangeType,
     }).then((res) => {
       const list = res.course_frequence_list

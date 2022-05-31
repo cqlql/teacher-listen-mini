@@ -227,7 +227,7 @@ interface GetListenAndTeachStatisticsResult {
   }[]
 }
 
-/**听授课次数统计 */
+/**我的听授课次数统计 */
 export function getListenAndTeachStatistics(
   data: GetListenAndTeachStatisticsParams,
 ): Promise<GetListenAndTeachStatisticsResult> {
