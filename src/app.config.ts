@@ -58,6 +58,8 @@ export default {
         'pages/EvaluationStatistics/MyEvaluationStatistics',
         // 科组评课统计
         'pages/EvaluationStatistics/DepartmentEvaluationStatistics',
+        // 全校评课统计
+        'pages/EvaluationStatistics/AllEvaluationStatistics',
       ],
     },
   ],
