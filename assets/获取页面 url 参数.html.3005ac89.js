@@ -1,4 +1,4 @@
-import{_ as s}from"./plugin-vue_export-helper.21dcd24c.js";import{o as n,c as a,i as e}from"./app.2cbb1386.js";const t={},o={class:"language-typescript ext-ts line-numbers-mode"},c=e(`<pre class="language-typescript"><code><span class="token keyword">import</span> useRouterParams <span class="token keyword">from</span> <span class="token string">&#39;@/hooks/useRouterParams&#39;</span>
+import{_ as s}from"./plugin-vue_export-helper.21dcd24c.js";import{o as n,c as a,i as e}from"./app.9f8219a8.js";const t={},o={class:"language-typescript ext-ts line-numbers-mode"},c=e(`<pre class="language-typescript"><code><span class="token keyword">import</span> useRouterParams <span class="token keyword">from</span> <span class="token string">&#39;@/hooks/useRouterParams&#39;</span>
 
 <span class="token comment">// \u67D0 url:</span>
 <span class="token comment">// pages/EvaluationRecord/EvaluationRecord?id=10086</span>
