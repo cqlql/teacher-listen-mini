@@ -11,6 +11,7 @@ import useCountStatistics from './hooks/department/useCountStatistics'
 import useEvaluationStatistics from './hooks/department/useEvaluationStatistics'
 import { RadioGroup as NutRadiogroup, Radio as NutRadio } from '@nutui/nutui-taro'
 import { userSubjectGroups } from '@/api/user'
+import { getUserListDepartment } from '@/api/course'
 const { toastLoading, toastClose } = useToastInject()
 
 const rangeType = ref<GetListenAndTeachStatisticsParams['range_type']>('this_semester')
@@ -55,6 +56,19 @@ userSubjectGroups().then((res) => {
     reload()
   }
 })
+
+// getUserListDepartment({
+//   group_id: item
+// })
+// const groupList = ref([])
+// const userList = ref<string[]>([])
+// function changeRangeDate(rangeType) {
+//   fetchOnce(()=> {
+
+//   }).then((
+
+//   ))
+// }
 </script>
 <template>
   <div class="EvaluationStatistics">

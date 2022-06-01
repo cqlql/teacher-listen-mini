@@ -236,3 +236,12 @@ export function getListenAndTeachStatistics(
     data,
   })
 }
+
+/**科组用户列表 */
+
+export function getUserListDepartment(data: { group_id: string }) {
+  return httpV1.get({
+    url: '/lecture/v3/queryEvaluationGroupMember',
+    data,
+  })
+}
