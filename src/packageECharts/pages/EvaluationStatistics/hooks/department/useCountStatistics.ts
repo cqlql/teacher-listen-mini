@@ -17,6 +17,9 @@ export default function useCountStatistics() {
     },
   })
 
+  function picChartOptionsGenerate(list: any[]) {}
+  function barChartOptionsGenerate(list: any[]) {}
+
   function update(rangeType: GetListenAndTeachStatisticsParams['range_type'], groupId: string) {
     return getListenAndTeachStatistics({
       group_id: groupId,
@@ -25,6 +28,8 @@ export default function useCountStatistics() {
       const list = res.course_frequence_list
       if (list.length) {
         const item = list[0]
+        picChartOptionsGenerate(list)
+        barChartOptionsGenerate(list)
         countStatistics.pie.chartOptions = {
           legend: {
             bottom: '0',
