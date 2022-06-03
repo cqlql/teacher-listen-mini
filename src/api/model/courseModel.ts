@@ -556,3 +556,13 @@ export interface GetListenAndTeachStatisticsParams {
   /** 科组ID*/
   group_id?: string
 }
+
+export interface GetListenAndTeachStatisticsResult {
+  course_frequence_list: {
+    listen_num: string
+    teaching_num: string
+    total_num: string
+    user_id: string
+    user_name: string
+  }[]
+}

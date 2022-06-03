@@ -16,6 +16,7 @@ import type {
   GetEvaluationListParams,
   GetEvaluationListResult,
   GetListenAndTeachStatisticsParams,
+  GetListenAndTeachStatisticsResult,
   GetUserCourseParams,
   LessonCountResult,
   LessonRecordReqData,
@@ -215,16 +216,6 @@ export function getRecordList(data: { course_id: string; user_id: string }): Pro
     url: '/lecture/v1/list',
     data: data,
   })
-}
-
-interface GetListenAndTeachStatisticsResult {
-  course_frequence_list: {
-    listen_num: string
-    teaching_num: string
-    total_num: string
-    user_id: string
-    user_name: string
-  }[]
 }
 
 /**我的听授课次数统计 */

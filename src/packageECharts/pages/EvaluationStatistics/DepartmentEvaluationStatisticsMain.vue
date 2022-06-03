@@ -2,7 +2,7 @@
 import CardPlus from '@/components/CardPlus.vue'
 import EChart from '@/packageECharts/components/EChart.vue'
 import ChartBarCustom from '@/components/ChartBarCustom.vue'
-import { reactive, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { getStorage } from '@/utils/storage'
 import { Empty } from '@nutui/nutui-taro'
 import type { GetListenAndTeachStatisticsParams } from '@/api/model/courseModel'
@@ -90,9 +90,14 @@ userSubjectGroups().then((res) => {
     </nut-radiogroup>
     <!-- </div> -->
 
-    <CardPlus title2="听授课次数统计：">
+    <CardPlus title2="科组听授课次数统计：">
       <Empty v-if="countStatistics.empty"></Empty>
-      <EChart v-else ref="vEChart" :option="countStatistics.pie.chartOptions"> </EChart>
+      <EChart v-else :option="countStatistics.pie.chartOptions"> </EChart>
+    </CardPlus>
+
+    <CardPlus title2="科组人员听授课次数统计：">
+      <Empty v-if="countStatistics.empty"></Empty>
+      <EChart v-else class="charBar" :option="countStatistics.bar.chartOptions"> </EChart>
     </CardPlus>
 
     <CardPlus title2="授课评价统计：">
