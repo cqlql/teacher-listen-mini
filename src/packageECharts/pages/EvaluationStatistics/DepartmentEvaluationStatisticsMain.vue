@@ -37,15 +37,6 @@ function reload() {
   countUpdate(rangeType.value, groupId.value)
 }
 
-function reload2() {
-  if (groupId.value) {
-    toastLoading()
-    Promise.all([countUpdate(rangeType.value), updateChartBar(rangeType.value)]).finally(() => {
-      toastClose()
-    })
-  }
-}
-
 const subjectGroups = ref<{ id: string; name: string }[]>([])
 userSubjectGroups().then((res) => {
   const groups = (subjectGroups.value = res.subject_groups.map((group) => {

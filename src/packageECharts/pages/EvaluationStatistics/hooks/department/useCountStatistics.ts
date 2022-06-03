@@ -3,7 +3,6 @@ import type {
   GetListenAndTeachStatisticsParams,
   GetListenAndTeachStatisticsResult,
 } from '@/api/model/courseModel'
-import type { Ref } from 'vue'
 import { reactive } from 'vue'
 import { ref } from 'vue'
 
@@ -22,7 +21,8 @@ export default function useCountStatistics() {
 
   function chartOptionsGenerate(list: GetListenAndTeachStatisticsResult['course_frequence_list']) {
     const barDataSource: any[] = [['product', '听课', '授课']]
-
+    const totalNumber = list.length
+    const showNumber = 5
     let listenTotal = 0
     let teachTotal = 0
     list.forEach((item) => {
@@ -30,13 +30,13 @@ export default function useCountStatistics() {
       teachTotal += Number(item.teaching_num)
 
       barDataSource.push([item.user_name, item.listen_num, item.teaching_num])
-      barDataSource.push([
-        String(~~(Math.random() * 10)),
-        String(Math.random() * 10),
-        String(Math.random() * 10),
-      ])
+      // barDataSource.push([
+      //   String(~~(Math.random() * 10)),
+      //   String(Math.random() * 10),
+      //   String(Math.random() * 10),
+      // ])
     })
-    console.log(barDataSource)
+
     countStatistics.pie.chartOptions = {
       legend: {
         bottom: '0',
@@ -92,8 +92,8 @@ export default function useCountStatistics() {
         {
           show: true,
           start: 0,
-          end: 10,
-          // zoomLock: true, //
+          end: (showNumber / totalNumber) * 100,
+          zoomLock: true, //
           brushSelect: false,
         },
         // {
