@@ -30,7 +30,7 @@ export default {
       // 画笔
       'pages/DrawPage/DrawPage',
       // 搜索
-      'pages/SearchPage/SearchPage',
+      // 'pages/SearchPage/SearchPage',
     ]
     if (process.env.NODE_ENV === 'development') {
       // eslint-disable-next-line prefer-const

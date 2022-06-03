@@ -2,7 +2,7 @@
 import CardPlus from '@/components/CardPlus.vue'
 import EChart from '@/packageECharts/components/EChart.vue'
 import ChartBarCustom from '@/components/ChartBarCustom.vue'
-import { ref, watch } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import { getStorage } from '@/utils/storage'
 import { Empty } from '@nutui/nutui-taro'
 import type { GetListenAndTeachStatisticsParams } from '@/api/model/courseModel'
@@ -14,16 +14,15 @@ import { userSubjectGroups } from '@/api/user'
 import { getUserListDepartment } from '@/api/course'
 const { toastLoading, toastClose } = useToastInject()
 
-const rangeType = ref<GetListenAndTeachStatisticsParams['range_type']>('this_semester')
 const userId = getStorage('userId')
-
+const rangeType = ref<GetListenAndTeachStatisticsParams['range_type']>('this_semester')
 const groupId = ref('')
 
 const {
-  empty: countEmpty,
   update: countUpdate,
-  chartOptions: countChartOptions,
-} = useCountStatistics(groupId)
+  // chartOptions: countChartOptions,
+  countStatistics,
+} = useCountStatistics()
 
 const {
   empty: chartBarEmpty,
@@ -34,6 +33,11 @@ const {
 watch(groupId, reload)
 
 function reload() {
+  //!!!! 从这里开始
+  countUpdate(rangeType.value, groupId.value)
+}
+
+function reload2() {
   if (groupId.value) {
     toastLoading()
     Promise.all([countUpdate(rangeType.value), updateChartBar(rangeType.value)]).finally(() => {
@@ -52,8 +56,6 @@ userSubjectGroups().then((res) => {
   }))
   if (groups[0]) {
     groupId.value = groups[0].id
-
-    reload()
   }
 })
 
@@ -69,6 +71,8 @@ userSubjectGroups().then((res) => {
 
 //   ))
 // }
+
+// useCountStatistics()
 </script>
 <template>
   <div class="EvaluationStatistics">
@@ -87,8 +91,8 @@ userSubjectGroups().then((res) => {
     <!-- </div> -->
 
     <CardPlus title2="听授课次数统计：">
-      <Empty v-if="countEmpty"></Empty>
-      <EChart v-else ref="vEChart" :option="countChartOptions"> </EChart>
+      <Empty v-if="countStatistics.empty"></Empty>
+      <EChart v-else ref="vEChart" :option="countStatistics.pie.chartOptions"> </EChart>
     </CardPlus>
 
     <CardPlus title2="授课评价统计：">

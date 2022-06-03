@@ -1,21 +1,31 @@
 import { getListenAndTeachStatistics } from '@/api/course'
 import type { GetListenAndTeachStatisticsParams } from '@/api/model/courseModel'
 import type { Ref } from 'vue'
+import { reactive } from 'vue'
 import { ref } from 'vue'
 
-export default function useCountStatistics(groupId: Ref<string>) {
+export default function useCountStatistics() {
   const empty = ref(false)
-  const chartOptions = ref<any>()
+  // const chartOptions = ref<any>()
+  const countStatistics = reactive({
+    empty: false,
+    pie: {
+      chartOptions: {},
+    },
+    bar: {
+      chartOptions: {},
+    },
+  })
 
-  function update(rangeType: GetListenAndTeachStatisticsParams['range_type']) {
+  function update(rangeType: GetListenAndTeachStatisticsParams['range_type'], groupId: string) {
     return getListenAndTeachStatistics({
-      group_id: groupId.value,
+      group_id: groupId,
       range_type: rangeType,
     }).then((res) => {
       const list = res.course_frequence_list
       if (list.length) {
         const item = list[0]
-        chartOptions.value = {
+        countStatistics.pie.chartOptions = {
           legend: {
             bottom: '0',
           },
@@ -46,14 +56,16 @@ export default function useCountStatistics(groupId: Ref<string>) {
           ],
         }
       } else {
-        empty.value = true
+        countStatistics.empty = true
       }
     })
   }
 
   return {
     empty,
-    chartOptions,
+    // chartOptions,
     update,
+
+    countStatistics,
   }
 }
