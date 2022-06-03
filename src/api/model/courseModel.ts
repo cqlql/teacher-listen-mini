@@ -579,3 +579,36 @@ export interface GetSubjectGroupsMembersResult {
     userid: string
   }[]
 }
+
+export interface GetFullCourseStatisticsParams {
+  role_type?: CoursesRecordListParams['role_type']
+  power?: CoursesRecordListParams['power']
+  less_type?: CoursesRecordListParams['less_type']
+  range_type?: GetListenAndTeachStatisticsParams['range_type']
+
+  /**科目ID */
+  subject_id?: string
+  /**学段ID */
+  period_id?: string
+  /**
+   * 统计学期的起始年份
+   * 当range_type取值为first_semester或者second_semester时，需要这个参数，其余情况不需要，目前取固定值2017,以后根据实际提交
+   **/
+  start_year?: string
+}
+export interface GetFullCourseStatisticsResult {
+  listenNum: number
+  listenSelfNum: number
+  statisticsFrequency: {
+    campus_id: string
+    campus_name: string
+    subject_info: {
+      subject_id: string
+      subject_name: string
+      course_info: {
+        teaching_num: string
+        listen_num: string
+      }
+    }[]
+  }[]
+}

@@ -78,7 +78,15 @@ export default function useCountStatistics() {
       dataset: {
         source: barDataSource,
       },
-      xAxis: { type: 'category' },
+      xAxis: {
+        type: 'category',
+        axisTick: {
+          alignWithLabel: true,
+        },
+        axisLabel: {
+          interval: 0,
+        },
+      },
       yAxis: {
         name: '次数',
         nameTextStyle: {
@@ -98,19 +106,25 @@ export default function useCountStatistics() {
           brushSelect: false,
           bottom: 22,
         },
-        // {
-        //   show: true,
-        //   yAxisIndex: 0,
-        //   filterMode: 'empty',
-        //   width: 30,
-        //   height: '80%',
-        //   showDataShadow: false,
-        //   left: '93%'
-        // }
       ],
       // Declare several bar series, each will be mapped
       // to a column of dataset.source by default.
-      series: [{ type: 'bar' }, { type: 'bar' }],
+      series: [
+        {
+          type: 'bar',
+          label: {
+            show: true,
+            position: 'inside',
+          },
+        },
+        {
+          type: 'bar',
+          label: {
+            show: true,
+            position: 'inside',
+          },
+        },
+      ],
     }
   }
 

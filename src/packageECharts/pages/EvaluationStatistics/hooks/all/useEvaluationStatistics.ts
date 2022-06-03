@@ -1,6 +1,7 @@
-import { getEvaluationStatistics } from '@/api/course'
+import { getEvaluationStatistics, getSubjectGroups } from '@/api/course'
 import type { GetListenAndTeachStatisticsParams } from '@/api/model/courseModel'
 import type { ChartBarCustomItem } from '@/components/ChartBarCustom'
+import OncePromise from '@/utils/once/once-promise'
 import { ref } from 'vue'
 
 export default function useEvaluationStatistics(userId) {
@@ -26,9 +27,19 @@ export default function useEvaluationStatistics(userId) {
     })
   }
 
+  const onceGetSubjectGroupList = new OncePromise(() => {
+    return getSubjectGroups()
+  })
+
+  async function updateEvaluation(rangeType: GetListenAndTeachStatisticsParams['range_type']) {
+    const subjectGroupList = await onceGetSubjectGroupList.execute()
+    console.log('🚀 -- updateEvaluation -- subjectGroupList', subjectGroupList)
+  }
+
   return {
     empty,
     chartBarData,
     update,
+    updateEvaluation,
   }
 }

@@ -2,16 +2,18 @@
 import CardPlus from '@/components/CardPlus.vue'
 import EChart from '@/packageECharts/components/EChart.vue'
 import ChartBarCustom from '@/components/ChartBarCustom.vue'
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { getStorage } from '@/utils/storage'
 import { Empty } from '@nutui/nutui-taro'
 import type { GetListenAndTeachStatisticsParams } from '@/api/model/courseModel'
 import useToastInject from '@/hooks/useToastInject'
-import useCountStatistics from './hooks/all/useCountStatistics'
+
 import useEvaluationStatistics from './hooks/all/useEvaluationStatistics'
 import { RadioGroup as NutRadiogroup, Radio as NutRadio } from '@nutui/nutui-taro'
-import { userSubjectGroups } from '@/api/user'
+
 import SearchBarSelect2 from '@/components/SearchBarSelect2.vue'
+import useCountPieChart from './hooks/all/useCountPieChart'
+import useSubjectGroupBar from './hooks/all/useSubjectGroupBar'
 const { toastLoading, toastClose } = useToastInject()
 
 const rangeType = ref<GetListenAndTeachStatisticsParams['range_type']>('this_semester')
@@ -19,43 +21,27 @@ const userId = getStorage('userId')
 
 const groupId = ref('')
 
-const {
-  empty: countEmpty,
-  update: countUpdate,
-  chartOptions: countChartOptions,
-} = useCountStatistics(groupId)
-
-const {
-  empty: chartBarEmpty,
-  chartBarData,
-  update: updateChartBar,
-} = useEvaluationStatistics(userId)
-
-watch(groupId, reload)
-
-function reload() {
-  if (groupId.value) {
-    toastLoading()
-    Promise.all([countUpdate(rangeType.value), updateChartBar(rangeType.value)]).finally(() => {
-      toastClose()
-    })
-  }
-}
+const { empty: chartBarEmpty, chartBarData, updateEvaluation } = useEvaluationStatistics(userId)
 
 const subjectGroups = ref<{ id: string; name: string }[]>([])
-userSubjectGroups().then((res) => {
-  const groups = (subjectGroups.value = res.subject_groups.map((group) => {
-    return {
-      id: group.subject_group_id,
-      name: group.subject_group_name,
-    }
-  }))
-  if (groups[0]) {
-    groupId.value = groups[0].id
 
-    reload()
-  }
-})
+const { countPieState, updateCountPie } = useCountPieChart()
+
+const { subjectGroupBar, updateSubjectGroupBar } = useSubjectGroupBar()
+
+function reload() {
+  toastLoading()
+  let rangeTypeValue = rangeType.value
+  Promise.all([
+    updateCountPie(rangeTypeValue),
+    updateSubjectGroupBar(rangeTypeValue),
+    updateEvaluation(rangeTypeValue),
+  ]).finally(() => {
+    toastClose()
+  })
+}
+
+reload()
 </script>
 <template>
   <div class="EvaluationStatistics">
@@ -65,8 +51,6 @@ userSubjectGroups().then((res) => {
       <nut-tabpane pane-key="this_week" title="本周"></nut-tabpane>
     </nut-tabs>
 
-    <SearchBarSelect2 :isExpanded="false"></SearchBarSelect2>
-
     <!-- <div style="padding: 10px"> -->
     <nut-radiogroup v-model="groupId" direction="horizontal">
       <nut-radio v-for="group of subjectGroups" :key="group.id" shape="button" :label="group.id">{{
@@ -75,12 +59,31 @@ userSubjectGroups().then((res) => {
     </nut-radiogroup>
     <!-- </div> -->
 
-    <CardPlus title2="听授课次数统计：">
-      <Empty v-if="countEmpty"></Empty>
-      <EChart v-else ref="vEChart" :option="countChartOptions"> </EChart>
+    <CardPlus title2="全校听授课次数统计：">
+      <Empty v-if="countPieState.empty"></Empty>
+      <EChart v-else ref="vEChart" :option="countPieState.chartOptions"> </EChart>
+    </CardPlus>
+
+    <CardPlus title2="各科组听授课次数统计：">
+      <Empty v-if="subjectGroupBar.empty"></Empty>
+      <EChart v-else class="charBar" :option="subjectGroupBar.chartOptions"> </EChart>
     </CardPlus>
 
     <CardPlus title2="授课评价统计：">
+      <!-- 已规划设计 -->
+      <!-- <GroupSelectAndUserSearch
+        v-model:groupId="evaluationState.groupId"
+        v-model:searchKeyword="evaluationState.searchKeyword"
+        :groupList="evaluationState.list"
+        @groupChange="evaluationGroupChange"
+        @search="evaluationTearchSearch"
+      ></GroupSelectAndUserSearch> -->
+      <!-- <SearchBarSelect2 
+          v-model:isExpanded="searchOption.visible"
+      v-model="searchOption.keyword"
+      :selectedName="searchOption.selectedName"
+      @search="searchOption.search"
+      :isExpanded="false"></SearchBarSelect2> -->
       <div class="safe-padding-bottom">
         <div class="teaching">
           <!-- <div class="personnel-list">

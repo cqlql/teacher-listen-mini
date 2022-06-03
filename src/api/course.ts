@@ -15,6 +15,8 @@ import type {
   GetAttachListResult,
   GetEvaluationListParams,
   GetEvaluationListResult,
+  GetFullCourseStatisticsParams,
+  GetFullCourseStatisticsResult,
   GetListenAndTeachStatisticsParams,
   GetListenAndTeachStatisticsResult,
   GetSubjectGroupsMembersResult,
@@ -229,12 +231,45 @@ export function getListenAndTeachStatistics(
   })
 }
 
+interface GetSubjectGroupsResult {
+  count: number
+  data: {
+    id: string
+    name: string
+    school_id: string
+    campus_id: string
+    is_deleted: string
+    createdby: string
+    createdbyname: string
+    createdon: string
+    displayorder: string
+    // group_members: string[]
+  }[]
+}
+
+/**科组列表 */
+export function getSubjectGroups(): Promise<GetSubjectGroupsResult> {
+  return httpV1.get({
+    url: '/lecture/v3/queryEvaluationGroup',
+  })
+}
+
 /**科组用户列表 */
 export function getSubjectGroupsMembers(data: {
   group_id: string
 }): Promise<GetSubjectGroupsMembersResult> {
   return httpV1.get({
     url: '/lecture/v3/queryEvaluationGroupMember',
+    data,
+  })
+}
+
+/**课程统计 */
+export function getFullCourseStatistics(
+  data: GetFullCourseStatisticsParams,
+): Promise<GetFullCourseStatisticsResult> {
+  return httpV1.get({
+    url: '/lecture/v1/statisticsv1',
     data,
   })
 }

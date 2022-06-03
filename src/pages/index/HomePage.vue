@@ -39,7 +39,7 @@ if (process.env.NODE_ENV !== 'production') {
   // url = '/pages/ListenApplicationRecord/ListenApplicationRecord'
 
   url = '/packageECharts/pages/EvaluationStatistics/MyEvaluationStatistics'
-  url = '/packageECharts/pages/EvaluationStatistics/DepartmentEvaluationStatistics'
+  url = '/packageECharts/pages/EvaluationStatistics/AllEvaluationStatistics'
 
   // tabUrl = '/pages/ToListenClass/ToListenClass'
 
