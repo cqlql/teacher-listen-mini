@@ -566,3 +566,16 @@ export interface GetListenAndTeachStatisticsResult {
     user_name: string
   }[]
 }
+
+export interface GetSubjectGroupsMembersResult {
+  count: number
+  data: {
+    classid: string
+    id: string
+    isleader: string
+    mainid: string
+    name: string
+    sno: string
+    userid: string
+  }[]
+}

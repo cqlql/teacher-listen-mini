@@ -17,6 +17,7 @@ import type {
   GetEvaluationListResult,
   GetListenAndTeachStatisticsParams,
   GetListenAndTeachStatisticsResult,
+  GetSubjectGroupsMembersResult,
   GetUserCourseParams,
   LessonCountResult,
   LessonRecordReqData,
@@ -229,8 +230,9 @@ export function getListenAndTeachStatistics(
 }
 
 /**科组用户列表 */
-
-export function getUserListDepartment(data: { group_id: string }) {
+export function getSubjectGroupsMembers(data: {
+  group_id: string
+}): Promise<GetSubjectGroupsMembersResult> {
   return httpV1.get({
     url: '/lecture/v3/queryEvaluationGroupMember',
     data,

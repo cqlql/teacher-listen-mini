@@ -93,8 +93,10 @@ export default function useCountStatistics() {
           show: true,
           start: 0,
           end: (showNumber / totalNumber) * 100,
+          height: 25,
           zoomLock: true, //
           brushSelect: false,
+          bottom: 22,
         },
         // {
         //   show: true,
