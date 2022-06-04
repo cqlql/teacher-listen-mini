@@ -5,6 +5,7 @@ import TabsText from '@/components/Tabs/TabsText.vue'
 import ToastProvider from '@/components/ToastProvider/ToastProvider.vue'
 // import type { SearchOptions } from './types'
 import useRouterParams from '@/hooks/useRouterParams'
+import { getListenAndTeachStatistics } from '@/api/course'
 
 interface ParamsType {
   dateStart: string
@@ -36,6 +37,18 @@ const tabList = ref([
     value: '共(-)节',
   },
 ])
+
+getListenAndTeachStatistics({
+  user_id: routeQuery.userId,
+  date_start: routeQuery.dateStart,
+  date_end: routeQuery.dateEnd,
+}).then((res) => {
+  let user = res.course_frequence_list[0]
+  if (user) {
+    tabList.value[0].value = `共(${user.listen_num})节`
+    tabList.value[1].value = `共(${user.teaching_num})节`
+  }
+})
 </script>
 
 <template>

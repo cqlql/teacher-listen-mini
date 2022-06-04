@@ -8,23 +8,17 @@ export interface EvaluationDataItem {
   className: string
 }
 
+interface SearchItem {
+  dateStart: string
+  dateEnd: string
+  keyword: string
+  selectedName: string
+  defaultIndex: number
+  visible: boolean
+  search: () => void
+}
+
 export interface SearchOptions {
-  listen: {
-    dateStart: string
-    dateEnd: string
-    keyword: string
-    selectedName: string
-    defaultIndex: number
-    visible: boolean
-    search: () => void
-  }
-  teaching: {
-    dateStart: string
-    dateEnd: string
-    keyword: string
-    selectedName: string
-    defaultIndex: number
-    visible: boolean
-    search: () => void
-  }
+  listen: SearchItem
+  teaching: SearchItem
 }

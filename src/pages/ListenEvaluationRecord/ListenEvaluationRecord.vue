@@ -5,6 +5,8 @@ import TabsText from '@/components/Tabs/TabsText.vue'
 import ToastProvider from '@/components/ToastProvider/ToastProvider.vue'
 import SemesterRangePicker from './comp/SemesterRangePicker.vue'
 import type { SearchOptions } from './types'
+import { getStorage } from '@/utils/storage'
+import { getListenAndTeachStatistics } from '@/api/course'
 
 const searchOptions = ref<SearchOptions>({
   listen: {
@@ -39,6 +41,16 @@ const tabList = ref([
     value: '共(-)节',
   },
 ])
+
+getListenAndTeachStatistics({
+  user_id: getStorage('userId'),
+}).then((res) => {
+  let user = res.course_frequence_list[0]
+  if (user) {
+    tabList.value[0].value = `共(${user.listen_num})节`
+    tabList.value[1].value = `共(${user.teaching_num})节`
+  }
+})
 </script>
 
 <template>
