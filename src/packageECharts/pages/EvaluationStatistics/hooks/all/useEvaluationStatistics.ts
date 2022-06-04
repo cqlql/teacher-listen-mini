@@ -9,6 +9,7 @@ import type {
 } from '@/api/model/courseModel'
 import type { ChartBarCustomItem } from '@/components/ChartBarCustom'
 import OncePromise from '@/utils/once/once-promise'
+import testKeyword from '@/utils/search/test-keyword'
 import type { Ref } from 'vue'
 import { reactive, ref } from 'vue'
 
@@ -22,8 +23,10 @@ export default function useEvaluationStatistics(
   const subjectGroups = ref<{ text: string; value: string }[]>([])
   const evaluationState = reactive({
     groupId: '',
+    keyword: '',
   })
   const subjectGroupMembers = ref<IdName[]>([])
+  const subjectGroupMembersSearchResults = ref<IdName[]>([])
   const subjectGroupMemberId = ref('')
 
   function updateEvaluationStatistics() {
@@ -63,12 +66,13 @@ export default function useEvaluationStatistics(
       const userList: IdName[] = []
       result.data.forEach((item) => {
         userList.push({
-          id: item.id,
+          id: item.userid,
           name: item.name,
         })
       })
       subjectGroupMembers.value = userList
-      subjectGroupMemberId.value = userList[0]?.id
+      updateMembersByKeyword()
+      subjectGroupMemberId.value = subjectGroupMembersSearchResults.value[0]?.id
     })
   })
 
@@ -76,6 +80,15 @@ export default function useEvaluationStatistics(
     await onceGetSubjectGroupList.execute()
     await onceGetSubjectGroupMembers.execute()
     return updateEvaluationStatistics()
+  }
+
+  function updateMembersByKeyword() {
+    const keyword = evaluationState.keyword
+    subjectGroupMembersSearchResults.value = subjectGroupMembers.value.filter(
+      (member) => {
+        return testKeyword(keyword, member.name)
+      },
+    )
   }
 
   return {
@@ -88,10 +101,16 @@ export default function useEvaluationStatistics(
     subjectGroupMemberId,
 
     evaluationState,
-    evaluationGroupConfirm() {},
-    evaluationTearchSearch() {},
+    evaluationGroupConfirm() {
+      onceGetSubjectGroupMembers.clear()
+      onceGetSubjectGroupMembers.execute()
+    },
+    evaluationTearchSearch() {
+      updateMembersByKeyword()
+    },
     subjectGroupMemberChange() {
       updateEvaluation()
     },
+    subjectGroupMembersSearchResults,
   }
 }

@@ -3,7 +3,7 @@
 // }
 
 import Debounce from '../perf/debounce'
-import createSearchRegExp from './create-search-regExp'
+import createSearchRegExp from './create-search-regexp'
 import showKeyWrod from './show-key-word'
 
 export default class Search {

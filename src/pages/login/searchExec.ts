@@ -1,5 +1,5 @@
 import Debounce from '@/utils/perf/debounce'
-import createSearchRegExp from '@/utils/search/create-search-regExp'
+import createSearchRegExp from '@/utils/search/create-search-regexp'
 // import showKeyWrod from '@/utils/search/show-key-word';
 
 export default class SearchCustom {

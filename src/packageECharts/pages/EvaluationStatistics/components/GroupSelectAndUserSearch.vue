@@ -1,9 +1,8 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue'
 import SearchBarSelect2 from '@/components/SearchBarSelect2.vue'
-import { Popup as NutPopup, Picker as NutPicker } from '@nutui/nutui-taro'
+import { Picker as NutPicker } from '@nutui/nutui-taro'
 const visible = ref(false)
-const keyword = ref('')
 const selectedValue = ref('')
 const selectedName = ref('')
 
@@ -19,12 +18,16 @@ const selectedName = ref('')
 
 const props = defineProps<{
   modelValue: string
+  keyword: string
+  placeholder: string
   columns: { text: string; value: string }[]
 }>()
 
 const emits = defineEmits<{
   (e: 'update:modelValue', v: string): void
+  (e: 'update:keyword', v: string): void
   (e: 'confirm', data: any): void
+  (e: 'search', keyword: string): void
 }>()
 
 watch(
@@ -42,26 +45,28 @@ watch(
   },
 )
 
-function search() {}
-function change(v) {
-  console.log(v)
-}
-function confirm({ selectedValue: value, selectedOptions }) {
-  selectedValue.value = value
+function change() {}
+function confirm({ selectedValue: values, selectedOptions }) {
+  let v = (selectedValue.value = values[0])
   let selectedOption = selectedOptions[0]
   selectedName.value = selectedOption.text
-  emits('update:modelValue', value)
+  emits('update:modelValue', v)
   emits('confirm', { selectedValue, selectedOption })
-  console.log('🚀 -- confirm -- selectedOptions', selectedOptions)
 }
 </script>
 <template>
   <div>
     <SearchBarSelect2
       v-model:isExpanded="visible"
-      v-model="keyword"
+      :modelValue="keyword"
       :selectedName="selectedName"
-      @search="search"
+      :placeholder="placeholder"
+      @search="
+        (v) => {
+          $emit('search', v as unknown as string)
+        }
+      "
+      @update:model-value="(v) => $emit('update:keyword', v)"
     ></SearchBarSelect2>
     <nut-picker
       :modelValue="[modelValue]"

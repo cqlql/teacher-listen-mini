@@ -45,4 +45,10 @@ export default class OncePromise {
 
     return setPromise()
   }
+
+  clear() {
+    this.cache = null
+    this.success = false
+    this.loading = false
+  }
 }
