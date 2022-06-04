@@ -14,6 +14,7 @@ export interface SearchOptions {
     dateEnd: string
     keyword: string
     selectedName: string
+    defaultIndex: number
     visible: boolean
     search: () => void
   }
@@ -22,6 +23,7 @@ export interface SearchOptions {
     dateEnd: string
     keyword: string
     selectedName: string
+    defaultIndex: number
     visible: boolean
     search: () => void
   }

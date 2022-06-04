@@ -6,9 +6,15 @@ import { ref, watch } from 'vue'
 import SelectValue from '@/components/Select/SelectValue.vue'
 
 import useSemesterDate from '../useSemesterDate'
-const props = defineProps<{
-  visible: boolean
-}>()
+const props = withDefaults(
+  defineProps<{
+    visible: boolean
+    defaultIndex: number
+  }>(),
+  {
+    defaultIndex: -1,
+  },
+)
 
 const emit = defineEmits<{
   (e: 'update:start', v: string)
@@ -20,8 +26,8 @@ const emit = defineEmits<{
 
 const startDate = ref('')
 const endDate = ref('')
-const selectedIndex = ref(-1)
-const currentSelectedIndex = ref(-1)
+const selectedIndex = ref(props.defaultIndex)
+const currentSelectedIndex = ref(props.defaultIndex)
 let isCustom = false
 
 const { list } = useSemesterDate()
@@ -46,6 +52,17 @@ watch(currentSelectedIndex, () => {
   isCustom = false
 })
 
+function updateSelect(index: number) {
+  selectedIndex.value = index
+  let item = list[index]
+
+  if (item) {
+    emit('update:start', item.start)
+    emit('update:end', item.end)
+    emit('update:label', item.label)
+  }
+}
+
 function select(index: number) {
   currentSelectedIndex.value = index
 }
@@ -56,19 +73,15 @@ function ok() {
     emit('update:end', endDate.value)
     emit('update:label', '自定义')
   } else {
-    let index = currentSelectedIndex.value
-    selectedIndex.value = index
-    let item = list[index]
-
-    if (item) {
-      emit('update:start', item.start)
-      emit('update:end', item.end)
-      emit('update:label', item.label)
-    }
+    updateSelect(currentSelectedIndex.value)
   }
 
   emit('ok')
   emit('update:visible', false)
+}
+
+if (props.defaultIndex > -1) {
+  updateSelect(props.defaultIndex)
 }
 </script>
 <template>

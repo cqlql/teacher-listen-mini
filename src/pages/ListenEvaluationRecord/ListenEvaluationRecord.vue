@@ -12,6 +12,7 @@ const searchOptions = ref<SearchOptions>({
     dateEnd: '',
     keyword: '',
     selectedName: '请选择',
+    defaultIndex: 0,
     visible: false,
     search: () => {},
   },
@@ -20,6 +21,7 @@ const searchOptions = ref<SearchOptions>({
     dateEnd: '',
     keyword: '',
     selectedName: '请选择',
+    defaultIndex: 0,
     visible: false,
     search: () => {},
   },
@@ -56,6 +58,7 @@ const tabList = ref([
       v-model:end="searchOptions.listen.dateEnd"
       v-model:label="searchOptions.listen.selectedName"
       v-model:visible="searchOptions.listen.visible"
+      v-model:defaultIndex="searchOptions.listen.defaultIndex"
       @ok="searchOptions.listen.search"
     ></SemesterRangePicker>
     <SemesterRangePicker
@@ -63,6 +66,7 @@ const tabList = ref([
       v-model:end="searchOptions.teaching.dateEnd"
       v-model:label="searchOptions.teaching.selectedName"
       v-model:visible="searchOptions.teaching.visible"
+      v-model:defaultIndex="searchOptions.listen.defaultIndex"
       @ok="searchOptions.teaching.search"
     ></SemesterRangePicker>
   </ToastProvider>

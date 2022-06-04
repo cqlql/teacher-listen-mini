@@ -10,7 +10,7 @@ const props = defineProps<{
   modelValue: string
   isExpanded: boolean
   selectedName: string
-  placeholder: string
+  placeholder?: string
 }>()
 
 const emit = defineEmits<{
