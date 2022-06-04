@@ -19,6 +19,11 @@ tagline: false
 
 once-promise 泛型
 
+## 问题速记
+
+- api 问题
+  - /lecture/v1/statisticsv1 [全校 - 科组统计次数] 空数据，明明是有数据的
+
 ## 导航
 
 <HomeView></HomeView>
