@@ -32,6 +32,7 @@ export default function useLogin(
       )
       setStorage('token', result.token)
       setStorage('userId', result.uid)
+      setStorage('role', result.role)
       Taro.switchTab({
         url: '/pages/index/HomePage',
       })

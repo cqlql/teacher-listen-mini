@@ -5,7 +5,7 @@ import Taro from '@tarojs/taro'
  *
  * userId 登录用户ID
  * */
-type keyName = 'openid' | 'token' | 'userId' | 'pageTemp'
+type keyName = 'openid' | 'token' | 'userId' | 'pageTemp' | 'role'
 
 /**
  *

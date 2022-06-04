@@ -38,10 +38,12 @@ if (process.env.NODE_ENV !== 'production') {
   // 开课记录列表
   // url = '/pages/ListenApplicationRecord/ListenApplicationRecord'
 
-  url = '/packageECharts/pages/EvaluationStatistics/MyEvaluationStatistics'
-  url = '/packageECharts/pages/EvaluationStatistics/AllEvaluationStatistics'
+  // url = '/packageECharts/pages/EvaluationStatistics/MyEvaluationStatistics'
+  // url = '/packageECharts/pages/EvaluationStatistics/AllEvaluationStatistics'
+  url = '/pages/ListenEvaluationList/ListenEvaluationList'
 
   // tabUrl = '/pages/ToListenClass/ToListenClass'
+  // tabUrl = '/pages/profile/index'
 
   if (url) {
     Taro.navigateTo({ url })
