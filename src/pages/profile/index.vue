@@ -42,6 +42,11 @@
         is-link
         @click="to('/packageECharts/pages/EvaluationStatistics/EvaluationStatistics')"
       ></nut-cell>
+      <nut-cell
+        title="全校评课统计"
+        is-link
+        @click="to('/packageECharts/pages/EvaluationStatistics/AllEvaluationStatistics')"
+      ></nut-cell>
     </nut-cell-group>
 
     <nut-cell-group>

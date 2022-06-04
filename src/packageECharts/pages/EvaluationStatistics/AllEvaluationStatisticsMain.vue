@@ -11,9 +11,10 @@ import useToastInject from '@/hooks/useToastInject'
 import useEvaluationStatistics from './hooks/all/useEvaluationStatistics'
 import { RadioGroup as NutRadiogroup, Radio as NutRadio } from '@nutui/nutui-taro'
 
-import SearchBarSelect2 from '@/components/SearchBarSelect2.vue'
+// import SearchBarSelect2 from '@/components/SearchBarSelect2.vue'
 import useCountPieChart from './hooks/all/useCountPieChart'
 import useSubjectGroupBar from './hooks/all/useSubjectGroupBar'
+import GroupSelectAndUserSearch from './components/GroupSelectAndUserSearch.vue'
 const { toastLoading, toastClose } = useToastInject()
 
 const rangeType = ref<GetListenAndTeachStatisticsParams['range_type']>('this_semester')
@@ -21,9 +22,14 @@ const userId = getStorage('userId')
 
 const groupId = ref('')
 
-const { empty: chartBarEmpty, chartBarData, updateEvaluation } = useEvaluationStatistics(userId)
+const {
+  empty: chartBarEmpty,
+  chartBarData,
+  updateEvaluation,
+  subjectGroups,
+} = useEvaluationStatistics(userId)
 
-const subjectGroups = ref<{ id: string; name: string }[]>([])
+// const subjectGroups = ref<{ id: string; name: string }[]>([])
 
 const { countPieState, updateCountPie } = useCountPieChart()
 
@@ -52,11 +58,11 @@ reload()
     </nut-tabs>
 
     <!-- <div style="padding: 10px"> -->
-    <nut-radiogroup v-model="groupId" direction="horizontal">
+    <!-- <nut-radiogroup v-model="groupId" direction="horizontal">
       <nut-radio v-for="group of subjectGroups" :key="group.id" shape="button" :label="group.id">{{
         group.name
       }}</nut-radio>
-    </nut-radiogroup>
+    </nut-radiogroup> -->
     <!-- </div> -->
 
     <CardPlus title2="全校听授课次数统计：">
@@ -71,6 +77,7 @@ reload()
 
     <CardPlus title2="授课评价统计：">
       <!-- 已规划设计 -->
+      <GroupSelectAndUserSearch :columns="subjectGroups"></GroupSelectAndUserSearch>
       <!-- <GroupSelectAndUserSearch
         v-model:groupId="evaluationState.groupId"
         v-model:searchKeyword="evaluationState.searchKeyword"

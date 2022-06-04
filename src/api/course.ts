@@ -20,6 +20,7 @@ import type {
   GetListenAndTeachStatisticsParams,
   GetListenAndTeachStatisticsResult,
   GetSubjectGroupsMembersResult,
+  GetSubjectGroupsResult,
   GetUserCourseParams,
   LessonCountResult,
   LessonRecordReqData,
@@ -229,22 +230,6 @@ export function getListenAndTeachStatistics(
     url: '/lecture/v1/statsCoursesFrequenceOfACampus',
     data,
   })
-}
-
-interface GetSubjectGroupsResult {
-  count: number
-  data: {
-    id: string
-    name: string
-    school_id: string
-    campus_id: string
-    is_deleted: string
-    createdby: string
-    createdbyname: string
-    createdon: string
-    displayorder: string
-    // group_members: string[]
-  }[]
 }
 
 /**科组列表 */
