@@ -11,6 +11,8 @@ tagline: false
 
 授课记录 -> 查看详情 -> 听课老师名单页
 
+推门听课过滤
+
 科组统计 -> 科组人员听授课次数统计（按成员统计次数）相关接口：[/lecture/v3/queryEvaluationGroupMember](https://doc.shenduedu.com/#/%E5%B0%8F%CF%80%E6%99%BA%E5%90%AC/%E7%A7%91%E7%BB%84/%E6%A0%B9%E6%8D%AE%E7%A7%91%E7%BB%84%E6%9F%A5%E8%AF%A2%E6%88%90%E5%91%98%E4%BF%A1%E6%81%AF)
 
 钉钉评课记录 https://app.shenduedu.com/lecture/v1/courses_with_recording_resource
