@@ -21,6 +21,7 @@ const vListLoad = ref<{
 const props = defineProps<{
   type: 'listen' | 'teaching'
   active: boolean
+  noSearch?: boolean
 }>()
 
 const searchOption = computed(() => {
@@ -58,12 +59,14 @@ function resolveCoursesList(resultItem: CoursesRecordListResultItem) {
 
 async function reqList({ page }) {
   let searchOptionValue = searchOption.value
+
   return coursesRecordList({
     list_mun: 10,
     page: page * 10,
     course_type: props.type === 'listen' ? '1' : '0',
     role_type: '0',
     power: '0',
+    user_id: searchOptionValue.userId,
     search_name: searchOptionValue.keyword,
     start_date: searchOptionValue.dateStart,
     end_date: searchOptionValue.dateEnd,
@@ -95,6 +98,7 @@ function to(item: EvaluationDataItem) {
 <template>
   <div class="EvaluationRecordList">
     <SearchBarSelect2
+      v-if="!noSearch"
       v-model:isExpanded="searchOption.visible"
       v-model="searchOption.keyword"
       :selectedName="searchOption.selectedName"

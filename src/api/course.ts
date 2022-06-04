@@ -34,6 +34,13 @@ import type {
 
 /** 获取听课、授课记录 */
 export function coursesRecordList(data: CoursesRecordListParams): Promise<CoursesRecordListResult> {
+  if (!data.user_id) {
+    delete data.user_id
+  }
+  if (!data.search_name) {
+    delete data.search_name
+  }
+
   return httpV1.get({
     url: '/lecture/v1/coursesrecordlist',
     data,

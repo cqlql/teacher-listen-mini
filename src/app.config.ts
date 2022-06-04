@@ -9,6 +9,7 @@ export default {
       'pages/ToListenClass/ToListenClass',
       // 听评课记录（听课、授课）
       'pages/ListenEvaluationRecord/ListenEvaluationRecord',
+      'pages/ListenEvaluationRecord/ListenEvaluationRecordNoSearch',
       // 开课记录 开课审批
       'pages/ListenApplicationRecord/ListenApplicationRecord',
       // 创建听课

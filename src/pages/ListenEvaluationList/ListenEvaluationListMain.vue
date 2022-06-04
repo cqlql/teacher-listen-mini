@@ -5,7 +5,7 @@ import SemesterRangePicker from '../ListenEvaluationRecord/comp/SemesterRangePic
 import SearchBarSelect2 from '@/components/SearchBarSelect2.vue'
 import { getListenAndTeachStatistics } from '@/api/course'
 import type { GetListenAndTeachStatisticsResult } from '@/api/model/courseModel'
-
+import Taro from '@tarojs/taro'
 const vListLoad = ref<{
   firstPageLoad: () => void
 }>()
@@ -30,8 +30,17 @@ async function reqList({ page }) {
     keyword: searchOption.keyword,
     offset: page * pageSize,
     list_mun: pageSize,
-  }).then((res: GetListenAndTeachStatisticsResult) => {
+  }).then((res) => {
     return res.course_frequence_list
+  })
+}
+
+function toListenEvaluationRecord(
+  item: GetListenAndTeachStatisticsResult['course_frequence_list'][0],
+) {
+  let params = `?dateStart=${searchOption.dateStart}&dateEnd=${searchOption.dateEnd}&userId=${item.user_id}`
+  Taro.navigateTo({
+    url: '/pages/ListenEvaluationRecord/ListenEvaluationRecordNoSearch' + params,
   })
 }
 </script>
@@ -58,7 +67,12 @@ async function reqList({ page }) {
         <template
           #default="{ list }: { list: GetListenAndTeachStatisticsResult['course_frequence_list'] }"
         >
-          <div class="item" v-for="item of list" :key="item.user_id">
+          <div
+            class="item"
+            v-for="item of list"
+            :key="item.user_id"
+            @click="toListenEvaluationRecord(item)"
+          >
             <div class="avatar-icon">
               <nut-icon font-class-name="iconfont" class-prefix="icon" name="user-full"></nut-icon>
             </div>
