@@ -1,22 +1,35 @@
-import { getEvaluationStatistics, getSubjectGroups } from '@/api/course'
+import {
+  getEvaluationStatistics,
+  getSubjectGroups,
+  getSubjectGroupsMembers,
+} from '@/api/course'
 import type {
   GetListenAndTeachStatisticsParams,
   GetSubjectGroupsResult,
 } from '@/api/model/courseModel'
 import type { ChartBarCustomItem } from '@/components/ChartBarCustom'
 import OncePromise from '@/utils/once/once-promise'
-import { ref } from 'vue'
+import type { Ref } from 'vue'
+import { reactive, ref } from 'vue'
 
-export default function useEvaluationStatistics(userId) {
+type IdName = { id: string; name: string }
+
+export default function useEvaluationStatistics(
+  rangeType: Ref<GetListenAndTeachStatisticsParams['range_type']>,
+) {
   const empty = ref(false)
   const chartBarData = ref<ChartBarCustomItem[]>([])
-
   const subjectGroups = ref<{ text: string; value: string }[]>([])
+  const evaluationState = reactive({
+    groupId: '',
+  })
+  const subjectGroupMembers = ref<IdName[]>([])
+  const subjectGroupMemberId = ref('')
 
-  function update(rangeType: GetListenAndTeachStatisticsParams['range_type']) {
+  function updateEvaluationStatistics() {
     return getEvaluationStatistics({
-      user_id: userId,
-      range_type: rangeType,
+      user_id: subjectGroupMemberId.value,
+      range_type: rangeType.value,
     }).then((res) => {
       const list: ChartBarCustomItem[] = []
       res.evaluation_count.forEach((item) => {
@@ -33,25 +46,52 @@ export default function useEvaluationStatistics(userId) {
   }
 
   const onceGetSubjectGroupList = new OncePromise(() => {
-    return getSubjectGroups()
-  })
-
-  async function updateEvaluation(_rangeType: GetListenAndTeachStatisticsParams['range_type']) {
-    await onceGetSubjectGroupList.execute().then(({ data }: GetSubjectGroupsResult) => {
-      subjectGroups.value = data.map((item) => {
+    return getSubjectGroups().then(({ data }: GetSubjectGroupsResult) => {
+      const list = (subjectGroups.value = data.map((item) => {
         return {
           text: item.name,
           value: item.id,
         }
-      })
+      }))
+      evaluationState.groupId = list[0]?.value
     })
+  })
+  const onceGetSubjectGroupMembers = new OncePromise(() => {
+    return getSubjectGroupsMembers({
+      group_id: evaluationState.groupId,
+    }).then((result) => {
+      const userList: IdName[] = []
+      result.data.forEach((item) => {
+        userList.push({
+          id: item.id,
+          name: item.name,
+        })
+      })
+      subjectGroupMembers.value = userList
+      subjectGroupMemberId.value = userList[0]?.id
+    })
+  })
+
+  async function updateEvaluation() {
+    await onceGetSubjectGroupList.execute()
+    await onceGetSubjectGroupMembers.execute()
+    return updateEvaluationStatistics()
   }
 
   return {
     empty,
     chartBarData,
-    update,
+
     updateEvaluation,
     subjectGroups,
+    subjectGroupMembers,
+    subjectGroupMemberId,
+
+    evaluationState,
+    evaluationGroupConfirm() {},
+    evaluationTearchSearch() {},
+    subjectGroupMemberChange() {
+      updateEvaluation()
+    },
   }
 }

@@ -9,7 +9,10 @@ import type { GetListenAndTeachStatisticsParams } from '@/api/model/courseModel'
 import useToastInject from '@/hooks/useToastInject'
 
 import useEvaluationStatistics from './hooks/all/useEvaluationStatistics'
-import { RadioGroup as NutRadiogroup, Radio as NutRadio } from '@nutui/nutui-taro'
+import {
+  RadioGroup as NutRadiogroup,
+  Radio as NutRadio,
+} from '@nutui/nutui-taro'
 
 // import SearchBarSelect2 from '@/components/SearchBarSelect2.vue'
 import useCountPieChart from './hooks/all/useCountPieChart'
@@ -17,17 +20,21 @@ import useSubjectGroupBar from './hooks/all/useSubjectGroupBar'
 import GroupSelectAndUserSearch from './components/GroupSelectAndUserSearch.vue'
 const { toastLoading, toastClose } = useToastInject()
 
-const rangeType = ref<GetListenAndTeachStatisticsParams['range_type']>('this_semester')
-const userId = getStorage('userId')
-
-const groupId = ref('')
+const rangeType =
+  ref<GetListenAndTeachStatisticsParams['range_type']>('this_semester')
 
 const {
   empty: chartBarEmpty,
   chartBarData,
   updateEvaluation,
   subjectGroups,
-} = useEvaluationStatistics(userId)
+  subjectGroupMembers,
+  subjectGroupMemberId,
+  evaluationState,
+  evaluationGroupConfirm,
+  evaluationTearchSearch,
+  subjectGroupMemberChange,
+} = useEvaluationStatistics(rangeType)
 
 // const subjectGroups = ref<{ id: string; name: string }[]>([])
 
@@ -41,7 +48,7 @@ function reload() {
   Promise.all([
     updateCountPie(rangeTypeValue),
     updateSubjectGroupBar(rangeTypeValue),
-    updateEvaluation(rangeTypeValue),
+    updateEvaluation(),
   ]).finally(() => {
     toastClose()
   })
@@ -51,6 +58,8 @@ reload()
 </script>
 <template>
   <div class="EvaluationStatistics">
+    {{ subjectGroupMemberId }}
+    {{ subjectGroupMembers }}
     <nut-tabs class="nut-tabs3 blue" v-model="rangeType" @change="reload">
       <nut-tabpane pane-key="this_semester" title="本学期"></nut-tabpane>
       <nut-tabpane pane-key="this_month" title="本月"></nut-tabpane>
@@ -67,17 +76,24 @@ reload()
 
     <CardPlus title2="全校听授课次数统计：">
       <Empty v-if="countPieState.empty"></Empty>
-      <EChart v-else ref="vEChart" :option="countPieState.chartOptions"> </EChart>
+      <EChart v-else ref="vEChart" :option="countPieState.chartOptions">
+      </EChart>
     </CardPlus>
 
     <CardPlus title2="各科组听授课次数统计：">
       <Empty v-if="subjectGroupBar.empty"></Empty>
-      <EChart v-else class="charBar" :option="subjectGroupBar.chartOptions"> </EChart>
+      <EChart v-else class="charBar" :option="subjectGroupBar.chartOptions">
+      </EChart>
     </CardPlus>
 
     <CardPlus title2="授课评价统计：">
       <!-- 已规划设计 -->
-      <GroupSelectAndUserSearch :columns="subjectGroups"></GroupSelectAndUserSearch>
+      <GroupSelectAndUserSearch
+        v-model="evaluationState.groupId"
+        :columns="subjectGroups"
+        @confirm="evaluationGroupConfirm"
+        @search="evaluationTearchSearch"
+      ></GroupSelectAndUserSearch>
       <!-- <GroupSelectAndUserSearch
         v-model:groupId="evaluationState.groupId"
         v-model:searchKeyword="evaluationState.searchKeyword"
@@ -91,6 +107,19 @@ reload()
       :selectedName="searchOption.selectedName"
       @search="searchOption.search"
       :isExpanded="false"></SearchBarSelect2> -->
+      <nut-radiogroup
+        v-model="subjectGroupMemberId"
+        @change="subjectGroupMemberChange"
+        direction="horizontal"
+      >
+        <nut-radio
+          v-for="group of subjectGroupMembers"
+          :key="group.id"
+          shape="button"
+          :label="group.id"
+          >{{ group.name }}</nut-radio
+        >
+      </nut-radiogroup>
       <div class="safe-padding-bottom">
         <div class="teaching">
           <!-- <div class="personnel-list">
