@@ -1,24 +1,49 @@
 <script lang="ts" setup>
 import ListLoad from '@/components/ListLoad/ListLoad.vue'
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import SemesterRangePicker from '../ListenEvaluationRecord/comp/SemesterRangePicker.vue'
 import SearchBarSelect2 from '@/components/SearchBarSelect2.vue'
+import { getListenAndTeachStatistics } from '@/api/course'
+import type { GetListenAndTeachStatisticsResult } from '@/api/model/courseModel'
+
+const vListLoad = ref<{
+  firstPageLoad: () => void
+}>()
 
 const searchOption = reactive({
   dateStart: '',
   dateEnd: '',
-  selectedName: '',
+  selectedName: '请选择',
+  defaultIndex: 0,
   visible: false,
   keyword: '',
-  search() {},
+  search() {
+    vListLoad.value?.firstPageLoad()
+  },
 })
 
-async function reqList(page) {
-  console.log('🚀 -- reqList -- page', page)
-  return [1]
+async function reqList({ page }) {
+  let pageSize = 10
+  return getListenAndTeachStatistics({
+    date_start: searchOption.dateStart,
+    date_end: searchOption.dateEnd,
+    keyword: searchOption.keyword,
+    offset: page * pageSize,
+    list_mun: pageSize,
+  }).then((res: GetListenAndTeachStatisticsResult) => {
+    return res.course_frequence_list
+  })
 }
 </script>
 <template>
+  <SemesterRangePicker
+    v-model:start="searchOption.dateStart"
+    v-model:end="searchOption.dateEnd"
+    v-model:label="searchOption.selectedName"
+    v-model:visible="searchOption.visible"
+    :defaultIndex="searchOption.defaultIndex"
+    @ok="searchOption.search"
+  ></SemesterRangePicker>
   <div class="ListenEvaluationList">
     <div class="top">
       <SearchBarSelect2
@@ -29,15 +54,18 @@ async function reqList(page) {
       ></SearchBarSelect2>
     </div>
     <div class="list">
-      <ListLoad :reqList="reqList">
-        <template #default>
-          <div class="item" v-for="v of 19" :key="v">
+      <ListLoad ref="vListLoad" :startPage="0" :reqList="reqList">
+        <template
+          #default="{ list }: { list: GetListenAndTeachStatisticsResult['course_frequence_list'] }"
+        >
+          <div class="item" v-for="item of list" :key="item.user_id">
             <div class="avatar-icon">
               <nut-icon font-class-name="iconfont" class-prefix="icon" name="user-full"></nut-icon>
             </div>
-            <div class="name">张三</div>
+            <div class="name">{{ item.user_name }}</div>
             <div class="number"
-              >听课 <span class="blue">15</span> 次/授课 <span class="red">2</span> 次</div
+              >听课 <span class="blue">{{ item.listen_num }}</span> 次/授课
+              <span class="red">{{ item.teaching_num }}</span> 次</div
             >
             <div class="arrow-icon">
               <nut-icon name="right"></nut-icon>
@@ -47,14 +75,6 @@ async function reqList(page) {
       </ListLoad>
     </div>
   </div>
-
-  <SemesterRangePicker
-    v-model:start="searchOption.dateStart"
-    v-model:end="searchOption.dateEnd"
-    v-model:label="searchOption.selectedName"
-    v-model:visible="searchOption.visible"
-    @ok="searchOption.search"
-  ></SemesterRangePicker>
 </template>
 
 <style lang="scss">

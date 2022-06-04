@@ -8,10 +8,7 @@ import type { GetListenAndTeachStatisticsParams } from '@/api/model/courseModel'
 import useToastInject from '@/hooks/useToastInject'
 
 import useEvaluationStatistics from './hooks/all/useEvaluationStatistics'
-import {
-  RadioGroup as NutRadiogroup,
-  Radio as NutRadio,
-} from '@nutui/nutui-taro'
+import { RadioGroup as NutRadiogroup, Radio as NutRadio } from '@nutui/nutui-taro'
 
 // import SearchBarSelect2 from '@/components/SearchBarSelect2.vue'
 import useCountPieChart from './hooks/all/useCountPieChart'
@@ -19,8 +16,7 @@ import useSubjectGroupBar from './hooks/all/useSubjectGroupBar'
 import GroupSelectAndUserSearch from './components/GroupSelectAndUserSearch.vue'
 const { toastLoading, toastClose } = useToastInject()
 
-const rangeType =
-  ref<GetListenAndTeachStatisticsParams['range_type']>('this_semester')
+const rangeType = ref<GetListenAndTeachStatisticsParams['range_type']>('this_semester')
 
 const {
   empty: chartBarEmpty,
@@ -63,14 +59,12 @@ reload()
 
     <CardPlus title2="全校听授课次数统计：">
       <Empty v-if="countPieState.empty"></Empty>
-      <EChart v-else ref="vEChart" :option="countPieState.chartOptions">
-      </EChart>
+      <EChart v-else ref="vEChart" :option="countPieState.chartOptions"> </EChart>
     </CardPlus>
 
     <CardPlus title2="各科组听授课次数统计：">
       <Empty v-if="subjectGroupBar.empty"></Empty>
-      <EChart v-else class="charBar" :option="subjectGroupBar.chartOptions">
-      </EChart>
+      <EChart v-else class="charBar" :option="subjectGroupBar.chartOptions"> </EChart>
     </CardPlus>
 
     <CardPlus title2="授课评价统计：">

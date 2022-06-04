@@ -491,7 +491,7 @@ export interface CoursesRecordListParams {
   end_date?: string
 
   /**目标用户 */
-  user_id: string
+  user_id?: string
 }
 
 export interface CoursesRecordListResultItem {
@@ -546,11 +546,14 @@ export interface AddTempOpenCourseParams {
 
 export interface GetListenAndTeachStatisticsParams {
   /** 时间范围  */
-  range_type: 'this_semester' | 'this_month' | 'this_week' | 'first_semester' | 'second_semester'
-  /** 分页查询起始位置  */
-  offset?: string
+  range_type?: 'this_semester' | 'this_month' | 'this_week' | 'first_semester' | 'second_semester'
+  date_start?: string
+  date_end?: string
+  keyword?: string
+  /** 分页查询起始位置 起始值 0 */
+  offset?: number
   /** 分页查询每页条数  */
-  list_mun?: string
+  list_mun?: number
   /** 指定教师用户ID查询 */
   user_id?: string
   /** 科组ID*/

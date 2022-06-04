@@ -222,7 +222,7 @@ export function getRecordList(data: { course_id: string; user_id: string }): Pro
   })
 }
 
-/**我的听授课次数统计 */
+/**听授课次数统计 */
 export function getListenAndTeachStatistics(
   data: GetListenAndTeachStatisticsParams,
 ): Promise<GetListenAndTeachStatisticsResult> {

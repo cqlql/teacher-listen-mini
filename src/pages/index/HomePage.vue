@@ -37,6 +37,7 @@ if (process.env.NODE_ENV !== 'production') {
   // url = '/pages/CreateOutsideClass/CreateOutsideClass'
   // 开课记录列表
   // url = '/pages/ListenApplicationRecord/ListenApplicationRecord'
+  // tabUrl = '/pages/ListenEvaluationRecord/ListenEvaluationRecord'
 
   // url = '/packageECharts/pages/EvaluationStatistics/MyEvaluationStatistics'
   // url = '/packageECharts/pages/EvaluationStatistics/AllEvaluationStatistics'
