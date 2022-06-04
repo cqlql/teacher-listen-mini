@@ -17,6 +17,8 @@ tagline: false
 
 [当前用户的角色类型 /lecture/v1/role](https://doc.shenduedu.com/#/%E5%B0%8F%CF%80%E6%99%BA%E5%90%AC/%E6%9F%A5%E8%AF%A2%E5%BD%93%E5%89%8D%E7%94%A8%E6%88%B7%E7%9A%84%E8%A7%92%E8%89%B2%E5%88%97%E8%A1%A8)
 
+once-promise 泛型
+
 ## 导航
 
 <HomeView></HomeView>
