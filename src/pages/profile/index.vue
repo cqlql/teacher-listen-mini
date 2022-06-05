@@ -57,7 +57,7 @@
       <nut-cell
         title="钉钉听评课记录"
         is-link
-        @click="to('/packageECharts/pages/EvaluationStatistics/EvaluationStatistics')"
+        @click="to('/pages/DingListenRecord/DingListenRecord')"
       ></nut-cell>
     </nut-cell-group>
 

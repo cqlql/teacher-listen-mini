@@ -266,3 +266,29 @@ export function getFullCourseStatistics(
     data,
   })
 }
+
+// interface GetDingListenRecordParams {}
+interface GetDingListenRecordResult {
+  courses: {
+    class_name: string
+    grade_name: string
+    id: string
+    lesson_date: string
+    name: string
+    start_time: string
+    user_name: string
+
+    recording_resources: {
+      file_id: string
+      play_url: string
+    }[]
+  }[]
+}
+
+/**订订听课记录 */
+export function getDingListenRecord(data: any): Promise<GetDingListenRecordResult> {
+  return httpV1.get({
+    url: '/lecture/v1/courses_with_recording_resource',
+    data,
+  })
+}

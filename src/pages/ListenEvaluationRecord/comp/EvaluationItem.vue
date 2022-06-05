@@ -10,11 +10,11 @@ defineProps<{
   <div class="EvaluationRecordItem">
     <div class="top">
       <div class="date"> {{ data.dateTime }} </div>
-      <TagFlag class="type">{{ data.type }}</TagFlag>
+      <TagFlag v-if="data.type" class="type">{{ data.type }}</TagFlag>
     </div>
 
     <div class="tit">
-      <span class="subject">{{ data.subjectShort }}</span>
+      <span v-if="data.subjectShort" class="subject">{{ data.subjectShort }}</span>
       <span class="name">{{ data.name }}</span>
     </div>
     <div class="rows">

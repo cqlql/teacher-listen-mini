@@ -28,6 +28,8 @@ export default {
       'pages/ListeningTeacherList/ListeningTeacherList',
       // 科组/ 听课记录
       'pages/ListenEvaluationList/ListenEvaluationList',
+      // 钉钉听课记录
+      'pages/DingListenRecord/DingListenRecord',
       // 画笔
       'pages/DrawPage/DrawPage',
       // 搜索

@@ -44,6 +44,7 @@ if (process.env.NODE_ENV !== 'production') {
   // url = '/pages/ListenEvaluationList/ListenEvaluationList'
   url =
     '/pages/TeachingRecordDetails/TeachingRecordDetails?id=5567019870354718065&name=test222&dateTime=2022-06-01 23:34:10&className=八年级6班&teacher=钟洁&userId=467067'
+  url = '/pages/DingListenRecord/DingListenRecord'
   // tabUrl = '/pages/ToListenClass/ToListenClass'
   // tabUrl = '/pages/profile/index'
 
