@@ -19,7 +19,7 @@ async function reqList() {
 }
 function to(item: LessonRecordResult) {
   Taro.navigateTo({
-    url: `/pages/ListenEvaluationDetails/ListenEvaluationDetails?courseId=${routeQuery.courseId}&userId=${item.user_id}&userName=${item.user_name}`,
+    url: `/pages/ListenEvaluationDetails/EvaluationDetails?courseId=${routeQuery.courseId}&userId=${item.user_id}&userName=${item.user_name}`,
   })
 }
 </script>
