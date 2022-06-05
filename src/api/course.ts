@@ -94,6 +94,52 @@ export function openCourseListV1(
   return get('/lecture/v1/listenlist', data)
 }
 
+interface GetCourseListParams {
+  campus_id?: string //校区
+  subject_id?: string //科目ID
+  grade_id?: string //年级ID
+  class_id?: string //教室ID
+
+  list_mun: number //条数
+  page: string //页数
+  user_name?: string //授课老师名
+  period_id?: string // 学段ID 1001 小学 1002 初中 10 03 高中
+  date: string
+}
+interface GetCourseListResult {
+  getCurriculum: [
+    {
+      id: string
+      user_id: string
+      user_name: string
+      subject_id: string
+      grade_id: string
+      grade_name: string
+      class_id: string
+      class_name: string
+      lesson_date: string
+      lesson_id: string
+      lesson_name: string
+      start_time: string
+      end_time: string
+      subject_name: string
+      //不为0表示该课是公开课
+      courses_id: string
+      //课程名
+      name: string
+    },
+  ]
+  nowDate: string
+}
+
+/**根据条件获取课程 */
+export function getCourseList(data: GetCourseListParams): Promise<GetCourseListResult> {
+  return httpV1.get({
+    url: '/lecture/v1/getCurriculum',
+    data,
+  })
+}
+
 /**
  * 审核公开课申请
  */

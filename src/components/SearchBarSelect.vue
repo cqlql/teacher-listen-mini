@@ -8,6 +8,7 @@ const props = defineProps<{
   searchValue: string
   selectedValue: string
   isExpanded: boolean
+  placeholder?: string
 }>()
 
 const emit = defineEmits<{
@@ -30,6 +31,7 @@ watch(
     <nut-searchbar
       class="SearchBarSelect"
       :modelValue="searchValue"
+      :placeholder="placeholder"
       @update:model-value="(v) => $emit('update:searchValue', v)"
     >
       <template #leftin>

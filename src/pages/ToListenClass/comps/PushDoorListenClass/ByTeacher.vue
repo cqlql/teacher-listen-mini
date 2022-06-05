@@ -5,11 +5,13 @@ import ListenClassCategoryList from '../ListenClassCategoryList/ListenClassCateg
 import SearchBarSelect from '@/components/SearchBarSelect.vue'
 import TabButtons from '@/components/TabButtons/TabButtons.vue'
 import LayoutView from './LayoutView.vue'
-import { computed, reactive, ref, watch } from 'vue'
+import { computed, inject, reactive, ref, watch } from 'vue'
 import SelectCheckPopup from '@/components/SelectCheck/SelectCheckPopup.vue'
 
 import usePeriodSubjectData from '@/hooks/usePeriodSubjectData'
-import { openCourseListV1 } from '@/api/course'
+import { getCourseList } from '@/api/course'
+import type { TopSearchParams } from '../../types'
+const topSearchParams = inject('topSearchParams') as TopSearchParams
 
 interface OptionType {
   label: string
@@ -74,18 +76,21 @@ function search() {
 }
 
 function reqList({ page }) {
-  return openCourseListV1({
-    less_type: 1,
-    status: '2',
+  return getCourseList({
     list_mun: 10,
-    offset: page * 10,
-    is_history: 1,
+    page,
+    subject_id: searchOptions.subject,
+    period_id: searchOptions.period,
+    user_name: searchOptions.keyword,
+    date: topSearchParams.date,
   }).then((res) => {
-    return res.listenList
+    return res.getCurriculum
   })
 }
 
 setInitValue()
+
+topSearchParams.search = search
 </script>
 <template>
   <div class="ToListenClassByTeacher">
@@ -93,6 +98,7 @@ setInitValue()
       v-model:searchValue="searchOptions.keyword"
       :selectedValue="searchOptions.periodName"
       v-model:isExpanded="isExpanded"
+      placeholder="请输入老师姓名"
       @search="search"
     >
     </SearchBarSelect>
@@ -108,6 +114,7 @@ setInitValue()
       </template>
       <template #rightList>
         <ListenClassCategoryList
+          v-if="searchOptions.subject"
           type="teacher"
           v-model:search="searchOptions.search"
           :reqList="reqList"

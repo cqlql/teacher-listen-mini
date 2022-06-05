@@ -23,31 +23,7 @@ if (process.env.NODE_ENV !== 'production') {
   let url = ''
   let tabUrl = ''
 
-  // 新增听课记录
-  // url =
-  //   '/pages/ListenEvaluation/ListenEvaluation?user_id=466954&course_id=6485930388991485693&subject_id=1&grade_id=1108&live_url=' +
-  //   encodeURIComponent('http://live1.wuhubtv.com/channel1/sd/live.m3u8')
-
-  // 听课记录详情
-  // url = '/pages/ListenEvaluationDetails/ListenRecordDetails?id=5679704728818079286&name=test&dateTime=2022-05-25 15:49:00&className=八年级6班&teacher=钟洁娜'
-  // 授课记录详情
-  // url =
-  //   '/pages/TeachingRecordDetails/TeachingRecordDetails?id=1198266997879021517&name=语文测试课&dateTime=2022-05-25 12:00:00&className=一年级1班&teacher=陈理'
-  // 添加校外课
-  // url = '/pages/CreateOutsideClass/CreateOutsideClass'
-  // 开课记录列表
-  // url = '/pages/ListenApplicationRecord/ListenApplicationRecord'
-  // tabUrl = '/pages/ListenEvaluationRecord/ListenEvaluationRecord'
-
-  // url = '/packageECharts/pages/EvaluationStatistics/MyEvaluationStatistics'
-  // url = '/packageECharts/pages/EvaluationStatistics/AllEvaluationStatistics'
-  // url = '/pages/ListenEvaluationList/ListenEvaluationList'
-  // url =
-  //   '/pages/TeachingRecordDetails/TeachingRecordDetails?id=5567019870354718065&name=test222&dateTime=2022-06-01 23:34:10&className=八年级6班&teacher=钟洁&userId=467067'
-  // url = '/pages/ListenEvaluationDetails/EvaluationDetails'
-  tabUrl = '/pages/profile/index'
-  // tabUrl = '/pages/ToListenClass/ToListenClass'
-  // tabUrl = '/pages/profile/index'
+  tabUrl = '/pages/ToListenClass/ToListenClass'
 
   if (url) {
     Taro.navigateTo({ url })

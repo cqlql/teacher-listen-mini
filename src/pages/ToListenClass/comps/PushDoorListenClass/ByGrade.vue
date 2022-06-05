@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { openCourseListV1 } from '@/api/course'
+import { getCourseList } from '@/api/course'
 import TabButtons from '@/components/TabButtons/TabButtons.vue'
 import { inject } from 'vue'
 import ListenClassCategoryList from '../ListenClassCategoryList/ListenClassCategoryList.vue'
@@ -9,23 +9,20 @@ import useGradeClassSelect from './useGradeClassSelect'
 const { searchOptions, gradeList, classList, search } = useGradeClassSelect()
 
 const topSearchParams = inject('topSearchParams') as {
-  subject: string
   date: string
   search: () => void
 }
-
 topSearchParams.search = search
 
 function reqList({ page }) {
-  return openCourseListV1({
-    less_type: 1,
-    status: '2',
+  return getCourseList({
     grade_id: searchOptions.grade,
+    class_id: searchOptions.class,
     list_mun: 10,
-    offset: page * 10,
-    is_history: 1,
+    page: page,
+    date: topSearchParams.date,
   }).then((res) => {
-    return res.listenList
+    return res.getCurriculum
   })
 }
 </script>
@@ -48,6 +45,7 @@ function reqList({ page }) {
       </template>
       <template #rightList>
         <ListenClassCategoryList
+          v-if="searchOptions.class"
           type="grade"
           v-model:search="searchOptions.search"
           :reqList="reqList"
