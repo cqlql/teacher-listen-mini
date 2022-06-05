@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import CardPlus from '@/components/CardPlus.vue'
-import TitleContent from '../ListenRecordDetails/comp/TitleContent.vue'
+import TitleContent from './comp/TitleContent.vue'
 import TagView from '@/components/Tag/TagView.vue'
 import { ref } from 'vue'
 import { getRecordList } from '@/api/course'

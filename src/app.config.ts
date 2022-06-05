@@ -19,7 +19,7 @@ export default {
       // 听课评价 过程记录
       'pages/ListenEvaluation/ListenEvaluation',
       // 听课记录详情
-      'pages/ListenRecordDetails/ListenRecordDetails',
+      'pages/ListenEvaluationDetails/ListenRecordDetails',
       // 听课老师听课评价详情
       'pages/ListenEvaluationDetails/EvaluationDetails',
       // 授课记录详情

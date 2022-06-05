@@ -63,7 +63,7 @@ function to(item: EvaluationDataItem) {
   let urlParams = `?id=${item.id}&name=${item.name}&dateTime=${item.dateTime}&className=${item.className}&teacher=${item.teacher}&userId=${item.userId}`
   console.log('🚀 -- to -- urlParams', urlParams)
   Taro.navigateTo({
-    url: '/pages/ListenRecordDetails/ListenRecordDetails' + urlParams,
+    url: '/pages/ListenEvaluationDetails/ListenRecordDetails' + urlParams,
   })
 }
 </script>

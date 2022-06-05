@@ -29,7 +29,7 @@ if (process.env.NODE_ENV !== 'production') {
   //   encodeURIComponent('http://live1.wuhubtv.com/channel1/sd/live.m3u8')
 
   // 听课记录详情
-  // url = '/pages/ListenRecordDetails/ListenRecordDetails?id=5679704728818079286&name=test&dateTime=2022-05-25 15:49:00&className=八年级6班&teacher=钟洁娜'
+  // url = '/pages/ListenEvaluationDetails/ListenRecordDetails?id=5679704728818079286&name=test&dateTime=2022-05-25 15:49:00&className=八年级6班&teacher=钟洁娜'
   // 授课记录详情
   // url =
   //   '/pages/TeachingRecordDetails/TeachingRecordDetails?id=1198266997879021517&name=语文测试课&dateTime=2022-05-25 12:00:00&className=一年级1班&teacher=陈理'

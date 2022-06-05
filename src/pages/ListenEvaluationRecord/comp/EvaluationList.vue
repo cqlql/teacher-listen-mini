@@ -92,7 +92,7 @@ function to(item: EvaluationDataItem) {
   Taro.navigateTo({
     url:
       props.type === 'listen'
-        ? '/pages/ListenRecordDetails/ListenRecordDetails' + urlParams
+        ? '/pages/ListenEvaluationDetails/ListenRecordDetails' + urlParams
         : '/pages/TeachingRecordDetails/TeachingRecordDetails' + urlParams,
   })
 }
