@@ -44,13 +44,18 @@
         @click="to('/pages/ListenEvaluationList/ListenEvaluationList')"
       ></nut-cell>
       <!-- </template> -->
-      <template v-if="userRole === '2'">
-        <nut-cell
-          title="全校评课统计"
-          is-link
-          @click="to('/packageECharts/pages/EvaluationStatistics/AllEvaluationStatistics')"
-        ></nut-cell>
-      </template>
+      <!-- <template v-if="userRole === '2'"> -->
+      <nut-cell
+        title="全校评课统计"
+        is-link
+        @click="to('/packageECharts/pages/EvaluationStatistics/AllEvaluationStatistics')"
+      ></nut-cell>
+      <nut-cell
+        title="全校听评课记录"
+        is-link
+        @click="to('/pages/ListenEvaluationList/ListenEvaluationList')"
+      ></nut-cell>
+      <!-- </template> -->
     </nut-cell-group>
 
     <nut-cell-group>

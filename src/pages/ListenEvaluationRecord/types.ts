@@ -8,6 +8,10 @@ export interface EvaluationDataItem {
   className: string
 }
 
+export interface DingListenItem extends EvaluationDataItem {
+  videoUrl: string
+}
+
 interface SearchItem {
   dateStart: string
   dateEnd: string

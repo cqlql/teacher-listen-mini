@@ -4,10 +4,11 @@ import { reactive, ref } from 'vue'
 import SemesterRangePicker from '../ListenEvaluationRecord/comp/SemesterRangePicker.vue'
 import SearchBarSelect2 from '@/components/SearchBarSelect2.vue'
 import { getDingListenRecord, getListenAndTeachStatistics } from '@/api/course'
-import type { GetListenAndTeachStatisticsResult } from '@/api/model/courseModel'
 import Taro from '@tarojs/taro'
-import type { EvaluationDataItem } from '../ListenEvaluationRecord/types'
+
 import EvaluationItem from '../ListenEvaluationRecord/comp/EvaluationItem.vue'
+import type { DingListenItem } from '../ListenEvaluationRecord/types'
+
 const vListLoad = ref<{
   firstPageLoad: () => void
 }>()
@@ -44,26 +45,17 @@ async function reqList({ page }) {
         name: resultItem.name,
         teacher: resultItem.user_name,
         className: resultItem.grade_name + resultItem.class_name,
-        userId: resultItem.user_id,
+        videoUrl: resultItem.recording_resources[0]?.play_url,
       }
     })
   })
-  return getListenAndTeachStatistics({
-    date_start: searchOption.dateStart,
-    date_end: searchOption.dateEnd,
-    keyword: searchOption.keyword,
-    offset: page * pageSize,
-    list_mun: pageSize,
-  }).then((res) => {
-    return res.course_frequence_list
-  })
 }
 
-function to(item: EvaluationDataItem) {
-  let urlParams = `?id=${item.id}&name=${item.name}&dateTime=${item.dateTime}&className=${item.className}&teacher=${item.teacher}&userId=${item.userId}`
+function to(item: DingListenItem) {
+  let urlParams = `?id=${item.id}&name=${item.name}&dateTime=${item.dateTime}&className=${item.className}&teacher=${item.teacher}&videoUrl=${item.videoUrl}`
   console.log('🚀 -- to -- urlParams', urlParams)
   Taro.navigateTo({
-    url: '/pages/ListenEvaluationDetails/ListenRecordDetails' + urlParams,
+    url: '/pages/ListenEvaluationDetails/DingListenDetails' + urlParams,
   })
 }
 </script>
@@ -82,6 +74,7 @@ function to(item: EvaluationDataItem) {
         v-model:isExpanded="searchOption.visible"
         v-model="searchOption.keyword"
         :selectedName="searchOption.selectedName"
+        placeholder="请输入课程或老师名称搜索"
         @search="searchOption.search"
       ></SearchBarSelect2>
     </div>

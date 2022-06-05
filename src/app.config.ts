@@ -30,6 +30,7 @@ export default {
       'pages/ListenEvaluationList/ListenEvaluationList',
       // 钉钉听课记录
       'pages/DingEvaluationRecord/DingEvaluationRecord',
+      'pages/ListenEvaluationDetails/DingListenDetails',
       // 画笔
       'pages/DrawPage/DrawPage',
       // 搜索
