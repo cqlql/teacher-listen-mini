@@ -74,24 +74,25 @@ getRecordList({
   user_id: getStorage('userId'),
 }).then((res) => {
   let newList: PointList = []
-  classify<LessonScoreItem>(
-    res.scoreList,
-    'dimension_id',
-    (item) => {
-      let children = []
-      newList.push({
-        name: item.dimension_name,
-        children,
-      })
-      return children
-    },
-    (item) => {
-      return {
-        type: '',
-        name: item.dimension_item_id,
-      }
-    },
-  )
+  res.scoreList &&
+    classify<LessonScoreItem>(
+      res.scoreList,
+      'dimension_id',
+      (item) => {
+        let children = []
+        newList.push({
+          name: item.dimension_name,
+          children,
+        })
+        return children
+      },
+      (item) => {
+        return {
+          type: '',
+          name: item.dimension_item_id,
+        }
+      },
+    )
 
   pointList.value = newList
 

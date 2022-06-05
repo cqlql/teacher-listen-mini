@@ -23,6 +23,7 @@ defineProps<{
 .IconLink {
   display: inline-flex;
   align-items: center;
+  word-break: break-all;
   & > .nut-icon {
     margin-right: 4px;
   }

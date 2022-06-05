@@ -4,7 +4,7 @@ import IconLink from './IconLink.vue'
 withDefaults(
   defineProps<{
     title: string
-    filesTitle: string
+    filesTitle?: string
     data: {
       label: string
       value: string
@@ -29,7 +29,9 @@ withDefaults(
         <div class="lb">{{ filesTitle }}：</div>
         <div class="childList">
           <div v-for="(file, index) of files" :key="index" class="childItem">
-            <IconLink icon="pdf" type="custom">{{ file.name }}</IconLink>
+            <div>
+              <IconLink icon="pdf" type="custom">{{ file.name }}</IconLink>
+            </div>
           </div>
         </div>
       </div>
@@ -57,7 +59,8 @@ withDefaults(
     padding: 2px 0;
   }
   .lb {
-    width: 70px;
+    min-width: 70px;
+    white-space: nowrap;
   }
   .val {
     flex: 1;
