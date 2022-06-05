@@ -80,13 +80,15 @@ async function reqList({ page }) {
         name: resultItem.name,
         teacher: resultItem.user_name,
         className: resultItem.grade_name + resultItem.class_name,
+        userId: resultItem.user_id,
       }
     })
   })
 }
 
 function to(item: EvaluationDataItem) {
-  let urlParams = `?id=${item.id}&name=${item.name}&dateTime=${item.dateTime}&className=${item.className}&teacher=${item.teacher}`
+  let urlParams = `?id=${item.id}&name=${item.name}&dateTime=${item.dateTime}&className=${item.className}&teacher=${item.teacher}&userId=${item.userId}`
+  console.log('🚀 -- to -- urlParams', urlParams)
   Taro.navigateTo({
     url:
       props.type === 'listen'

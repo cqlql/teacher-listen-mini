@@ -74,7 +74,9 @@ getEvaluationStatistics({
     <InfoBox title="课程信息" filesTitle="授课文件" :data="courseInfoData" :files="files"></InfoBox>
     <CardPlus title2="授课评价">
       <template #title2Right>
-        <navigator class="navigator" url="/pages/ListeningTeacherList/ListeningTeacherList"
+        <navigator
+          class="navigator"
+          :url="`/pages/ListeningTeacherList/ListeningTeacherList?courseId=${courseInfo.id}`"
           >查看详情</navigator
         >
       </template>

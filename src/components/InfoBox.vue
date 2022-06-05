@@ -29,9 +29,7 @@ withDefaults(
         <div class="lb">{{ filesTitle }}：</div>
         <div class="childList">
           <div v-for="(file, index) of files" :key="index" class="childItem">
-            <div>
-              <IconLink icon="pdf" type="custom">{{ file.name }}</IconLink>
-            </div>
+            <IconLink icon="pdf" type="custom">{{ file.name }}</IconLink>
           </div>
         </div>
       </div>

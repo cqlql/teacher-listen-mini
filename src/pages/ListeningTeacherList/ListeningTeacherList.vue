@@ -1,26 +1,39 @@
 <script lang="ts" setup>
 import ListLoad from '@/components/ListLoad/ListLoad.vue'
 import Taro from '@tarojs/taro'
+import useRouterParams from '@/hooks/useRouterParams'
+import { allRecordList } from '@/api/course'
+import { ref } from 'vue'
+import type { LessonRecordResult } from '@/api/model/courseModel'
+
+let routeQuery = useRouterParams<{ courseId: string }>()
+
+const list = ref<LessonRecordResult[]>([])
+
 async function reqList() {
-  return [1]
+  return allRecordList({
+    course_id: routeQuery.courseId,
+  }).then((result) => {
+    list.value = result.lessonRecordList
+  })
 }
-function to() {
+function to(item: LessonRecordResult) {
   Taro.navigateTo({
-    url: '/pages/ListenEvaluationDetails/ListenEvaluationDetails',
+    url: `/pages/ListenEvaluationDetails/ListenEvaluationDetails?courseId=${routeQuery.courseId}&userId=${item.user_id}&userName=${item.user_name}`,
   })
 }
 </script>
 <template>
   <div class="ListeningTeacherList">
-    <div class="topInfo"> 听课老师名单：16人 </div>
+    <div class="topInfo"> 听课老师名单：{{ list.length }}人 </div>
     <div class="list">
-      <ListLoad :reqList="reqList">
+      <ListLoad :scrollLowerEnabled="false" :reqList="reqList">
         <template #default>
-          <div class="item" v-for="v of 19" :key="v" @click="to">
+          <div class="item" v-for="item of list" :key="item.user_id" @click="to(item)">
             <div class="avatar-icon">
               <nut-icon font-class-name="iconfont" class-prefix="icon" name="user-full"></nut-icon>
             </div>
-            <div class="name">张三</div>
+            <div class="name">{{ item.user_name }}</div>
             <div class="arrow-icon">
               <nut-icon name="right"></nut-icon>
             </div>

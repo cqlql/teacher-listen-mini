@@ -181,6 +181,7 @@ export function getAttachList(courseId: string): Promise<GetAttachListResult> {
   })
 }
 
+/**听课老师名单 */
 export function allRecordList(data: {
   course_id: string
 }): Promise<{ lessonRecordList: LessonRecordResult[] }> {
