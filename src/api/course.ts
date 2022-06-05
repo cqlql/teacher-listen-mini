@@ -67,7 +67,10 @@ export function getLessonCount(): Promise<LessonCountResult> {
 
 /** 申请公开课 */
 export function requestOpenCourse(data: RequestOpenCourseParams) {
-  return post('/lecture/v1/requestOpenCourse', data)
+  return httpV1.post({
+    url: '/lecture/v1/requestOpenCourse',
+    data,
+  })
 }
 
 /** 编辑校外课 */
