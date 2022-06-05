@@ -1,11 +1,17 @@
 <script lang="ts" setup>
 import ListLoad from '@/components/ListLoad/ListLoad.vue'
 import { reactive, ref } from 'vue'
-import SemesterRangePicker from '../ListenEvaluationRecord/comp/SemesterRangePicker.vue'
+import SemesterRangePicker from '../../ListenEvaluationRecord/comp/SemesterRangePicker.vue'
 import SearchBarSelect2 from '@/components/SearchBarSelect2.vue'
 import { getListenAndTeachStatistics } from '@/api/course'
 import type { GetListenAndTeachStatisticsResult } from '@/api/model/courseModel'
 import Taro from '@tarojs/taro'
+
+defineProps<{
+  // 是列出科组还是全校
+  range?: 'subjectGroup'
+}>()
+
 const vListLoad = ref<{
   firstPageLoad: () => void
 }>()

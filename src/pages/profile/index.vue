@@ -32,30 +32,30 @@
         is-link
         @click="to('/packageECharts/pages/EvaluationStatistics/MyEvaluationStatistics')"
       ></nut-cell>
-      <!-- <template v-if="userRole === '1'"> -->
-      <nut-cell
-        title="科组评课统计"
-        is-link
-        @click="to('/packageECharts/pages/EvaluationStatistics/DepartmentEvaluationStatistics')"
-      ></nut-cell>
-      <nut-cell
-        title="科组听评课记录"
-        is-link
-        @click="to('/pages/ListenEvaluationList/ListenEvaluationList')"
-      ></nut-cell>
-      <!-- </template> -->
-      <!-- <template v-if="userRole === '2'"> -->
-      <nut-cell
-        title="全校评课统计"
-        is-link
-        @click="to('/packageECharts/pages/EvaluationStatistics/AllEvaluationStatistics')"
-      ></nut-cell>
-      <nut-cell
-        title="全校听评课记录"
-        is-link
-        @click="to('/pages/ListenEvaluationList/ListenEvaluationList')"
-      ></nut-cell>
-      <!-- </template> -->
+      <template v-if="userRole === '1'">
+        <nut-cell
+          title="科组评课统计"
+          is-link
+          @click="to('/packageECharts/pages/EvaluationStatistics/DepartmentEvaluationStatistics')"
+        ></nut-cell>
+        <nut-cell
+          title="科组听评课记录"
+          is-link
+          @click="to('/pages/ListenEvaluationMemberList/SubjectGroupMemberList')"
+        ></nut-cell>
+      </template>
+      <template v-if="userRole === '2'">
+        <nut-cell
+          title="全校评课统计"
+          is-link
+          @click="to('/packageECharts/pages/EvaluationStatistics/AllEvaluationStatistics')"
+        ></nut-cell>
+        <nut-cell
+          title="全校听评课记录"
+          is-link
+          @click="to('/pages/ListenEvaluationMemberList/AllMemberList')"
+        ></nut-cell>
+      </template>
     </nut-cell-group>
 
     <nut-cell-group>

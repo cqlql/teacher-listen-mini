@@ -26,8 +26,9 @@ export default {
       'pages/TeachingRecordDetails/TeachingRecordDetails',
       // 听课老师名单
       'pages/ListeningTeacherList/ListeningTeacherList',
-      // 科组/ 听课记录
-      'pages/ListenEvaluationList/ListenEvaluationList',
+      // 全校/科组 成员听评课记录
+      'pages/ListenEvaluationMemberList/AllMemberList',
+      'pages/ListenEvaluationMemberList/SubjectGroupMemberList',
       // 钉钉听课记录
       'pages/DingEvaluationRecord/DingEvaluationRecord',
       'pages/ListenEvaluationDetails/DingListenDetails',
