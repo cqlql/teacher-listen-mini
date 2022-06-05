@@ -33,16 +33,11 @@ function onToToday() {
     date: today,
   })
 }
-function dateHandle(_dateItem: DateItem) {
-  // console.log('🚀 -- dateHandle -- dateItem', dateItem)
-}
+function dateHandle(_dateItem: DateItem) {}
 function onSelect(dateItem: DateItem) {
-  console.log('🚀 -- onSelect -- dateItem', dateItem)
   emit('select', dateItem)
 }
-function onChange(dateItem: DateItem) {
-  console.log('🚀 -- onChange -- dateItem', dateItem)
-}
+function onChange(_dateItem: DateItem) {}
 </script>
 <template>
   <div class="CalendarDate">
