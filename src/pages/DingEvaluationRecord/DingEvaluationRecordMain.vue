@@ -3,7 +3,7 @@ import ListLoad from '@/components/ListLoad/ListLoad.vue'
 import { reactive, ref } from 'vue'
 import SemesterRangePicker from '../ListenEvaluationRecord/comp/SemesterRangePicker.vue'
 import SearchBarSelect2 from '@/components/SearchBarSelect2.vue'
-import { getDingListenRecord, getListenAndTeachStatistics } from '@/api/course'
+import { getDingListenRecord } from '@/api/course'
 import Taro from '@tarojs/taro'
 
 import EvaluationItem from '../ListenEvaluationRecord/comp/EvaluationItem.vue'
@@ -35,7 +35,6 @@ async function reqList({ page }) {
     offset: page * pageSize,
     list_mun: pageSize,
   }).then((res) => {
-    console.log(res)
     return res.courses.map((resultItem) => {
       return {
         id: resultItem.id,
@@ -80,7 +79,7 @@ function to(item: DingListenItem) {
     </div>
     <div class="list">
       <ListLoad ref="vListLoad" :startPage="0" :reqList="reqList">
-        <template #default="{ list }: { list: EvaluationDataItem[] }">
+        <template #default="{ list }: { list: DingListenItem[] }">
           <EvaluationItem v-for="item of list" :key="item.id" :data="item" @click="to(item)">
           </EvaluationItem>
         </template>

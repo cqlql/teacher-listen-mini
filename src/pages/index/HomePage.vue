@@ -23,7 +23,8 @@ if (process.env.NODE_ENV !== 'production') {
   let url = ''
   let tabUrl = ''
 
-  tabUrl = '/pages/ToListenClass/ToListenClass'
+  url = '/pages/DingEvaluationRecord/DingEvaluationRecord'
+  tabUrl = '/pages/profile/index'
 
   if (url) {
     Taro.navigateTo({ url })

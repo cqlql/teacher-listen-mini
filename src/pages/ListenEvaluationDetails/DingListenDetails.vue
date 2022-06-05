@@ -29,10 +29,13 @@ let courseInfoData = [
 </script>
 <template>
   <div class="DingListenDetails">
-    <div class="info">
-      <InfoBox title="课程信息" :data="courseInfoData"></InfoBox>
+    <!-- <div class="info"> -->
+    <InfoBox title="课程信息" :data="courseInfoData"></InfoBox>
+    <!-- </div> -->
+    <div class="video-wrapper">
+      <div class="title">钉钉评课视频：</div>
+      <video class="video" :src="courseInfo.videoUrl"></video>
     </div>
-    <video class="video" :src="courseInfo.videoUrl"></video>
   </div>
 </template>
 
@@ -42,13 +45,24 @@ page {
 }
 .DingListenDetails {
   // margin-bottom: 30px;
+  padding: 10px;
+  // .info {
+  //   padding: 10px;
+  // }
 
-  .info {
-    padding: 10px;
-  }
+  .video-wrapper {
+    margin-top: 10px;
 
-  .video {
-    width: 100%;
+    .title {
+      font-size: 16px;
+      color: #000;
+      padding: 10px 10px 8px;
+      font-weight: bold;
+    }
+
+    .video {
+      width: 100%;
+    }
   }
 }
 </style>
