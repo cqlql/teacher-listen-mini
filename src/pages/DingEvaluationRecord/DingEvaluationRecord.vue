@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import ToastProvider from '@/components/ToastProvider/ToastProvider.vue'
-import DingListenRecordMain from './DingListenRecordMain.vue'
+import DingEvaluationRecordMain from './DingEvaluationRecordMain.vue'
 </script>
 
 <template>
   <ToastProvider>
-    <DingListenRecordMain />
+    <DingEvaluationRecordMain />
   </ToastProvider>
 </template>

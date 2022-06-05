@@ -29,7 +29,7 @@ export default {
       // 科组/ 听课记录
       'pages/ListenEvaluationList/ListenEvaluationList',
       // 钉钉听课记录
-      'pages/DingListenRecord/DingListenRecord',
+      'pages/DingEvaluationRecord/DingEvaluationRecord',
       // 画笔
       'pages/DrawPage/DrawPage',
       // 搜索
