@@ -74,8 +74,8 @@
 </template>
 
 <script lang="ts" setup>
-import { profile, userSubjectGroups } from '@/api/user'
-import { getStorage, removeStorage } from '@/utils/storage'
+import { getRoleType, profile, userSubjectGroups } from '@/api/user'
+import { removeStorage } from '@/utils/storage'
 import Taro from '@tarojs/taro'
 import { onMounted, reactive, ref } from 'vue'
 import avatarDefault from '@/static/img/avatar.png'
@@ -88,7 +88,7 @@ const userInfo = reactive({
   school: '',
 })
 
-const userRole = ref(getStorage('role'))
+const userRole = ref('-1')
 
 const subjectGroups = ref<string[]>([])
 
@@ -106,6 +106,10 @@ onMounted(() => {
       return group.subject_group_name
     })
   })
+})
+
+getRoleType().then((res) => {
+  userRole.value = res.role[0]?.role_type || '-1'
 })
 
 function logout() {

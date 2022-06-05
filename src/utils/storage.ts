@@ -5,14 +5,14 @@ import Taro from '@tarojs/taro'
  *
  * userId 登录用户ID
  * */
-type keyName = 'openid' | 'token' | 'userId' | 'pageTemp' | 'role'
+type keyName = 'openid' | 'token' | 'userId' | 'pageTemp'
 
 /**
  *
  * @param k key name
  * @returns 不存在返回空字符串
  */
-export function getStorage(k: keyName): '' | string {
+export function getStorage<T = string>(k: keyName): '' | T {
   return Taro.getStorageSync(k)
 }
 
