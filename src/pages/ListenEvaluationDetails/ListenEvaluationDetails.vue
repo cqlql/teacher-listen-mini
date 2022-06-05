@@ -20,13 +20,11 @@ const pointList = ref<PointList>([])
 const evaluationText = ref('')
 
 let routeQuery = useRouterParams<{ userId: string; userName: string; courseId: string }>()
-console.log('🚀 -- routeQuery', routeQuery)
 
 getRecordList({
   course_id: routeQuery.courseId,
   user_id: routeQuery.userId,
 }).then((res) => {
-  console.log('🚀 -- res', res)
   let newList: PointList = []
   res.scoreList &&
     classify<LessonScoreItem>(
@@ -93,6 +91,7 @@ page {
   }
 
   .tags-list {
+    margin-top: 8px;
     .name {
       // margin-right: 10px;
     }
@@ -100,6 +99,7 @@ page {
     .LabelView {
       margin-left: 5px;
       border-radius: 100px;
+      height: 22px;
     }
   }
 

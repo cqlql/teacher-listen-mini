@@ -14,7 +14,7 @@ async function reqList() {
   return allRecordList({
     course_id: routeQuery.courseId,
   }).then((result) => {
-    list.value = result.lessonRecordList
+    return (list.value = result.lessonRecordList)
   })
 }
 function to(item: LessonRecordResult) {
