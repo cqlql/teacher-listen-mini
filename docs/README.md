@@ -7,12 +7,6 @@ tagline: false
 
 ## 待办
 
-钉钉听评课记录、全校听评课记录
-
-推门听课过滤
-
-钉钉评课记录 https://app.shenduedu.com/lecture/v1/courses_with_recording_resource
-
 once-promise 泛型
 
 ## 问题速记
