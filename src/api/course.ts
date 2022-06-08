@@ -107,7 +107,7 @@ interface GetCourseListParams {
   page: string //页数
   user_name?: string //授课老师名
   period_id?: string // 学段ID 1001 小学 1002 初中 10 03 高中
-  date: string
+  lesson_date: string
 }
 interface GetCourseListResult {
   getCurriculum: [

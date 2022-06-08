@@ -82,7 +82,7 @@ function reqList({ page }) {
     subject_id: searchOptions.subject,
     period_id: searchOptions.period,
     user_name: searchOptions.keyword,
-    date: topSearchParams.date,
+    lesson_date: topSearchParams.date,
   }).then((res) => {
     return res.getCurriculum
   })

@@ -20,7 +20,7 @@ function reqList({ page }) {
     class_id: searchOptions.class,
     list_mun: 10,
     page: page,
-    date: topSearchParams.date,
+    lesson_date: topSearchParams.date,
   }).then((res) => {
     return res.getCurriculum
   })
