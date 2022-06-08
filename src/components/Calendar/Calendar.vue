@@ -7,8 +7,8 @@ const displayedDate = ref(new Date())
 const displayedDatePlus = ref(dayjs(displayedDate.value))
 const selectedDate = ref(new Date())
 
-const selectedDateText = computed(() => {
-  return dayjs(selectedDate.value).format('YYYY年M月D日')
+const displayDateText = computed(() => {
+  return dayjs(displayedDate.value).format('YYYY年M月')
 })
 
 watch(displayedDate, (value) => {
@@ -42,7 +42,7 @@ function onChange(_dateItem: DateItem) {}
 <template>
   <div class="CalendarDate">
     <div class="CalendarDate_header">
-      <div class="l">{{ selectedDateText }}</div>
+      <div class="l">{{ displayDateText }}</div>
       <div class="r">
         <nut-button @click="onPrevMonth" plain type="primary" icon="left"></nut-button>
         <nut-button @click="onNextMonth" plain type="primary" icon="right"></nut-button>
