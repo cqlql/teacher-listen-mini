@@ -2,14 +2,24 @@
 import BottomOkButtons from '@/components/Button/BottomOkButtons.vue'
 import DatePicker from '@/components/DatePicker/DatePicker.vue'
 
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import SelectValue from '@/components/Select/SelectValue.vue'
 
-import useSemesterDate from '../useSemesterDate'
+import { semesterRange } from '@/utils/date/semester-range'
+
+interface OptionType {
+  label: string
+  value?: string
+  start: string
+  end: string
+}
+
 const props = withDefaults(
   defineProps<{
     visible: boolean
     defaultIndex: number
+    options?: OptionType[]
+    noCustom?: boolean
   }>(),
   {
     defaultIndex: -1,
@@ -21,26 +31,21 @@ const emit = defineEmits<{
   (e: 'update:end', v: string)
   (e: 'update:label', v: string)
   (e: 'update:visible', v: boolean)
+  (e: 'update:dateRange', v: string | undefined)
   (e: 'ok')
 }>()
 
 const startDate = ref('')
 const endDate = ref('')
 const selectedIndex = ref(props.defaultIndex)
-const currentSelectedIndex = ref(props.defaultIndex)
 let isCustom = false
 
-const { list } = useSemesterDate()
-
-watch(
-  () => props.visible,
-  (visible) => {
-    if (!visible) {
-      // 关闭时复位
-      currentSelectedIndex.value = selectedIndex.value
-    }
-  },
-)
+const safeOptions = computed(() => {
+  if (props.options) {
+    return props.options
+  }
+  return semesterRange() as OptionType[]
+})
 
 watch([startDate, endDate], ([startDate, endDate]) => {
   if (startDate && endDate) {
@@ -48,32 +53,31 @@ watch([startDate, endDate], ([startDate, endDate]) => {
   }
 })
 
-watch(currentSelectedIndex, () => {
-  isCustom = false
-})
-
-function updateSelect(index: number) {
-  selectedIndex.value = index
-  let item = list[index]
+function updateSelect() {
+  let item = safeOptions.value[selectedIndex.value]
 
   if (item) {
     emit('update:start', item.start)
     emit('update:end', item.end)
+    emit('update:dateRange', item.value)
     emit('update:label', item.label)
   }
 }
 
 function select(index: number) {
-  currentSelectedIndex.value = index
+  selectedIndex.value = index
+  isCustom = false
+  ok()
 }
 
 function ok() {
   if (isCustom) {
+    selectedIndex.value = -1
     emit('update:start', startDate.value)
     emit('update:end', endDate.value)
     emit('update:label', '自定义')
   } else {
-    updateSelect(currentSelectedIndex.value)
+    updateSelect()
   }
 
   emit('ok')
@@ -81,7 +85,7 @@ function ok() {
 }
 
 if (props.defaultIndex > -1) {
-  updateSelect(props.defaultIndex)
+  updateSelect()
 }
 </script>
 <template>
@@ -95,33 +99,35 @@ if (props.defaultIndex > -1) {
     <div class="SemesterRangePicker_list">
       <div class="list">
         <div
-          v-for="(item, index) of list"
+          v-for="(item, index) of safeOptions"
           :key="index"
           class="item"
-          :class="{ active: currentSelectedIndex === index }"
+          :class="{ active: selectedIndex === index }"
           @click="select(index)"
           >{{ item.label }}（{{ item.start }}-{{ item.end }}）<nut-icon name="Check" />
         </div>
       </div>
 
-      <div class="dateRange">
-        <div class="tit"> 自定义时间： </div>
-        <div class="dateInput">
-          <div class="l">
-            <DatePicker v-model="startDate" :endDate="endDate" valueFormat="YYYY-MM-DD">
-              <SelectValue :value="startDate" placeholder="开始时间"></SelectValue>
-            </DatePicker>
-          </div>
-          <div class="r">
-            <!-- <input type="text" placeholder="结束时间" /> -->
-            <DatePicker v-model="endDate" :startDate="startDate" valueFormat="YYYY-MM-DD">
-              <SelectValue :value="endDate" placeholder="结束时间"></SelectValue>
-            </DatePicker>
+      <template v-if="!noCustom">
+        <div class="dateRange">
+          <div class="tit"> 自定义时间： </div>
+          <div class="dateInput">
+            <div class="l">
+              <DatePicker v-model="startDate" :endDate="endDate" valueFormat="YYYY-MM-DD">
+                <SelectValue :value="startDate" placeholder="开始时间"></SelectValue>
+              </DatePicker>
+            </div>
+            <div class="r">
+              <!-- <input type="text" placeholder="结束时间" /> -->
+              <DatePicker v-model="endDate" :startDate="startDate" valueFormat="YYYY-MM-DD">
+                <SelectValue :value="endDate" placeholder="结束时间"></SelectValue>
+              </DatePicker>
+            </div>
           </div>
         </div>
-      </div>
 
-      <BottomOkButtons @ok="ok" @cancel="$emit('update:visible', false)"></BottomOkButtons>
+        <BottomOkButtons @ok="ok" @cancel="$emit('update:visible', false)"></BottomOkButtons>
+      </template>
     </div>
   </nut-popup>
 </template>

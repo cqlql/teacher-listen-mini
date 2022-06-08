@@ -317,28 +317,31 @@ export function getFullCourseStatistics(
 }
 
 interface GetDingListenRecordParams {
-  date_start: string
-  date_end: string
+  // date_start: string
+  // date_end: string
+  range_type?: GetListenAndTeachStatisticsParams['range_type']
   search_name: string
   offset: number
   list_mun: number
 }
 interface GetDingListenRecordResult {
   data: {
-    courses: {
-      class_name: string
-      grade_name: string
-      id: string
-      lesson_date: string
-      name: string
-      start_time: string
-      user_name: string
+    courses:
+      | {
+          class_name: string
+          grade_name: string
+          id: string
+          lesson_date: string
+          name: string
+          start_time: string
+          user_name: string
 
-      recording_resources: {
-        file_id: string
-        play_url: string
-      }[]
-    }[]
+          recording_resources: {
+            file_id: string
+            play_url: string
+          }[]
+        }[]
+      | null
   }
 }
 

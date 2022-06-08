@@ -546,7 +546,14 @@ export interface AddTempOpenCourseParams {
 
 export interface GetListenAndTeachStatisticsParams {
   /** 时间范围  */
-  range_type?: 'this_semester' | 'this_month' | 'this_week' | 'first_semester' | 'second_semester'
+  range_type?:
+    | 'full_semester'
+    | 'this_semester'
+    | 'this_month'
+    | 'this_week'
+    | 'first_semester'
+    | 'second_semester'
+    | ''
   date_start?: string
   date_end?: string
   keyword?: string

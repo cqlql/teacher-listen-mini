@@ -8,14 +8,28 @@ import Taro from '@tarojs/taro'
 
 import EvaluationItem from '../ListenEvaluationRecord/comp/EvaluationItem.vue'
 import type { DingListenItem } from '../ListenEvaluationRecord/types'
+import { semesterRangeUseName } from '@/utils/date/semester-range'
+import type { GetListenAndTeachStatisticsParams } from '@/api/model/courseModel'
 
 const vListLoad = ref<{
   firstPageLoad: () => void
 }>()
 
-const searchOption = reactive({
-  dateStart: '',
-  dateEnd: '',
+type SearchOption = {
+  // dateStart: string
+  // dateEnd: string
+  dateRange: GetListenAndTeachStatisticsParams['range_type']
+  selectedName: string
+  defaultIndex: number
+  visible: boolean
+  keyword: string
+  search: () => void
+}
+
+const searchOption = reactive<SearchOption>({
+  // dateStart: '',
+  // dateEnd: '',
+  dateRange: '',
   selectedName: '请选择',
   defaultIndex: 0,
   visible: false,
@@ -25,16 +39,19 @@ const searchOption = reactive({
   },
 })
 
+const semesterSelectOptions = semesterRangeUseName()
+
 async function reqList({ page }) {
   let pageSize = 10
   return getDingListenRecord({
-    date_start: searchOption.dateStart,
-    date_end: searchOption.dateEnd,
+    // date_start: searchOption.dateStart,
+    // date_end: searchOption.dateEnd,
+    range_type: searchOption.dateRange,
     search_name: searchOption.keyword,
     offset: page * pageSize,
     list_mun: pageSize,
   }).then((res) => {
-    return res.data.courses.map((resultItem) => {
+    return (res.data.courses || []).map((resultItem) => {
       return {
         id: resultItem.id,
         dateTime: resultItem.lesson_date.split('T')[0] + ' ' + resultItem.start_time,
@@ -58,11 +75,12 @@ function to(item: DingListenItem) {
 </script>
 <template>
   <SemesterRangePicker
-    v-model:start="searchOption.dateStart"
-    v-model:end="searchOption.dateEnd"
     v-model:label="searchOption.selectedName"
     v-model:visible="searchOption.visible"
+    v-model:dateRange="searchOption.dateRange"
     :defaultIndex="searchOption.defaultIndex"
+    :options="semesterSelectOptions"
+    :noCustom="true"
     @ok="searchOption.search"
   ></SemesterRangePicker>
   <div class="EvaluationRecordList">
