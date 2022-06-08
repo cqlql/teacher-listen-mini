@@ -89,7 +89,7 @@ export default function useCreateListen({ toastFail, toastSuccess, subjectData }
       /**'10:20:00'; // 开课时间 */
       start_time: startTime[1],
       /**'1016730'; // 教室ID, 与 `class_room_name`选一个参数提交 */
-      class_room_id: formVal.class_room_id,
+      class_room_id: formVal.class_room_id || '0',
       /**'录播室'; // 教室名（上课地点） */
       class_room_name: formVal.class_room_id ? undefined : formVal.class_room_name,
       /**'4679665164583612636'; // 科组ID */
