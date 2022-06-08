@@ -27,15 +27,14 @@ const searchOption = reactive({
 
 async function reqList({ page }) {
   let pageSize = 10
-
   return getDingListenRecord({
     date_start: searchOption.dateStart,
     date_end: searchOption.dateEnd,
-    keyword: searchOption.keyword,
+    search_name: searchOption.keyword,
     offset: page * pageSize,
     list_mun: pageSize,
   }).then((res) => {
-    return res.courses.map((resultItem) => {
+    return res.data.courses.map((resultItem) => {
       return {
         id: resultItem.id,
         dateTime: resultItem.lesson_date.split('T')[0] + ' ' + resultItem.start_time,
@@ -52,7 +51,6 @@ async function reqList({ page }) {
 
 function to(item: DingListenItem) {
   let urlParams = `?id=${item.id}&name=${item.name}&dateTime=${item.dateTime}&className=${item.className}&teacher=${item.teacher}&videoUrl=${item.videoUrl}`
-  console.log('🚀 -- to -- urlParams', urlParams)
   Taro.navigateTo({
     url: '/pages/ListenEvaluationDetails/DingListenDetails' + urlParams,
   })

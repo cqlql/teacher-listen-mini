@@ -17,6 +17,7 @@ export default function useSemesterDate() {
   let prevYearStart = nowDate
   let prevYearEnd = nowDate
 
+  // 当前是否是上学期
   let isFirst = true
   // let isSecond = false
   // let isHoliday = true

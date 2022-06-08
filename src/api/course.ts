@@ -316,26 +316,36 @@ export function getFullCourseStatistics(
   })
 }
 
-// interface GetDingListenRecordParams {}
+interface GetDingListenRecordParams {
+  date_start: string
+  date_end: string
+  search_name: string
+  offset: number
+  list_mun: number
+}
 interface GetDingListenRecordResult {
-  courses: {
-    class_name: string
-    grade_name: string
-    id: string
-    lesson_date: string
-    name: string
-    start_time: string
-    user_name: string
+  data: {
+    courses: {
+      class_name: string
+      grade_name: string
+      id: string
+      lesson_date: string
+      name: string
+      start_time: string
+      user_name: string
 
-    recording_resources: {
-      file_id: string
-      play_url: string
+      recording_resources: {
+        file_id: string
+        play_url: string
+      }[]
     }[]
-  }[]
+  }
 }
 
 /**订订听课记录 */
-export function getDingListenRecord(data: any): Promise<GetDingListenRecordResult> {
+export function getDingListenRecord(
+  data: GetDingListenRecordParams,
+): Promise<GetDingListenRecordResult> {
   return httpV1.get({
     url: '/lecture/v1/courses_with_recording_resource',
     data,
