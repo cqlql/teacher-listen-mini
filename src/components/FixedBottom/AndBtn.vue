@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts" setup>
-// import FixedBottom from './index.vue'
+import FixedBottom from './index.vue'
 defineProps<{
   btnText?: string
 }>()

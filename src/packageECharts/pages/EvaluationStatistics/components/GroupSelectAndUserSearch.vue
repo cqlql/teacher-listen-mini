@@ -79,5 +79,3 @@ function confirm({ selectedValue: values, selectedOptions }) {
     <!-- <nut-popup position="bottom" :style="{ height: '20%' }" v-model:visible="visible"> </nut-popup> -->
   </div>
 </template>
-
-<style lang="scss"></style>

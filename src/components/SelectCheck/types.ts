@@ -4,10 +4,11 @@ type OptionType = {
 
 export interface PropsType {
   visible: boolean
-  modelValue: string
+  modelValue?: string
   options: OptionType[] | []
   idProp: string
   nameProp: string
+  loading?: boolean
 
   popTitle?: string
   placeholder?: string

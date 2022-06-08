@@ -66,6 +66,12 @@
   </div>
 </template>
 
+<script lang="ts">
+export default {
+  name: 'LoginIndex',
+}
+</script>
+
 <script lang="ts" setup>
 import { SearchBar } from '@nutui/nutui-taro'
 import useToast from '@/hooks/useToast'

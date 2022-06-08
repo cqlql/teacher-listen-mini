@@ -28,6 +28,9 @@ import SelectCheck from '@/components/SelectCheck/SelectCheck.vue'
 </script>
 <template>
   <div style="margin: 10px">
+    <BoxView title="Calendar">
+      <Calendar></Calendar>
+    </BoxView>
     <BoxView title="SelectCheck">
       <SelectCheck></SelectCheck>
     </BoxView>
@@ -55,10 +58,10 @@ import SelectCheck from '@/components/SelectCheck/SelectCheck.vue'
       <BottomOkButtons></BottomOkButtons>
     </BoxView>
     <BoxView title="SearchBarSelect2">
-      <SearchBarSelect2 :isExpanded="false"></SearchBarSelect2>
+      <SearchBarSelect2 selected-name="一般" model-value="1" :isExpanded="false"></SearchBarSelect2>
     </BoxView>
     <BoxView title="SearchBarSelect">
-      <SearchBarSelect></SearchBarSelect>
+      <SearchBarSelect searchValue="1" selectedValue="1" :isExpanded="false"></SearchBarSelect>
     </BoxView>
     <BoxView title="IconLink">
       <IconLink icon="pdf" type="custom" style="margin-right: 5px">xxx.pdf</IconLink>
@@ -155,7 +158,7 @@ import SelectCheck from '@/components/SelectCheck/SelectCheck.vue'
 
     <BoxView title="InfoBox">
       <div style="background: #f6f6f6">
-        <InfoBox></InfoBox>
+        <InfoBox :data="[{ value: '1', label: '标签' }]" title="infoBox"></InfoBox>
       </div>
     </BoxView>
     <BoxView title="ButtonBlock">
@@ -164,9 +167,6 @@ import SelectCheck from '@/components/SelectCheck/SelectCheck.vue'
 
     <BoxView title="TabButtons">
       <TabButtonsDemo></TabButtonsDemo>
-    </BoxView>
-    <BoxView>
-      <Calendar></Calendar>
     </BoxView>
 
     <BoxView>
@@ -185,7 +185,7 @@ import SelectCheck from '@/components/SelectCheck/SelectCheck.vue'
       <MenuAndSearch></MenuAndSearch>
     </BoxView>
     <BoxView title="ChartBarCustom">
-      <ChartBarCustom></ChartBarCustom>
+      <ChartBarCustom :data="[]"></ChartBarCustom>
     </BoxView>
 
     <BoxView>

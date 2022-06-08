@@ -59,7 +59,7 @@ if (process.env.NODE_ENV !== 'production') {
       <FormItem label="科目">
         <SelectCheck
           v-model="form.subject_id"
-          :options="subjectData[form.period]"
+          :options="(subjectData[form.period] as any)"
           idProp="subject_id"
           nameProp="subject_name"
           placeholder="请选择科目"

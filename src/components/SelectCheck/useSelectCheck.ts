@@ -14,7 +14,7 @@ export default function useSelectCheck(props: PropsType, emit: EmitType) {
   watch(
     () => props.modelValue,
     (v) => {
-      selectedId.value = v
+      selectedId.value = v || ''
     },
     {
       immediate: true,

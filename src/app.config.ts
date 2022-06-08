@@ -57,8 +57,6 @@ export default {
     {
       root: 'packageECharts',
       pages: [
-        // 评课统计
-        'pages/EvaluationStatistics/EvaluationStatistics',
         // 我的评课统计
         'pages/EvaluationStatistics/MyEvaluationStatistics',
         // 科组评课统计

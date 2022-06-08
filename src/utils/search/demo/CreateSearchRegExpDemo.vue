@@ -11,7 +11,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import createSearchRegExp from '@/utils/search/create-search-regExp'
+import createSearchRegExp from '@/utils/search/create-search-regexp'
 
 const keyword = ref('收')
 
