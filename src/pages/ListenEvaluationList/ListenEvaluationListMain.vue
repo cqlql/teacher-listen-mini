@@ -25,9 +25,9 @@ const searchOption = reactive({
 async function reqList({ page }) {
   let pageSize = 10
   return getListenAndTeachStatistics({
-    date_start: searchOption.dateStart,
-    date_end: searchOption.dateEnd,
-    keyword: searchOption.keyword,
+    start_date: searchOption.dateStart,
+    end_date: searchOption.dateEnd,
+    search_name: searchOption.keyword,
     offset: page * pageSize,
     list_mun: pageSize,
   }).then((res) => {

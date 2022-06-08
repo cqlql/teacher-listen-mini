@@ -554,9 +554,8 @@ export interface GetListenAndTeachStatisticsParams {
     | 'first_semester'
     | 'second_semester'
     | ''
-  date_start?: string
-  date_end?: string
-  keyword?: string
+  start_date?: string
+  end_date?: string
   /** 分页查询起始位置 起始值 0 */
   offset?: number
   /** 分页查询每页条数  */
@@ -565,6 +564,8 @@ export interface GetListenAndTeachStatisticsParams {
   user_id?: string
   /** 科组ID*/
   group_id?: string
+  /**老师名称过滤 */
+  search_name?: string
 }
 
 export interface GetListenAndTeachStatisticsResult {
