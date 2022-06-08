@@ -90,11 +90,7 @@ useDidShow(() => {
   }
 
   .nut-tabs__content {
-    position: absolute;
-    top: 46px;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    height: calc(100vh - 46px);
   }
 }
 

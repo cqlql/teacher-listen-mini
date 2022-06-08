@@ -61,11 +61,7 @@ page {
   // padding: 10px;
 
   & > .nut-tabs > .nut-tabs__content {
-    position: absolute;
-    top: 35px;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    height: calc(100vh - 35px);
     & > .nut-tabpane {
       padding: 0;
       // background-color: transparent;
