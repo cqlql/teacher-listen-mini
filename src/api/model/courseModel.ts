@@ -74,8 +74,8 @@ export interface RequestOpenCourseParams {
   lesson_date: string
   /**'10:20:00'; // 开课时间 */
   start_time: string
-  /**'1016730'; // 教室ID, 与 `class_room_name`选一个参数提交 */
-  class_room_id?: string
+  /**'教室ID, 如果只有 `class_room_name`，需提交 '0' */
+  class_room_id: '0' | string
   /**'录播室'; // 教室名（上课地点） */
   class_room_name?: string
   /**'4679665164583612636'; // 科组ID */
