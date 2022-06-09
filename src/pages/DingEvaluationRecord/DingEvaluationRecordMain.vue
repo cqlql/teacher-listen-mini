@@ -4,7 +4,6 @@ import { reactive, ref } from 'vue'
 import SemesterRangePicker from '../ListenEvaluationRecord/comp/SemesterRangePicker.vue'
 import SearchBarSelect2 from '@/components/SearchBarSelect2.vue'
 import { getDingListenRecord } from '@/api/course'
-import Taro from '@tarojs/taro'
 
 import EvaluationItem from '../ListenEvaluationRecord/comp/EvaluationItem.vue'
 import type { DingListenItem } from '../ListenEvaluationRecord/types'
@@ -41,7 +40,7 @@ const searchOption = reactive<SearchOption>({
 
 const semesterSelectOptions = semesterRangeUseName()
 
-async function reqList({ page }) {
+async function reqList({ page }): Promise<DingListenItem[]> {
   let pageSize = 10
   return getDingListenRecord({
     // date_start: searchOption.dateStart,
@@ -60,16 +59,26 @@ async function reqList({ page }) {
         name: resultItem.name,
         teacher: resultItem.user_name,
         className: resultItem.grade_name + resultItem.class_name,
-        videoUrl: resultItem.recording_resources[0]?.play_url,
+        videos: resultItem.recording_resources,
       }
     })
   })
 }
 
 function to(item: DingListenItem) {
-  let urlParams = `?id=${item.id}&name=${item.name}&dateTime=${item.dateTime}&className=${item.className}&teacher=${item.teacher}&videoUrl=${item.videoUrl}`
-  Taro.navigateTo({
-    url: '/pages/ListenEvaluationDetails/DingListenDetails' + urlParams,
+  // let urlParams = `?id=${item.id}&name=${item.name}&dateTime=${item.dateTime}&className=${
+  //   item.className
+  // }&teacher=${item.teacher}&videoUrl=${encodeURIComponent(item.videoUrl)}`
+  // Taro.navigateTo({
+  //   url: '/pages/ListenEvaluationDetails/DingListenDetails' + urlParams,
+  // })
+
+  wx.navigateTo({
+    url: '/pages/ListenEvaluationDetails/DingListenDetails',
+    success: function (res) {
+      // 向子页面传值
+      res.eventChannel.emit('acceptPageParams', item)
+    },
   })
 }
 </script>

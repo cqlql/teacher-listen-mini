@@ -1,31 +1,59 @@
 <script lang="ts" setup>
 import InfoBox from '@/components/InfoBox.vue'
-import useRouterParams from '@/hooks/useRouterParams'
+import usePage from '@/hooks/usePage'
+import { ref } from 'vue'
 import type { DingListenItem } from '../ListenEvaluationRecord/types'
 
-let courseInfo = useRouterParams<DingListenItem>()
-
-let courseInfoData = [
+let { pageOn } = usePage()
+// let courseInfoData = ref<{ label: string; value: string }[]>([])
+let courseInfoData = ref([
   {
     label: '授课名称',
-    value: courseInfo.name,
+    value: '',
   },
 
   {
     label: '授课人',
-    value: courseInfo.teacher,
+    value: '',
   },
 
   {
     label: '授课班级',
-    value: courseInfo.className,
+    value: '',
   },
 
   {
     label: '授课时间',
-    value: courseInfo.dateTime,
+    value: '',
   },
-]
+])
+
+const videos = ref<DingListenItem['videos']>([])
+
+pageOn<DingListenItem>('acceptPageParams', (data) => {
+  videos.value = data.videos
+  courseInfoData.value = [
+    {
+      label: '授课名称',
+      value: data.name,
+    },
+
+    {
+      label: '授课人',
+      value: data.teacher,
+    },
+
+    {
+      label: '授课班级',
+      value: data.className,
+    },
+
+    {
+      label: '授课时间',
+      value: data.dateTime,
+    },
+  ]
+})
 </script>
 <template>
   <div class="DingListenDetails">
@@ -34,7 +62,9 @@ let courseInfoData = [
     <!-- </div> -->
     <div class="video-wrapper">
       <div class="title">钉钉评课视频：</div>
-      <video class="video" :src="courseInfo.videoUrl"></video>
+      <div v-for="v of videos" :key="v.file_id" class="video-item">
+        <video class="video" :src="v.play_url"></video>
+      </div>
     </div>
   </div>
 </template>
@@ -60,8 +90,13 @@ page {
       font-weight: bold;
     }
 
+    .video-item + .video-item {
+      margin-top: 5px;
+    }
+
     .video {
       width: 100%;
+      display: block;
     }
   }
 }
