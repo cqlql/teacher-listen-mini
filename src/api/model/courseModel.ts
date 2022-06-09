@@ -47,6 +47,7 @@ export interface LessonScoreItem {
   dimension_id: string //主维度ID
   dimension_name: string //主维度
   dimension_item_id: string //维度子项 ，0 时为主维度ID
+  dimension_item_name: string
   score: string //打分，dimensionitemId = 0，记录平均分
 }
 

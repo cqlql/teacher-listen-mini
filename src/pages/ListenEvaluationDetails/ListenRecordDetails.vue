@@ -89,7 +89,7 @@ getRecordList({
       (item) => {
         return {
           type: '',
-          name: item.dimension_item_id,
+          name: item.dimension_item_name,
         }
       },
     )
