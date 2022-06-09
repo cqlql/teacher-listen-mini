@@ -23,11 +23,12 @@ if (process.env.NODE_ENV !== 'production') {
   let url = ''
   let tabUrl = ''
 
-  tabUrl = '/pages/profile/index'
-  tabUrl = '/pages/demo/DemoLot'
-  tabUrl = '/pages/ListenEvaluationRecord/ListenEvaluationRecord'
+  // tabUrl = '/pages/profile/index'
+  // tabUrl = '/pages/demo/DemoLot'
+  // tabUrl = '/pages/ListenEvaluationRecord/ListenEvaluationRecord'
 
-  url = '/pages/DingEvaluationRecord/DingEvaluationRecord'
+  // url = '/pages/DingEvaluationRecord/DingEvaluationRecord'
+  url = '/packageECharts/pages/EvaluationStatistics/AllEvaluationStatistics'
 
   if (url) {
     Taro.navigateTo({ url })

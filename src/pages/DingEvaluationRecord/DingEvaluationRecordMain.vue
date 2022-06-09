@@ -9,6 +9,7 @@ import EvaluationItem from '../ListenEvaluationRecord/comp/EvaluationItem.vue'
 import type { DingListenItem } from '../ListenEvaluationRecord/types'
 import { semesterRangeUseName } from '@/utils/date/semester-range'
 import type { GetListenAndTeachStatisticsParams } from '@/api/model/courseModel'
+import Taro from '@tarojs/taro'
 
 const vListLoad = ref<{
   firstPageLoad: () => void
@@ -73,7 +74,7 @@ function to(item: DingListenItem) {
   //   url: '/pages/ListenEvaluationDetails/DingListenDetails' + urlParams,
   // })
 
-  wx.navigateTo({
+  Taro.navigateTo({
     url: '/pages/ListenEvaluationDetails/DingListenDetails',
     success: function (res) {
       // 向子页面传值

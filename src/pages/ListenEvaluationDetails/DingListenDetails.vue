@@ -28,10 +28,22 @@ let courseInfoData = ref([
   },
 ])
 
-const videos = ref<DingListenItem['videos']>([])
+interface VideoResult {
+  file_id: string
+  play_url: string
+  isWidth?: boolean
+}
+
+const videos = ref<VideoResult[]>([])
 
 pageOn<DingListenItem>('acceptPageParams', (data) => {
-  videos.value = data.videos
+  videos.value = data.videos.map((v) => {
+    return {
+      file_id: v.file_id,
+      play_url: v.play_url,
+      isWidth: true,
+    }
+  })
   courseInfoData.value = [
     {
       label: '授课名称',
@@ -54,6 +66,10 @@ pageOn<DingListenItem>('acceptPageParams', (data) => {
     },
   ]
 })
+
+function loadedmetadata(params, video) {
+  video.isWidth = params.detail.width > params.detail.height
+}
 </script>
 <template>
   <div class="DingListenDetails">
@@ -63,7 +79,12 @@ pageOn<DingListenItem>('acceptPageParams', (data) => {
     <div class="video-wrapper">
       <div class="title">钉钉评课视频：</div>
       <div v-for="v of videos" :key="v.file_id" class="video-item">
-        <video class="video" :src="v.play_url"></video>
+        <video
+          class="video"
+          :src="v.play_url"
+          :direction="v.isWidth ? 90 : 0"
+          @loadedmetadata="(params) => loadedmetadata(params, v)"
+        ></video>
       </div>
     </div>
   </div>

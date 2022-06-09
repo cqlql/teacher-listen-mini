@@ -24,6 +24,8 @@ module.exports = defineConfig({
     'plugin:prettier/recommended',
   ],
   rules: {
+    'no-console': ['error', { allow: ['warn', 'error'] }],
+
     'vue/script-setup-uses-vars': 'error',
     '@typescript-eslint/ban-ts-ignore': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',

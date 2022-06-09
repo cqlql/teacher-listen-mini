@@ -316,6 +316,28 @@ export function getFullCourseStatistics(
   })
 }
 
+interface GetSubjectGroupsStatisticsParams {
+  range_type?: GetListenAndTeachStatisticsParams['range_type']
+}
+interface GetSubjectGroupsStatisticsResult {
+  course_frequence: {
+    evaluation_group_id: string
+    evaluation_group_name: string
+    teaching_num: string
+    listen_num: string
+  }[]
+}
+
+/**科组听授课次数统计 */
+export function getSubjectGroupsStatistics(
+  data: GetSubjectGroupsStatisticsParams,
+): Promise<GetSubjectGroupsStatisticsResult> {
+  return httpV1.get({
+    url: '/lecture/v1/evaluation_count_by_subject_group',
+    data,
+  })
+}
+
 interface GetDingListenRecordParams {
   // date_start: string
   // date_end: string
