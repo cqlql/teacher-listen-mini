@@ -18,7 +18,7 @@ export default function useSubjectGroupBar() {
         barDataSource.push([item.evaluation_group_name, item.listen_num, item.teaching_num])
       })
       const totalNumber = barDataSource.length
-      const showNumber = 3
+      const showNumber = 4
       if (barDataSource.length) {
         barDataSource.unshift(['group', '听课', '授课'])
 
@@ -32,6 +32,9 @@ export default function useSubjectGroupBar() {
           dataset: {
             source: barDataSource,
           },
+          grid: {
+            height: '52%',
+          },
           xAxis: {
             type: 'category',
             axisTick: {
@@ -39,6 +42,7 @@ export default function useSubjectGroupBar() {
             },
             axisLabel: {
               interval: 0,
+              rotate: 20,
             },
           },
           yAxis: {

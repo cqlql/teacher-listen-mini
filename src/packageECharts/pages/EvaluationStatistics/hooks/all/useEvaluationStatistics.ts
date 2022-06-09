@@ -1,8 +1,4 @@
-import {
-  getEvaluationStatistics,
-  getSubjectGroups,
-  getSubjectGroupsMembers,
-} from '@/api/course'
+import { getEvaluationStatistics, getSubjectGroups, getSubjectGroupsMembers } from '@/api/course'
 import type {
   GetListenAndTeachStatisticsParams,
   GetSubjectGroupsResult,
@@ -84,11 +80,9 @@ export default function useEvaluationStatistics(
 
   function updateMembersByKeyword() {
     const keyword = evaluationState.keyword
-    subjectGroupMembersSearchResults.value = subjectGroupMembers.value.filter(
-      (member) => {
-        return testKeyword(keyword, member.name)
-      },
-    )
+    subjectGroupMembersSearchResults.value = subjectGroupMembers.value.filter((member) => {
+      return testKeyword(keyword, member.name)
+    })
   }
 
   return {
