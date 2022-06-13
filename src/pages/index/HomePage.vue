@@ -28,7 +28,8 @@ if (process.env.NODE_ENV !== 'production') {
   // tabUrl = '/pages/ListenEvaluationRecord/ListenEvaluationRecord'
 
   // url = '/pages/DingEvaluationRecord/DingEvaluationRecord'
-  url = '/packageECharts/pages/EvaluationStatistics/AllEvaluationStatistics'
+  // url = '/packageECharts/pages/EvaluationStatistics/AllEvaluationStatistics'
+  tabUrl = '/pages/ToListenClass/ToListenClass'
 
   if (url) {
     Taro.navigateTo({ url })
