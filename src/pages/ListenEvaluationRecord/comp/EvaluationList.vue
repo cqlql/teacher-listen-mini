@@ -87,8 +87,7 @@ async function reqList({ page }) {
 }
 
 function to(item: EvaluationDataItem) {
-  let urlParams = `?id=${item.id}&name=${item.name}&dateTime=${item.dateTime}&className=${item.className}&teacher=${item.teacher}&userId=${item.userId}`
-  console.log('🚀 -- to -- urlParams', urlParams)
+  let urlParams = `?id=${item.id}&name=${item.name}&dateTime=${item.dateTime}&className=${item.className}&teacher=${item.teacher}`
   Taro.navigateTo({
     url:
       props.type === 'listen'

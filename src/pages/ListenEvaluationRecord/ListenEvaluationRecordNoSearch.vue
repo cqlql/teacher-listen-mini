@@ -40,8 +40,8 @@ const tabList = ref([
 
 getListenAndTeachStatistics({
   user_id: routeQuery.userId,
-  date_start: routeQuery.dateStart,
-  date_end: routeQuery.dateEnd,
+  start_date: routeQuery.dateStart,
+  end_date: routeQuery.dateEnd,
 }).then((res) => {
   let user = res.course_frequence_list[0]
   if (user) {

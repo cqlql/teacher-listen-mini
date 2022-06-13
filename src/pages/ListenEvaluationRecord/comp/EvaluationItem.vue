@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import TagFlag from '@/components/Tag/TagFlag.vue'
-import type { EvaluationDataItem } from '../types'
+import type { DingListenItem, EvaluationDataItem } from '../types'
 
 defineProps<{
-  data: EvaluationDataItem
+  data: EvaluationDataItem | DingListenItem
 }>()
 </script>
 <template>

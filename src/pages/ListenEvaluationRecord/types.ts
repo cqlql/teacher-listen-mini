@@ -6,9 +6,17 @@ export interface EvaluationDataItem {
   name: string
   teacher: string
   className: string
+  userId: string
 }
 
-export interface DingListenItem extends EvaluationDataItem {
+export interface DingListenItem {
+  id: string
+  dateTime: string
+  type?: string
+  subjectShort?: string
+  name: string
+  teacher: string
+  className: string
   videos: {
     file_id: string
     play_url: string
@@ -22,6 +30,7 @@ interface SearchItem {
   selectedName: string
   defaultIndex: number
   visible: boolean
+  userId?: string
   search: () => void
 }
 
