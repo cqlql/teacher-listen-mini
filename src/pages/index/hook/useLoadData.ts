@@ -6,40 +6,40 @@ import { ref } from 'vue'
 
 function useGetList(weekDate: Ref<Dayjs>) {
   const myCourseList = ref([
-    {
-      sujectTag: '',
-      name: '',
-      user_id: '',
-      user_name: '',
-      course_id: '',
-      subject_id: '',
-      grade_id: '',
-      // startDate: '',
-      start_time: '',
-      end_time: '',
-      school_name: '',
-      campus_name: '',
-      grade_name: '',
-      class_name: '',
-      class_room_name: '',
-      live_url: '',
-      files: [
-        {
-          id: '',
-          name: '',
-          url: '',
-        },
-      ],
-      status: {
-        id: '',
-        type: '',
-        label: '',
-      },
-      type: {
-        type: '',
-        label: '',
-      },
-    },
+    // {
+    //   sujectTag: '',
+    //   name: '',
+    //   user_id: '',
+    //   user_name: '',
+    //   course_id: '',
+    //   subject_id: '',
+    //   grade_id: '',
+    //   // startDate: '',
+    //   start_time: '',
+    //   end_time: '',
+    //   school_name: '',
+    //   campus_name: '',
+    //   grade_name: '',
+    //   class_name: '',
+    //   class_room_name: '',
+    //   live_url: '',
+    //   files: [
+    //     {
+    //       id: '',
+    //       name: '',
+    //       url: '',
+    //     },
+    //   ],
+    //   status: {
+    //     id: '',
+    //     type: '',
+    //     label: '',
+    //   },
+    //   type: {
+    //     type: '',
+    //     label: '',
+    //   },
+    // },
   ])
 
   function reqList() {
