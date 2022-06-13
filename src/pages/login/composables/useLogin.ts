@@ -17,9 +17,10 @@ export default function useLogin(
     wkno,
     password,
     async login() {
+      const campusId = selectedCampus.value.campus_id_str
       const result = await login(
         {
-          campus_id_str: selectedCampus.value.campus_id_str,
+          campus_id_str: campusId,
           no: wkno.value,
           password: password.value,
           role: 2,
@@ -32,6 +33,7 @@ export default function useLogin(
       )
       setStorage('token', result.token)
       setStorage('userId', result.uid)
+      setStorage('campusId', campusId)
       Taro.switchTab({
         url: '/pages/index/HomePage',
       })

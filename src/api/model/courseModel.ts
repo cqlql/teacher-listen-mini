@@ -405,7 +405,7 @@ export interface DimensionListParams {
   grade_id: string
 
   /**校区ID*/
-  campus_id?: string
+  campus_id: string
 }
 
 export interface DimensionListResult {

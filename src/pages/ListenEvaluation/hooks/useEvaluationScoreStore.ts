@@ -1,5 +1,6 @@
 import { dimensionList } from '@/api/course'
 import type { GetEvaluationListResult } from '@/api/model/courseModel'
+import { getStorage } from '@/utils/storage'
 import { ref } from 'vue'
 import type { EvaluationScore, ScoreItem } from '../types'
 import type { RouteParams } from './useListenEvaluationStore'
@@ -10,6 +11,7 @@ function initEvaluationScore(
   return dimensionList({
     subject_id: routeParams.subject_id,
     grade_id: routeParams.grade_id,
+    campus_id: getStorage('campusId'),
   }).then((res) => {
     const record: Record<string, any> = {}
     const scoreList: ScoreItem[] = []

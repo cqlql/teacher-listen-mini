@@ -1,11 +1,11 @@
 import Taro from '@tarojs/taro'
 
 /**
- * pageTemp: 页面跳转临时参数，比如用于 wx.navigateBack 传参数
- *
+ * pageTemp: 页面跳转临时参数，比如用于 wx.navigateBack 传参数*
  * userId 登录用户ID
+ * campusId 登录用户所属校区
  * */
-type keyName = 'openid' | 'token' | 'userId' | 'pageTemp'
+type keyName = 'openid' | 'token' | 'userId' | 'pageTemp' | 'campusId'
 
 /**
  *
