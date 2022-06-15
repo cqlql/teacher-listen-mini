@@ -23,7 +23,7 @@ const dateValue = computed(() => {
 })
 
 function close() {
-  emits('update:visible', false)
+  updateVisible(false)
 }
 
 function change(d: DateItem) {
@@ -35,10 +35,14 @@ function select() {
   close()
 }
 
+function updateVisible(visible: boolean) {
+  emits('update:visible', visible)
+}
+
 defineExpose(vOneWeekRef)
 </script>
 <template>
-  <nut-popup position="bottom" :visible="visible" @close="close">
+  <nut-popup position="bottom" :visible="visible" @update:visible="updateVisible">
     <OneWeek
       :value="dateValue"
       @change="change"
