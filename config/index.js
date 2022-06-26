@@ -71,27 +71,49 @@ const config = {
     options: {},
   },
   framework: 'vue3',
+  compiler: 'webpack5',
   alias: {
     '@': resolve('src'),
+    '#': resolve('types'),
+  },
+  cache: {
+    enable: false, // Webpack 持久化缓存配置，建议开启。默认配置请参考：https://docs.taro.zone/docs/config-detail#cache
+  },
+  sass: {
+    data: `
+    @import "~@/styles/variables.scss";
+    @import "@nutui/nutui-taro/dist/styles/variables.scss";
+    `,
   },
   mini: {
     miniCssExtractPluginOption: {
       //忽略css文件引入顺序
       ignoreOrder: true,
     },
-
     compile: {
       exclude: [
         // echarts 不编译
         (modulePath) => modulePath.indexOf('ec-canvas/echarts') >= 0,
-        // path.resolve(__dirname, '..', 'src/packageA/components-weapp/ec-canvas/echarts.js'),
       ],
     },
+    // 自定义 Webpack 配置
+    webpackChain(chain) {
+      // ts 检查
+      webpackforkTsChecker(chain)
 
+      // echarts 的调用方式，https://webpack.docschina.org/configuration/externals/
+      chain.merge({
+        externals: {
+          echarts: 'commonjs ../../components-weapp/ec-canvas/echarts',
+        },
+      })
+    },
     postcss: {
       pxtransform: {
         enable: true,
-        config: {},
+        config: {
+          selectorBlackList: ['nut-'],
+        },
       },
       url: {
         enable: true,
@@ -107,22 +129,11 @@ const config = {
         },
       },
     },
-    // 自定义 Webpack 配置
-    webpackChain(chain) {
-      // ts 检查
-      webpackforkTsChecker(chain)
-
-      // echarts 的调用方式，https://webpack.docschina.org/configuration/externals/
-      chain.merge({
-        externals: {
-          echarts: 'commonjs ../../components-weapp/ec-canvas/echarts',
-        },
-      })
-    },
   },
   h5: {
     publicPath: '/',
     staticDirectory: 'static',
+    esnextModules: ['nutui-taro'],
     postcss: {
       autoprefixer: {
         enable: true,
@@ -141,9 +152,6 @@ const config = {
       // ts 检查
       webpackforkTsChecker(chain)
     },
-  },
-  sass: {
-    resource: resolve('src/styles/variables.scss'),
   },
 }
 
