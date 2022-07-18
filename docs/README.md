@@ -5,14 +5,6 @@ heroText: false
 tagline: false
 ---
 
-## 待办
-
-once-promise 泛型
-
-上学期下学期 本月本周支持
-
-## 问题速记
-
 ## 导航
 
 <HomeView></HomeView>
