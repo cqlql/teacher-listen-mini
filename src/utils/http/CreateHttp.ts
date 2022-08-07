@@ -31,6 +31,11 @@ interface RequestOptions {
   showErrorToast: boolean
 
   resultTransform: (data: any) => ResultType
+
+  // 是否开启 RefreshToken 功能
+  allowRefreshToken: boolean
+
+  refreshToken: () => Promise<any>
 }
 
 interface RequestOptionsNullable {
@@ -48,7 +53,11 @@ interface RequestOptionsNullable {
   // 是否显示错误消息提示
   showErrorToast?: boolean
 
+  allowRefreshToken?: boolean
+
   resultTransform?: (data: any) => ResultType
+
+  refreshToken?: () => Promise<any>
 }
 
 export default class CreateHttp {
@@ -62,7 +71,9 @@ export default class CreateHttp {
         withToken: true,
         fail() {},
         showErrorToast: true,
+        allowRefreshToken: false,
         resultTransform: (data: any) => data,
+        async refreshToken() {},
       },
       ...requestOptions,
     }
@@ -84,9 +95,10 @@ export default class CreateHttp {
       header[TOKEN_KEY] = getStorage('token')
     }
 
-    requestConfig.url = newRequestOptions.apiUrl + newRequestOptions.urlPrefix + requestConfig.url
-
-    const res = await request(requestConfig)
+    const res = await request({
+      ...requestConfig,
+      url: newRequestOptions.apiUrl + newRequestOptions.urlPrefix + requestConfig.url,
+    })
 
     const { code, message, result } = newRequestOptions.resultTransform(res.data)
 
@@ -94,7 +106,16 @@ export default class CreateHttp {
       return result
     }
 
+    // 处理 token 过期
     if (code === 401) {
+      // RefreshToken 情况
+      if (newRequestOptions.allowRefreshToken) {
+        await newRequestOptions.refreshToken()
+        // 重新请求
+        return this.request(requestConfig, requestOptions)
+      }
+
+      // 不需要刷新token情况
       setStorage('token', '')
       Taro.redirectTo({
         url: '/pages/login/auth',

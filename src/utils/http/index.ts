@@ -1,3 +1,4 @@
+import { setStorage } from '../storage'
 import CreateHttp from './CreateHttp'
 
 const apiUrl = 'https://app.shenduedu.com'
@@ -44,6 +45,38 @@ export const httpV1 = new CreateHttp({
 
     return {
       code: codeMap[data.status] || data.status,
+      message: data.message,
+      result: data.result,
+    }
+  },
+})
+
+export const httpV2 = new CreateHttp({
+  apiUrl,
+  // urlPrefix: '/api',
+
+  allowRefreshToken: true,
+
+  async refreshToken() {
+    const { token } = await httpV2.post(
+      {
+        url: '/api/refreshToken',
+        data: {
+          refreshToken: 'xxxxx',
+        },
+      },
+      {
+        allowRefreshToken: false,
+      },
+    )
+
+    setStorage('token', token)
+  },
+
+  // 结果数据格式统一
+  resultTransform(data) {
+    return {
+      code: data.status,
       message: data.message,
       result: data.result,
     }
