@@ -31,18 +31,12 @@ export function login(data: LoginParams, config: RequestOptionsNullable): Promis
       url: '/api/100',
       data,
     },
-    config,
+    {
+      withToken: false,
+      ...config,
+    },
   )
 }
-
-/**
- * 直接登录，或者判断是否登录
- *
- */
-// export default function getOpenid(data: { appId: string; js_code: string }): Promise<LoginResult>;
-// export default function getOpenid(data) {
-//   return post('/applets_login/getopenid', data);
-// }
 
 export interface Campus {
   // campus_id: string;

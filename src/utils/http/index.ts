@@ -68,6 +68,7 @@ export const httpV2 = new CreateHttp({
       },
       {
         allowRefreshToken: false,
+        withToken: false,
       },
     )
 
