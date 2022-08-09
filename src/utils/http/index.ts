@@ -77,6 +77,7 @@ export const httpV2 = new CreateHttp({
 
   // 结果数据格式统一
   resultTransform(data) {
+    data = data || { Basis: {} }
     return {
       code: data.Basis.Code,
       message: data.Basis.Msg,
