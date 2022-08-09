@@ -1,7 +1,8 @@
-import { setStorage } from '../storage'
+import { getStorage, setStorage } from '../storage'
 import CreateHttp from './CreateHttp'
 
-const apiUrl = 'https://app.shenduedu.com'
+// const apiUrl = 'https://app.shenduedu.com'
+const apiUrl = 'http://ting.api.weifos.com'
 
 /*
 code:'200',
@@ -58,11 +59,11 @@ export const httpV2 = new CreateHttp({
   allowRefreshToken: true,
 
   async refreshToken() {
-    const { token } = await httpV2.post(
+    const { accessToken } = await httpV2.post(
       {
-        url: '/api/refreshToken',
+        url: '/api/101',
         data: {
-          refreshToken: 'xxxxx',
+          refreshToken: getStorage('refreshToken'),
         },
       },
       {
@@ -70,15 +71,15 @@ export const httpV2 = new CreateHttp({
       },
     )
 
-    setStorage('token', token)
+    setStorage('token', accessToken)
   },
 
   // 结果数据格式统一
   resultTransform(data) {
     return {
-      code: data.status,
-      message: data.message,
-      result: data.result,
+      code: data.Basis.Code,
+      message: data.Basis.Msg,
+      result: data.Result,
     }
   },
 })

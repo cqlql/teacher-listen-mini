@@ -38,7 +38,7 @@ interface RequestOptions {
   refreshToken: () => Promise<any>
 }
 
-interface RequestOptionsNullable {
+export interface RequestOptionsNullable {
   apiUrl?: string // 'http://test.io',
   urlPrefix?: string // '/api',
 
@@ -120,6 +120,7 @@ export default class CreateHttp {
 
       // 不需要刷新token情况
       setStorage('token', '')
+      setStorage('refreshToken', '')
       Taro.redirectTo({
         url: '/pages/login/auth',
       })

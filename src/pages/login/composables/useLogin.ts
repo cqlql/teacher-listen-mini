@@ -20,10 +20,8 @@ export default function useLogin(
       const campusId = selectedCampus.value.campus_id_str
       const result = await login(
         {
-          campus_id_str: campusId,
-          no: wkno.value,
-          password: password.value,
-          role: 2,
+          loginName: wkno.value,
+          pwd: password.value,
         },
         {
           fail(e) {
@@ -31,8 +29,11 @@ export default function useLogin(
           },
         },
       )
-      setStorage('token', result.token)
-      setStorage('userId', result.uid)
+
+      setStorage('token', result.accessToken)
+      setStorage('refreshToken', result.refreshtoken)
+
+      // setStorage('userId', result.uid)
       setStorage('campusId', campusId)
       Taro.switchTab({
         url: '/pages/index/HomePage',
