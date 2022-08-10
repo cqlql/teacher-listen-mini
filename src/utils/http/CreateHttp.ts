@@ -7,7 +7,7 @@ import { getStorage, setStorage } from '../storage'
 //   get: () => Promise<any>
 // }
 
-const TOKEN_KEY = 'X-Sd-token'
+const TOKEN_KEY = 'Authorization'
 
 interface ResultType {
   code: number
@@ -92,7 +92,7 @@ export default class CreateHttp {
 
     // token
     if (newRequestOptions.withToken) {
-      header[TOKEN_KEY] = getStorage('token')
+      header[TOKEN_KEY] = 'Bearer ' + getStorage('token')
     }
 
     const res = await request({
