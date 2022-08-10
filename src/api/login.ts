@@ -1,6 +1,24 @@
 // import Taro, { request } from '@tarojs/taro';
 import { httpV2 } from '@/utils/http'
-import type { RequestOptionsNullable } from '@/utils/http/CreateHttp'
+// import type { RequestOptionsNullable } from '@/utils/http/CreateHttp'
+
+interface LoginParams {
+  // campus_id_str: string
+  // /**学号/工号 */
+  // no: string
+  // password: string
+  // /**0: 未知 1: 学生 2: 老师 */
+  // role: number
+
+  /**学校ID */
+  // schoolId: number
+  /**校区ID */
+  campusId: string
+  /**登录名 */
+  loginName: string
+  /**密码 */
+  pwd: string
+}
 
 interface LoginResult {
   // token: string
@@ -13,27 +31,15 @@ interface LoginResult {
   refreshtoken: string
 }
 
-interface LoginParams {
-  // campus_id_str: string
-  // /**学号/工号 */
-  // no: string
-  // password: string
-  // /**0: 未知 1: 学生 2: 老师 */
-  // role: number
-
-  loginName: string
-  pwd: string
-}
-
-export function login(data: LoginParams, config: RequestOptionsNullable): Promise<LoginResult> {
-  return httpV2.get(
+export function login(data: LoginParams): Promise<LoginResult> {
+  return httpV2.post(
     {
-      url: '/api/100',
+      url: '/100',
       data,
     },
     {
       withToken: false,
-      ...config,
+      // ...config,
     },
   )
 }
@@ -55,7 +61,17 @@ export interface Campus {
  * 学校区域选择
  */
 export function getCampus(): Promise<Campus[]> {
-  return httpV2.get({
-    url: '/comm/v1/campuses',
-  })
+  return httpV2.post(
+    {
+      url: '/200',
+      data: {
+        pageSize: 10,
+        pageIndex: 0,
+        keyword: '',
+      },
+    },
+    {
+      withToken: false,
+    },
+  )
 }

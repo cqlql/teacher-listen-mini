@@ -1,6 +1,6 @@
 import type { Campus } from '@/api/login'
 import { login } from '@/api/login'
-import type { UseToast } from '@/hooks/useToast'
+// import type { UseToast } from '@/hooks/useToast'
 import { setStorage } from '@/utils/storage'
 import Taro from '@tarojs/taro'
 import type { Ref } from 'vue'
@@ -8,7 +8,7 @@ import { ref } from 'vue'
 
 export default function useLogin(
   selectedCampus: Ref<Campus>,
-  toastFail: UseToast['toastFail'],
+  // toastFail: UseToast['toastFail'],
   // toastSuccess: (msg: string) => void,
 ) {
   const wkno = ref('')
@@ -20,14 +20,15 @@ export default function useLogin(
       const campusId = selectedCampus.value.campus_id_str
       const result = await login(
         {
-          loginName: wkno.value,
+          campus_id: campusId,
+          login_name: wkno.value,
           pwd: password.value,
         },
-        {
-          fail(e) {
-            toastFail(e)
-          },
-        },
+        // {
+        //   fail(e) {
+        //     toastFail(e)
+        //   },
+        // },
       )
 
       setStorage('token', result.accessToken)

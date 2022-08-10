@@ -1,4 +1,4 @@
-import { httpV1, httpV3 } from '@/utils/http'
+import { httpV1, httpV2, httpV3 } from '@/utils/http'
 import { post, get } from '@/utils/request'
 import type {
   AddTempOpenCourseParams,
@@ -163,8 +163,8 @@ export function reqIsLeader(): Promise<{ is_leader: boolean }> {
 export function getUserCourse(data?: GetUserCourseParams): Promise<{
   courselist: userCourseList
 }> {
-  return httpV1.get({
-    url: '/lecture/v1/getUserCourse',
+  return httpV2.get({
+    url: '/200',
     data,
   })
 }
