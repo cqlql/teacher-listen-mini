@@ -1,4 +1,5 @@
 import Taro, { request } from '@tarojs/taro'
+import getSign from './getSign'
 import { getStorage, setStorage } from '../storage'
 
 // interface HttpRequest {
@@ -90,10 +91,14 @@ export default class CreateHttp {
 
     const header: TaroGeneral.IAnyObject = (requestConfig.header = requestConfig.header || {})
 
+    let token = ''
     // token
     if (newRequestOptions.withToken) {
-      header[TOKEN_KEY] = 'Bearer ' + getStorage('token')
+      token = getStorage('token')
+      header[TOKEN_KEY] = 'Bearer ' + token
     }
+
+    requestConfig.data = getSign(requestConfig.data, token)
 
     const res = await request({
       ...requestConfig,
