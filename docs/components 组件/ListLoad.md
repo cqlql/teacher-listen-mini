@@ -31,14 +31,17 @@ async function reqList() {
 <template>
   <ListLoad :reqList="reqList">
     <template #default>
-      <GoodsItem v-for="item of 10" :key="item" :data="item" @click="toDetail(item)" />
+      <GoodsItem v-for="item of campusList" :key="item" :data="item" @click="toDetail(item)" />
     </template>
   </ListLoad>
 </template>
 
 <script lang="ts" setup>
-async function reqList() {
-  return [1]
+const campusList = []
+async function reqList({ page }) {
+  let list = await getCampus({ pageIndex: page, pageSize: 20 })
+  campusList.value = campusList.value.concat(list)
+  return list
 }
 
 function toDetail() {}
@@ -54,3 +57,9 @@ function toDetail() {}
 | startPage | 起始页 | number | 1 |
 | reqList | 必须返回当前页的列表（数组类型）数据，用来给默认的 handleResultSelf 函数处理是否还有下一页，否则需定制 handleResultSelf 函数 | function | - |
 | handleResultSelf | 处理是否还有下一页 | function | 默认的处理规则 |
+
+## ListLoad 方法
+
+| 方法名        | 说明                             | 参数 |
+| ------------- | -------------------------------- | ---- |
+| firstPageLoad | 进行第一次加载。相当于重置并加载 | -    |
