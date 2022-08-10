@@ -37,7 +37,8 @@ async function reqList() {
 </template>
 
 <script lang="ts" setup>
-const campusList = []
+import { ref } from 'vue'
+const campusList = ref([])
 async function reqList({ page }) {
   let list = await getCampus({ pageIndex: page, pageSize: 20 })
   campusList.value = campusList.value.concat(list)
