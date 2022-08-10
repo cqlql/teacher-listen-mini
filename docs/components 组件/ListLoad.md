@@ -8,17 +8,18 @@ title: ListLoad
 <script lang="ts" setup>
 import ListLoad from '@/components/ListLoad/ListLoad.vue'
 const vListLoad = ref<{ firstPageLoad: () => void }>()
-function reqList() {}
+async function reqList() {
+  return [
+    {
+      id: 1,
+    },
+  ]
+}
 </script>
 <template>
   <ListLoad ref="vListLoad" :reqList="reqList">
     <template #default="{ list: listCurrent }">
-      <GoodsItem
-        v-for="item of listCurrent"
-        :key="item.sku_id"
-        :data="item"
-        @click="toDetail(item)"
-      />
+      <GoodsItem v-for="item of listCurrent" :key="item.id" :data="item" @click="toDetail(item)" />
     </template>
   </ListLoad>
 </template>
@@ -45,6 +46,11 @@ function toDetail() {}
 <style lang="scss"></style>
 ```
 
-## 可优化建议
+## ListLoad 属性
 
-可以拆分，先实现一个基础的，再扩展定制
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| immediate | 是否组件初始化后立即请求列表数据。如果为 false 不立即请求，则需执行组件实例的 `firstPageLoad()` 手动请求 | boolean | true |
+| startPage | 起始页 | number | 1 |
+| reqList | 必须返回当前页的列表（数组类型）数据，用来给默认的 handleResultSelf 函数处理是否还有下一页，否则需定制 handleResultSelf 函数 | function | - |
+| handleResultSelf | 处理是否还有下一页 | function | 默认的处理规则 |
