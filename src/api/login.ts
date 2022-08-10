@@ -11,9 +11,9 @@ interface LoginParams {
   // role: number
 
   /**学校ID */
-  // schoolId: number
+  schoolId: number
   /**校区ID */
-  campusId: string
+  campusId: number
   /**登录名 */
   loginName: string
   /**密码 */
@@ -44,15 +44,16 @@ export function login(data: LoginParams): Promise<LoginResult> {
   )
 }
 
+interface getCampusParams {
+  pageSize: number
+  pageIndex: number
+  keyword: string
+}
+
 export interface Campus {
-  // campus_id: string;
-  campus_id_str: string
-  campus_name: string
-  /**搜索显示 */
-  // name?: string;
-  // grades: string;
-  // school_id: string;
-  // school_id_str: string;
+  id: number
+  name: string
+  school_id: number
   school_name: string
 }
 
@@ -60,15 +61,11 @@ export interface Campus {
  * 获取校区信息
  * 学校区域选择
  */
-export function getCampus(): Promise<Campus[]> {
+export function getCampus(data: getCampusParams): Promise<Campus[]> {
   return httpV2.post(
     {
       url: '/200',
-      data: {
-        pageSize: 10,
-        pageIndex: 0,
-        keyword: '',
-      },
+      data,
     },
     {
       withToken: false,

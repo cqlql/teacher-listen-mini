@@ -17,11 +17,12 @@ export default function useLogin(
     wkno,
     password,
     async login() {
-      const campusId = selectedCampus.value.campus_id_str
+      const campusId = selectedCampus.value.id
       const result = await login(
         {
-          campus_id: campusId,
-          login_name: wkno.value,
+          campusId: campusId,
+          schoolId: selectedCampus.value.school_id,
+          loginName: wkno.value,
           pwd: password.value,
         },
         // {

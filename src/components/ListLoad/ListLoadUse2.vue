@@ -1,3 +1,6 @@
+<!--
+  针对请求返回不同的数据格式，对 ListLoad 进行二次封装。
+-->
 <script lang="ts" setup>
 import { ref } from 'vue'
 import ListLoad from './ListLoad.vue'
@@ -17,10 +20,10 @@ withDefaults(
     // 是否开启滚动底部触发
     scrollLowerEnabled: true,
 
-    handleResult: ({ resData, page, noDataCb, finishCb }) => {
+    handleResult: ({ resData, page, startPage, noDataCb, finishCb }) => {
       let empty = resData.length === 0
 
-      if (page === 1 && empty) {
+      if (page === startPage && empty) {
         // 没有任何数据
         noDataCb()
       } else if (empty) {
