@@ -1,4 +1,4 @@
-import{_ as n}from"./plugin-vue_export-helper.21dcd24c.js";import{o as s,c as a,i as t}from"./app.4ae71f32.js";const p={},e={class:"language-typescript ext-ts line-numbers-mode"},o=t(`<pre class="language-typescript"><code><span class="token keyword">import</span> useFileUpload <span class="token keyword">from</span> <span class="token string">&#39;@/hooks/useFileUpload&#39;</span>
+import{_ as n}from"./plugin-vue_export-helper.21dcd24c.js";import{o as s,c as a,i as t}from"./app.e0a1b270.js";const p={},e={class:"language-typescript ext-ts line-numbers-mode"},o=t(`<pre class="language-typescript"><code><span class="token keyword">import</span> useFileUpload <span class="token keyword">from</span> <span class="token string">&#39;@/hooks/useFileUpload&#39;</span>
 
 <span class="token keyword">const</span> <span class="token punctuation">{</span> fileUpload <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">useFileUpload</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 
