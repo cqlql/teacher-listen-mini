@@ -24,7 +24,7 @@ function reqList() {}
 </template>
 ```
 
-## 不使用插槽 Prop
+## 不使用插槽值
 
 ```vue
 <template>
