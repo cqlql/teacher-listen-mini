@@ -79,13 +79,13 @@ if (process.env.NODE_ENV !== 'production') {
 
   selectedCampus.value = {
     name: '主校区',
-    school_id: 0,
+    school_id: 19,
     school_name: '深圳市龙岗区扬美实验学校',
-    id: 0,
+    id: 7,
   }
   // wkno.value = 'ym001' // 校长
-  // wkno.value = 'ym115' // 语文科组长
-  wkno.value = 'admin' // 语文科组长
+  wkno.value = 'ym115' // 语文科组长
+  // wkno.value = 'admin' // 语文科组长
 
   password.value = '111111'
 }

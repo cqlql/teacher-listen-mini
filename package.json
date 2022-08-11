@@ -45,6 +45,7 @@
     "@tarojs/plugin-html": "^3.4.11",
     "@tarojs/runtime": "^3.4.11",
     "@tarojs/taro": "^3.4.11",
+    "base64url": "^3.0.1",
     "crypto-js": "^4.1.1",
     "dayjs": "^1.11.3",
     "vue": "^3.2.37"

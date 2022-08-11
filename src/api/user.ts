@@ -1,12 +1,12 @@
 import { httpV1 } from '@/utils/http'
-import type { ProfileResult, UserSubjectGroupsResult } from './model/userModel'
+import type { UserSubjectGroupsResult } from './model/userModel'
 
 /**用户信息 */
-export function profile(): Promise<ProfileResult> {
-  return httpV1.get({
-    url: '/lecture/v1/profile',
-  })
-}
+// export function profile(): Promise<ProfileResult> {
+//   return httpV1.get({
+//     url: '/lecture/v1/profile',
+//   })
+// }
 
 /**用户所属科组 */
 export function userSubjectGroups(): Promise<UserSubjectGroupsResult> {
