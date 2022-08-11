@@ -66,7 +66,7 @@ function onSelect(item: Campus) {
 async function reqList({ page }) {
   // console.log('🚀 -- reqList -- params', params)
   let list = await getCampus({ pageIndex: page, pageSize: 20, keyword: searchValue.value })
-  campusList.value = campusList.value.concat(list)
+  campusList.value = page === 0 ? list : campusList.value.concat(list)
   return list
 }
 </script>
