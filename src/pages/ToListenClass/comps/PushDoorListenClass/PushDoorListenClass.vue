@@ -10,9 +10,9 @@ let isByGrade = computed(() => {
   return activeType.value === 'grade'
 })
 
-if (process.env.NODE_ENV !== 'production') {
-  activeType.value = 'teacher'
-}
+// if (process.env.NODE_ENV !== 'production') {
+//   activeType.value = 'teacher'
+// }
 </script>
 <template>
   <div class="PushDoorListenClass">

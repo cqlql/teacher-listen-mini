@@ -77,9 +77,9 @@ export const httpV2 = new CreateHttp({
 
   // 结果数据格式统一
   resultTransform(data, res) {
-    data = data || { Basis: {} }
+    console.log('🚀 -- resultTransform -- res', res)
 
-    let code = data.Basis.Code
+    let code = data.Basis?.Code
 
     // 部分接口不是通过 res.data 返回的 401，而是直接报的401错误
     if (res.statusCode === 401) {
@@ -88,7 +88,7 @@ export const httpV2 = new CreateHttp({
 
     return {
       code,
-      message: data.Basis.Msg,
+      message: data.Basis?.Msg || '',
       result: data.Result,
     }
   },

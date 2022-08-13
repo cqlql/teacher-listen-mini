@@ -18,8 +18,8 @@ export function getCampusGradeSelect(): Promise<CampusgradeResult> {
 
 /**获取该校区对应的年级、班级、科目 */
 export function getCampusinfo(): Promise<CampusinfoResult> {
-  return httpV1.get({
-    url: '/lecture/v1/campusinfo',
+  return httpV1.post({
+    url: '/201',
   })
 }
 

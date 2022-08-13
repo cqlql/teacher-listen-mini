@@ -163,8 +163,8 @@ export function reqIsLeader(): Promise<{ is_leader: boolean }> {
 export function getUserCourse(data?: GetUserCourseParams): Promise<{
   courselist: userCourseList
 }> {
-  return httpV2.get({
-    url: '/200',
+  return httpV2.post({
+    url: '/202',
     data,
   })
 }
