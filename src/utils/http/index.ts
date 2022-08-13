@@ -61,7 +61,7 @@ export const httpV2 = new CreateHttp({
   async refreshToken() {
     const { accessToken } = await httpV2.post(
       {
-        url: '/api/101',
+        url: '/101',
         data: {
           refreshToken: getStorage('refreshToken'),
         },
@@ -76,10 +76,18 @@ export const httpV2 = new CreateHttp({
   },
 
   // 结果数据格式统一
-  resultTransform(data) {
+  resultTransform(data, res) {
     data = data || { Basis: {} }
+
+    let code = data.Basis.Code
+
+    // 部分接口不是通过 res.data 返回的 401，而是直接报的401错误
+    if (res.statusCode === 401) {
+      code = 401
+    }
+
     return {
-      code: data.Basis.Code,
+      code,
       message: data.Basis.Msg,
       result: data.Result,
     }

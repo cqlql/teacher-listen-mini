@@ -31,7 +31,7 @@ interface RequestOptions {
   // 是否显示错误消息提示
   showErrorToast: boolean
 
-  resultTransform: (data: any) => ResultType
+  resultTransform: (data: any, res: Taro.request.SuccessCallbackResult<any>) => ResultType
 
   // 是否开启 RefreshToken 功能
   allowRefreshToken: boolean
@@ -56,7 +56,7 @@ export interface RequestOptionsNullable {
 
   allowRefreshToken?: boolean
 
-  resultTransform?: (data: any) => ResultType
+  resultTransform?: RequestOptions['resultTransform']
 
   refreshToken?: () => Promise<any>
 }
@@ -105,7 +105,7 @@ export default class CreateHttp {
       url: newRequestOptions.apiUrl + newRequestOptions.urlPrefix + requestConfig.url,
     })
 
-    const { code, message, result } = newRequestOptions.resultTransform(res.data)
+    const { code, message, result } = newRequestOptions.resultTransform(res.data, res)
 
     if (code === 200) {
       return result
