@@ -98,16 +98,22 @@ export function openCourseListV1(
 }
 
 interface GetCourseListParams {
-  campus_id?: string //校区
-  subject_id?: string //科目ID
-  grade_id?: string //年级ID
-  class_id?: string //教室ID
+  // campus_id?: string //校区
+  // subject_id?: string //科目ID
+  // grade_id?: string //年级ID
+  // class_id?: string //教室ID
 
-  list_mun: number //条数
-  page: string //页数
-  user_name?: string //授课老师名
-  period_id?: string // 学段ID 1001 小学 1002 初中 10 03 高中
-  lesson_date: string
+  // list_mun: number //条数
+  // page: string //页数
+  // user_name?: string //授课老师名
+  // period_id?: string // 学段ID 1001 小学 1002 初中 1003 高中
+  // lesson_date: string
+
+  pageSize: number //每页大小
+  pageIndex: number //当前页从0开始
+  period?: number // 学段ID 1001 小学 1002 初中 1003 高中
+  classId: number //班级ID
+  teacherName?: string //老师名称
 }
 interface GetCourseListResult {
   getCurriculum: [
@@ -135,10 +141,10 @@ interface GetCourseListResult {
   nowDate: string
 }
 
-/**根据条件获取课程 */
+/**根据条件获取课程 - 推门听课 - 课表数据 */
 export function getCourseList(data: GetCourseListParams): Promise<GetCourseListResult> {
-  return httpV1.get({
-    url: '/lecture/v1/getCurriculum',
+  return httpV2.post({
+    url: '/203',
     data,
   })
 }

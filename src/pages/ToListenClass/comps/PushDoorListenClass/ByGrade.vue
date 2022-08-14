@@ -16,10 +16,9 @@ topSearchParams.search = search
 
 function reqList({ page }) {
   return getCourseList({
-    grade_id: searchOptions.grade,
-    class_id: searchOptions.class,
-    list_mun: 10,
-    page: page,
+    classId: Number(searchOptions.class),
+    pageSize: 10,
+    pageIndex: page,
     lesson_date: topSearchParams.date,
   }).then((res) => {
     return res.getCurriculum
@@ -28,12 +27,7 @@ function reqList({ page }) {
 </script>
 <template>
   <div class="ToListenClassByGrade">
-    <TabButtons
-      class="scroll"
-      v-model="searchOptions.grade"
-      :list="gradeList"
-      @change="search"
-    ></TabButtons>
+    <TabButtons class="scroll" v-model="searchOptions.grade" :list="gradeList"></TabButtons>
     <LayoutView>
       <template #leftNav>
         <TabButtons
