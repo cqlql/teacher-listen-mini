@@ -115,12 +115,16 @@ export default class CreateHttp {
     if (code === 401) {
       // RefreshToken 情况
       if (newRequestOptions.allowRefreshToken) {
-        await newRequestOptions.refreshToken()
-        // 重新请求
-        return this.request(requestConfig, {
-          ...requestOptions,
-          allowRefreshToken: false, // 重复请求如果还是token过期，将不再 RefreshToken
-        })
+        try {
+          await newRequestOptions.refreshToken()
+          // 重新请求
+          return this.request(requestConfig, {
+            ...requestOptions,
+            allowRefreshToken: false, // 重复请求如果还是token过期，将不再 RefreshToken
+          })
+        } catch (error) {
+          console.error('❌ -- refreshToken', error)
+        }
       }
 
       // 不需要刷新token情况
