@@ -1,6 +1,6 @@
 /* 下拉列表 */
 
-import { httpV1 } from '@/utils/http'
+import { httpV1, httpV2 } from '@/utils/http'
 import { get } from '@/utils/request'
 import type {
   CampusgradeResult,
@@ -18,7 +18,7 @@ export function getCampusGradeSelect(): Promise<CampusgradeResult> {
 
 /**获取该校区对应的年级、班级、科目 */
 export function getCampusinfo(): Promise<CampusinfoResult> {
-  return httpV1.post({
+  return httpV2.post({
     url: '/201',
   })
 }

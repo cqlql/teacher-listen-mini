@@ -3,33 +3,54 @@ import { ref } from 'vue'
 interface OptionType {
   value: string
   label: string
+  grade: number
+}
+
+function numberToGradeName(v: number) {
+  const dict = ' 一二三四五六七八九十'
+
+  return dict[v] + '年级'
 }
 export default function useGradeClassData() {
   const gradeData = ref<Record<string, OptionType[]>>({})
   const gradeList = ref<OptionType[]>([])
+  const gradeInfoRecord: Record<number, { gradeName: string; grade: number }> = {}
 
   getCampusinfo().then((resData) => {
+    resData.grades.reduce((acc, val) => {
+      const grade = val.start_level + val.level
+      acc[val.id] = {
+        gradeName: numberToGradeName(val.start_level + val.level),
+        grade,
+      }
+      return acc
+    }, gradeInfoRecord)
+
     const gradeListNew: OptionType[] = []
-    gradeData.value = resData.schoolClasses.reduce((newDict, item) => {
-      let classListTemp: any[] | undefined = newDict[item.grade_id]
+    gradeData.value = resData.classes.reduce((newDict, item) => {
+      const gradeId = item.grade_id
+      let classListTemp: any[] | undefined = newDict[gradeId]
       if (!classListTemp) {
-        classListTemp = newDict[item.grade_id] = []
+        classListTemp = newDict[gradeId] = []
+        const gradeInfo = gradeInfoRecord[gradeId]
         gradeListNew.push({
-          value: item.grade_id,
-          label: item.grade_name,
+          value: String(gradeId),
+          label: gradeInfo.gradeName,
+          grade: gradeInfo.grade,
         })
       }
       classListTemp.push({
-        value: item.class_id,
-        label: item.class_name,
+        value: String(item.id),
+        label: item.name,
       })
       return newDict
     }, {})
 
-    // 排序
+    // grade 排序
     gradeListNew.sort((a, b) => {
-      return Number(a.value) - Number(b.value)
+      return a.grade - b.grade
     })
+    // class 排序
     Object.entries(gradeData.value).forEach(([, classList]) => {
       classList.sort((a, b) => {
         return parseInt(a.label) - parseInt(b.label)
