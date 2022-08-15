@@ -8,10 +8,13 @@ import LayoutView from './LayoutView.vue'
 import { computed, inject, reactive, ref, watch } from 'vue'
 import SelectCheckPopup from '@/components/SelectCheck/SelectCheckPopup.vue'
 
-import usePeriodSubjectData from '@/hooks/usePeriodSubjectData'
 import { getCourseList } from '@/api/course'
 import type { TopSearchParams } from '../../types'
+import type { GradeClassDataType } from './useGradeClassData'
 const topSearchParams = inject('topSearchParams') as TopSearchParams
+
+const { periodList, subjectListByPeriodKey } = inject('gradeClassData') as GradeClassDataType
+// console.log('🚀 -- gradeClassData', gradeClassData)
 
 interface OptionType {
   label: string
@@ -37,27 +40,31 @@ const searchOptions = reactive({
   search() {},
 })
 
-const { periodOptions, subjectData } = usePeriodSubjectData()
-
 const subjectList = computed(() => {
   return (
-    subjectData.value[searchOptions.period]?.map((item) => {
+    subjectListByPeriodKey.value[searchOptions.period]?.map((item) => {
       return {
-        label: item.subject_name,
-        value: item.subject_id,
+        label: item.label,
+        value: item.value,
       }
     }) || []
   )
 })
 
 function setInitValue() {
-  watch(periodOptions, (periodOptionsValue) => {
-    let period = periodOptionsValue[0]
-    if (period) {
-      searchOptions.period = period.id
-      searchOptions.periodName = period.name
-    }
-  })
+  watch(
+    periodList,
+    (periodOptionsValue) => {
+      let period = periodOptionsValue[0]
+      if (period) {
+        searchOptions.period = period.value
+        searchOptions.periodName = period.label
+      }
+    },
+    {
+      immediate: true,
+    },
+  )
 
   watch(
     () => searchOptions.period,
@@ -127,7 +134,9 @@ topSearchParams.search = search
     v-model="searchOptions.period"
     v-model:label="searchOptions.periodName"
     v-model:visible="isExpanded"
-    :options="periodOptions"
+    :options="periodList"
+    idProp="value"
+    nameProp="label"
   ></SelectCheckPopup>
 </template>
 

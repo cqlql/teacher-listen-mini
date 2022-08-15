@@ -45,6 +45,33 @@ export interface CampusinfoResult {
     updated_user_id: number //1
     years: number //2020
   }[]
+
+  periods: {
+    campus_id: number //7
+    // created_date: '2017-08-15 17:19:46'
+    created_user_id: number //1
+    id: number //9
+    // levels: [1, 2, 3, 4, 5, 6]
+    period: number //1001
+    school_id: number //19
+    // updated_date: '2017-08-15 17:19:46'
+    // updated_user_id: 1
+  }[]
+
+  subjects: {
+    campus_id: number //7
+    // created_date: '2021-03-18 11:53:55'
+    created_user_id: number //1
+    id: number //22
+    // is_enable: true
+    // order_index: 0
+    period: number //1001
+    school_id: number //19
+    subject_id: number //1
+    subject_name: string //'语文'
+    // updated_date: '2021-03-18 11:53:55'
+    // updated_user_id: 1
+  }[]
 }
 
 export type SubjectGroupsResult = {

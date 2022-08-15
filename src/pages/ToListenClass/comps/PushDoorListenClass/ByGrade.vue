@@ -10,16 +10,18 @@ const { searchOptions, gradeList, classList, search } = useGradeClassSelect()
 
 const topSearchParams = inject('topSearchParams') as {
   date: string
-  search: () => void
+  search: (item: any) => void
 }
 topSearchParams.search = search
 
 function reqList({ page }) {
   return getCourseList({
     classId: Number(searchOptions.class),
+    period: Number(searchOptions.period),
     pageSize: 10,
     pageIndex: page,
-    lesson_date: topSearchParams.date,
+    teacherName: '',
+    // lesson_date: topSearchParams.date,
   }).then((res) => {
     return res.getCurriculum
   })

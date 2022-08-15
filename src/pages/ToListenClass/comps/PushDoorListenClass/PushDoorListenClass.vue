@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
+import { computed, provide, ref } from 'vue'
 import ByGrade from './ByGrade.vue'
 import ByTeacher from './ByTeacher.vue'
+import useGradeClassData from './useGradeClassData'
 
 type ActiveType = 'grade' | 'teacher'
 
@@ -13,6 +14,10 @@ let isByGrade = computed(() => {
 // if (process.env.NODE_ENV !== 'production') {
 //   activeType.value = 'teacher'
 // }
+
+// const gradeClassData = useGradeClassData()
+
+provide('gradeClassData', useGradeClassData())
 </script>
 <template>
   <div class="PushDoorListenClass">

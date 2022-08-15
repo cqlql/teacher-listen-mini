@@ -94,7 +94,10 @@ export function openCourseList(
 export function openCourseListV1(
   data: OpenClassListParams,
 ): Promise<{ listenList: OpenCourseItemResult[] }> {
-  return get('/lecture/v1/listenlist', data)
+  return httpV2.post({
+    url: '/202',
+    data,
+  })
 }
 
 interface GetCourseListParams {
@@ -111,9 +114,9 @@ interface GetCourseListParams {
 
   pageSize: number //每页大小
   pageIndex: number //当前页从0开始
-  period?: number // 学段ID 1001 小学 1002 初中 1003 高中
+  period: number // 学段ID 1001 小学 1002 初中 1003 高中
   classId: number //班级ID
-  teacherName?: string //老师名称
+  teacherName: string //老师名称
 }
 interface GetCourseListResult {
   getCurriculum: [

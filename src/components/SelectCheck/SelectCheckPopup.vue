@@ -68,7 +68,7 @@ export default {
 import useSelectCheck from './useSelectCheck'
 
 type OptionType = {
-  [key: string]: string
+  [key: string]: string | any
 }
 
 const props = withDefaults(

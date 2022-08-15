@@ -2,6 +2,7 @@
 type ItemType = {
   label: string
   value: string
+  [propName: string]: any
 }
 const props = defineProps<{
   modelValue?: string
@@ -10,16 +11,17 @@ const props = defineProps<{
 
 const emits = defineEmits<{
   (e: 'update:modelValue', v: string): void
-  (e: 'change', v: string): void
+  (e: 'change', item: ItemType): void
 }>()
 
 function onSelect(index: number) {
   let { list } = props
   let pre = props.modelValue
-  let value = list[index].value
+  let item = list[index]
+  let value = item.value
   emits('update:modelValue', value)
   if (pre !== value) {
-    emits('change', value)
+    emits('change', item)
   }
 }
 </script>
