@@ -34,3 +34,10 @@ export function getSubjectGroups(): Promise<SubjectGroupsResult> {
 export function getClassrooms(): Promise<ClassroomsResult> {
   return get('/lecture/v1/classrooms').then((res) => res.classrooms)
 }
+
+/**公开课 */
+export function getCreateListenSelectData() {
+  return httpV2.post({
+    url: '/207',
+  })
+}

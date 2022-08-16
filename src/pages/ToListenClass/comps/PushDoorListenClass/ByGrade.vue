@@ -22,8 +22,6 @@ function reqList({ page }) {
     pageIndex: page,
     teacherName: '',
     // lesson_date: topSearchParams.date,
-  }).then((res) => {
-    return res.getCurriculum
   })
 }
 </script>

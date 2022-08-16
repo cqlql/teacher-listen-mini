@@ -22,6 +22,13 @@
       "problemMatcher": [],
       "label": "npm: download:iconfont",
       "detail": "node config/utils/iconfont-download.js"
+    },
+    {
+      "type": "npm",
+      "script": "dev:weapp",
+      "problemMatcher": [],
+      "label": "npm: dev:weapp",
+      "detail": "npm run build:weapp -- --watch"
     }
   ]
 }

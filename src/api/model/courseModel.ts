@@ -640,3 +640,24 @@ export interface GetSubjectGroupsResult {
     // group_members: string[]
   }[]
 }
+
+export interface GetCourseListResult {
+  campus_id: number //7
+  classes_id: number //484
+  classes_name: string //"1班"
+  classes_no: number //"1"
+  grade: number //3
+  grade_id: number //197
+  id: number //12012
+  lesson_num: number //6
+  period: number //1001
+  school_id: number //19
+  section_id: number //149
+  subject_id: number //1
+  subject_name: string //"语文"
+  sys_user_id: number //8802
+  teacher_id: number //4774
+  teacher_name: string //"蔺杰彦"
+  week: number //4
+  week_id: number //81
+}

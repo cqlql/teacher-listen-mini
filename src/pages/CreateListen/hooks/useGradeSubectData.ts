@@ -1,5 +1,6 @@
 import type { SubjectGroupsResult } from '@/api/model/selectModel'
-import { getSubjectGroups } from '@/api/select'
+import { getCreateListenSelectData } from '@/api/select'
+// import { getSubjectGroups } from '@/api/select'
 import usePeriodSubjectData from '@/hooks/usePeriodSubjectData'
 import { ref } from 'vue'
 
@@ -17,8 +18,11 @@ export default function useGradeSubectData() {
 
   const subjectGroups = ref<SubjectGroupsResult | []>([])
 
-  getSubjectGroups().then((res) => {
-    subjectGroups.value = res
+  // getSubjectGroups().then((res) => {
+  //   subjectGroups.value = res
+  // })
+  getCreateListenSelectData().then((res) => {
+    console.log('🚀 -- getCreateListenSelectData -- res', res)
   })
 
   return {

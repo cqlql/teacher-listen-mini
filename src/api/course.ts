@@ -13,6 +13,7 @@ import type {
   EditOpenCourseParams,
   GetAllEvaluationResult,
   GetAttachListResult,
+  GetCourseListResult,
   GetEvaluationListParams,
   GetEvaluationListResult,
   GetFullCourseStatisticsParams,
@@ -117,31 +118,6 @@ interface GetCourseListParams {
   period: number // 学段ID 1001 小学 1002 初中 1003 高中
   classId: number //班级ID
   teacherName: string //老师名称
-}
-interface GetCourseListResult {
-  getCurriculum: [
-    {
-      id: string
-      user_id: string
-      user_name: string
-      subject_id: string
-      grade_id: string
-      grade_name: string
-      class_id: string
-      class_name: string
-      lesson_date: string
-      lesson_id: string
-      lesson_name: string
-      start_time: string
-      end_time: string
-      subject_name: string
-      //不为0表示该课是公开课
-      courses_id: string
-      //课程名
-      name: string
-    },
-  ]
-  nowDate: string
 }
 
 /**根据条件获取课程 - 推门听课 - 课表数据 */
