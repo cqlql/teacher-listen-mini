@@ -69,6 +69,7 @@ export const httpV2 = new CreateHttp({
       {
         allowRefreshToken: false,
         withToken: false,
+        showErrorToast: false,
       },
     )
 
@@ -77,8 +78,6 @@ export const httpV2 = new CreateHttp({
 
   // 结果数据格式统一
   resultTransform(data, res) {
-    console.log('🚀 -- resultTransform -- res', res)
-
     let code = data.Basis?.Code
 
     // 部分接口不是通过 res.data 返回的 401，而是直接报的401错误

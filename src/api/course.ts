@@ -95,7 +95,7 @@ export function openCourseList(
 export function openCourseListV1(
   data: OpenClassListParams,
 ): Promise<{ listenList: OpenCourseItemResult[] }> {
-  return httpV2.post({
+  return httpV2.get({
     url: '/202',
     data,
   })
@@ -122,7 +122,7 @@ interface GetCourseListParams {
 
 /**根据条件获取课程 - 推门听课 - 课表数据 */
 export function getCourseList(data: GetCourseListParams): Promise<GetCourseListResult> {
-  return httpV2.post({
+  return httpV2.get({
     url: '/203',
     data,
   })
@@ -148,7 +148,7 @@ export function reqIsLeader(): Promise<{ is_leader: boolean }> {
 export function getUserCourse(data?: GetUserCourseParams): Promise<{
   courselist: userCourseList
 }> {
-  return httpV2.post({
+  return httpV2.get({
     url: '/202',
     data,
   })

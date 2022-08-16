@@ -51,24 +51,5 @@ export default function getSign(obj = {}, token) {
     return newObj
   }
 
-  const sign_data = {
-    Data: obj,
-    Global: { IMEI: '', IMSI: '', IP: '', OS: 3, Sign: '', Token: token },
-  }
-
-  return {
-    Data: obj,
-    Global: {
-      //设备唯一码
-      IMEI: '',
-      //国际移动用户识别码
-      IMSI: '',
-      IP: '',
-      //1:安卓、2:IOS、3:小程序
-      OS: 3,
-      //当前token
-      Token: token,
-      Sign: md5(JSON.stringify(sort(sign_data)) + ')(4AzEdr5J6a`@#$*%').toString(),
-    },
-  }
+  return md5(JSON.stringify(sort(obj)) + ')(4AzEdr5J6a`@#$*%' + token).toString()
 }

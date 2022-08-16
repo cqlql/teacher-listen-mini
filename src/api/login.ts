@@ -62,7 +62,7 @@ export interface Campus {
  * 学校区域选择
  */
 export function getCampus(data: getCampusParams): Promise<Campus[]> {
-  return httpV2.post(
+  return httpV2.get(
     {
       url: '/200',
       data,

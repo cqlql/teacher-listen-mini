@@ -92,13 +92,12 @@ export default class CreateHttp {
     const header: TaroGeneral.IAnyObject = (requestConfig.header = requestConfig.header || {})
 
     let token = ''
-    // token
     if (newRequestOptions.withToken) {
       token = getStorage('token')
       header[TOKEN_KEY] = 'Bearer ' + token
     }
 
-    requestConfig.data = getSign(requestConfig.data, token)
+    header['Sign'] = getSign(requestConfig.data, token)
 
     const res = await request({
       ...requestConfig,
@@ -127,7 +126,8 @@ export default class CreateHttp {
         }
       }
 
-      // 不需要刷新token情况
+      // 不需要 RefreshToken 或者 RefreshToken 出错
+      // 清理登录信息并跳到登录页
       setStorage('token', '')
       setStorage('refreshToken', '')
       Taro.redirectTo({
