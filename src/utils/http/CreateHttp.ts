@@ -126,7 +126,7 @@ export default class CreateHttp {
         }
       }
 
-      // 不需要 RefreshToken 或者 RefreshToken 出错
+      // 不需要 RefreshToken 或者 RefreshToken 出错情况执行
       // 清理登录信息并跳到登录页
       setStorage('token', '')
       setStorage('refreshToken', '')
