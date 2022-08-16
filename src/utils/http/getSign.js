@@ -2,7 +2,7 @@ import md5 from 'crypto-js/md5'
 
 //获取签名
 
-export default function getSign(obj = {}, token) {
+export default function getSign(obj, token) {
   // const token = ''
   // 递归排序
   function sort(obj) {
@@ -51,5 +51,10 @@ export default function getSign(obj = {}, token) {
     return newObj
   }
 
-  return md5(JSON.stringify(sort(obj)) + ')(4AzEdr5J6a`@#$*%' + token).toString()
+  let dataStr = ''
+  if (obj !== undefined) {
+    dataStr = JSON.stringify(sort(obj))
+  }
+
+  return md5(dataStr + ')(4AzEdr5J6a`@#$*%' + token).toString()
 }
