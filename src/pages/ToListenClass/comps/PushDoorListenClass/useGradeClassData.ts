@@ -1,5 +1,6 @@
 import type { CampusinfoResult } from '@/api/model/selectModel'
 import { getCampusinfo } from '@/api/select'
+import getPeriodMap from '@/data/get-period-map'
 import type { Ref } from 'vue'
 import { ref } from 'vue'
 interface PeriodType {
@@ -88,11 +89,7 @@ function initGradeClassData(resData: CampusinfoResult) {
 }
 
 function initPeriodsData(resData: CampusinfoResult) {
-  const periodsRecord = {
-    1001: '小学',
-    1002: '初中',
-    1003: '高中',
-  }
+  const periodsRecord = getPeriodMap()
   // const subjectByPeriodKey = resData.subjects.reduce<Record<string, SubjectType[]>>(
   //   (acc, subject) => {
   //     const periodId = subject.period

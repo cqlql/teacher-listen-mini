@@ -10,16 +10,18 @@ import DatetimePicker from '@/components/DatePicker/DatetimePicker.vue'
 import FileUpload from '@/components/FileUpload/FileUpload.vue'
 import SelectClass from './components/SelectClass/SelectClass.vue'
 
-import useGradeSubectData from './hooks/useGradeSubectData'
 import useToast from '@/hooks/useToast'
 import useCreateListen from './hooks/useCreateListen'
 import useEditInit from './hooks/useEditInit'
 import ButtonBlock from '@/components/Button/ButtonBlock.vue'
+import useInitSelectDate from './hooks/useInitSelectDate'
 // import dayjs from 'dayjs'
 
 let { toast, toastFail, toastSuccess } = useToast()
 
-const { periodOptions, subjectData, subjectGroups } = useGradeSubectData()
+// const { periodOptions, subjectData, subjectGroups } = useGradeSubectData()
+
+const { periodOptions, subjectData, subjectGroups } = useInitSelectDate()
 
 let { form, isLoading, confirm, promptPopup, periodChange } = useCreateListen({
   toastFail,
@@ -70,8 +72,6 @@ if (process.env.NODE_ENV !== 'production') {
         <SelectCheck
           v-model="form.subject_id"
           :options="(subjectData[form.period] as any)"
-          idProp="subject_id"
-          nameProp="subject_name"
           placeholder="请选择科目"
         />
       </FormItem>
