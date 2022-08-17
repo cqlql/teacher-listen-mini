@@ -21,7 +21,8 @@ let { toast, toastFail, toastSuccess } = useToast()
 
 // const { periodOptions, subjectData, subjectGroups } = useGradeSubectData()
 
-const { periodOptions, subjectData, subjectGroups } = useInitSelectDate()
+const { periodOptions, subjectData, subjectGroups, classRawData, classRoomsRawDate } =
+  useInitSelectDate()
 
 let { form, isLoading, confirm, promptPopup, periodChange } = useCreateListen({
   toastFail,
@@ -76,13 +77,18 @@ if (process.env.NODE_ENV !== 'production') {
         />
       </FormItem>
       <FormItem label="授课对象">
-        <SelectClass v-model="form.gradeClass" placeholder="请选择授课对象" />
+        <SelectClass
+          :classRawData="classRawData"
+          v-model="form.gradeClass"
+          placeholder="请选择授课对象"
+        />
       </FormItem>
       <FormItem label="授课时间">
         <DatetimePicker v-model="form.dateTime" placeholder="请选择授课时间" />
       </FormItem>
       <FormItem label="授课地点">
         <SelectTeachingLocation
+          :classRoomsRawDate="classRoomsRawDate"
           v-model:value="form.class_room_id"
           v-model:label="form.class_room_name"
           placeholder="输入或选择授课地点"
@@ -92,8 +98,6 @@ if (process.env.NODE_ENV !== 'production') {
         <SelectCheck
           v-model="form.subject_group_id"
           :options="subjectGroups"
-          idProp="subject_group_id"
-          nameProp="subject_group_name"
           placeholder="请选择所属科组"
         />
       </FormItem>

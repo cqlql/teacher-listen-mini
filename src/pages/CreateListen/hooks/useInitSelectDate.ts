@@ -1,4 +1,4 @@
-import type { SubjectGroupsResult } from '@/api/model/selectModel'
+import type { CreateListenSelectDataResult } from '@/api/model/selectModel'
 import { getCreateListenSelectData } from '@/api/select'
 import getPeriodMap from '@/data/get-period-map'
 // import { getSubjectGroups } from '@/api/select'
@@ -21,8 +21,9 @@ type Option = { id: string; name: string }
 export default function useInitSelectDate() {
   const periodOptions = ref<Option[]>([])
   const subjectData = ref<SubjectDataType>({})
-
-  const subjectGroups = ref<SubjectGroupsResult | []>([])
+  const subjectGroups = ref<{ id: string; name: string }[]>([])
+  const classRawData = ref<CreateListenSelectDataResult['schoolGradeClasses']>([])
+  const classRoomsRawDate = ref<CreateListenSelectDataResult['classRooms']>([])
 
   getCreateListenSelectData().then((res) => {
     const periodMap = getPeriodMap()
@@ -47,11 +48,22 @@ export default function useInitSelectDate() {
         }
       },
     )
+
+    classRawData.value = res.schoolGradeClasses
+    classRoomsRawDate.value = res.classRooms
+    subjectGroups.value = res.roles.map((role) => {
+      return {
+        id: String(role.id),
+        name: role.name,
+      }
+    })
   })
 
   return {
     periodOptions,
     subjectData,
     subjectGroups,
+    classRawData,
+    classRoomsRawDate,
   }
 }

@@ -36,8 +36,8 @@ const props = withDefaults(
     visible: boolean
     resList: () => Promise<any>
     searchPlaceholder?: string
-    idProp: string
-    nameProp: string
+    idProp?: string
+    nameProp?: string
   }>(),
   {
     searchPlaceholder: '请输入关键字搜索',
@@ -107,7 +107,6 @@ function onSelect(item) {
 // }
 
 function close() {
-  console.log('123')
   emits('update:visible', false)
 }
 </script>

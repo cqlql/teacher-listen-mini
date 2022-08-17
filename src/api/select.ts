@@ -6,6 +6,7 @@ import type {
   CampusgradeResult,
   CampusinfoResult,
   ClassroomsResult,
+  CreateListenSelectDataResult,
   SubjectGroupsResult,
 } from './model/selectModel'
 
@@ -33,34 +34,6 @@ export function getSubjectGroups(): Promise<SubjectGroupsResult> {
 /**授课地点 */
 export function getClassrooms(): Promise<ClassroomsResult> {
   return get('/lecture/v1/classrooms').then((res) => res.classrooms)
-}
-
-interface CreateListenSelectDataResult {
-  periods: {
-    // campus_id: 7
-    // created_date: '2017-08-15 17:19:46'
-    // created_user_id: 1
-    // id: 9
-    period: number // 1001
-    // school_id: 19
-    // updated_date: '2017-08-15 17:19:46'
-    // updated_user_id: 1
-  }[]
-
-  schoolSubjects: {
-    // campus_id: 7
-    // created_date: '2021-03-18 11:53:55'
-    // created_user_id: 1
-    // id: 23
-    // is_enable: true
-    // order_index: 0
-    period: number //1001
-    // school_id: 19
-    subject_id: number // 2
-    subject_name: string // '数学'
-    // updated_date: '2021-03-18 11:53:55'
-    // updated_user_id: 1
-  }[]
 }
 
 /**创建公开课的选择数据 */

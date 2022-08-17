@@ -2,34 +2,28 @@
   <SelectBar :name="nameFinal" :placeholder="placeholder" icon="category" @click-icon="click">
     <input type="text" :value="valueIpt" @input="handleInput" />
   </SelectBar>
-  <SelectListPopup
-    v-model:visible="visible"
-    :resList="resList"
-    @select="select"
-    idProp="class_room_id"
-    nameProp="class_room_name"
-  />
+  <SelectListPopup v-model:visible="visible" :resList="resList" @select="select" />
 </template>
 
 <script lang="ts" setup>
 import { ref, watch } from 'vue'
-import useTeachingLocation from '../hooks/useTeachingLocation'
 
 import SelectBar from '@/components/Select/SelectBar.vue'
 import SelectListPopup from '@/components/SelectListPopup/SelectListPopup.vue'
+import type { CreateListenSelectDataResult } from '@/api/model/selectModel'
 
 const props = defineProps<{
   value: string
   label: string
   placeholder?: string
+  classRoomsRawDate: CreateListenSelectDataResult['classRooms']
 }>()
 
 const emits = defineEmits<{
   (e: 'update:value', v: string): void
   (e: 'update:label', v: string): void
 }>()
-
-const { visible, resList } = useTeachingLocation()
+const visible = ref(false)
 
 const nameFinal = ref('')
 const valueIpt = ref('')
@@ -43,6 +37,15 @@ watch(
     immediate: true,
   },
 )
+
+async function resList() {
+  return props.classRoomsRawDate.map((room) => {
+    return {
+      id: String(room.id),
+      name: room.address,
+    }
+  })
+}
 
 function handleInput({ detail }: any) {
   let val = (valueIpt.value = detail.value)
