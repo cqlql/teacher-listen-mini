@@ -2,7 +2,7 @@
 // import { getCampusinfo } from '@/api/select'
 import type { EventChange, EventColumnchange } from '@/types/components/picker'
 import { ref, watch } from 'vue'
-import type { IdRecordItem, SelectOption } from './typing'
+import type { SelectOption } from './typing'
 import SelectBar from '@/components/Select/SelectBar.vue'
 import getGrade from './getGrade.js'
 import type { CreateListenSelectDataResult } from '@/api/model/selectModel'
@@ -180,7 +180,6 @@ function onMultiPickerColumnChange({ detail }: EventColumnchange) {
 
 // 确定回调
 function onMultiPickerChange({ detail }: EventChange) {
-  console.log('🚀 -- onMultiPickerChange -- detail', detail)
   let [c1Index, c2Index] = (selectedIndexs.value = detail.value)
   emits('update:modelValue', [range.value[0][c1Index].id, range.value[1][c2Index].id])
 }

@@ -2,7 +2,6 @@ import { requestOpenCourse, editOpenCourse } from '@/api/course'
 import type {
   AttachmentParams,
   EditOpenCourseParams,
-  RequestOpenCourseForm,
   RequestOpenCourseParams,
 } from '@/api/model/courseModel'
 import { setStorage } from '@/utils/storage'
@@ -10,6 +9,7 @@ import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import type { Ref } from 'vue'
 import { reactive, ref } from 'vue'
+import type { OpenCourseForm } from '../types'
 import type { SubjectDataType } from './useGradeSubectData'
 
 type FunStr = (p: string) => void
@@ -20,13 +20,13 @@ type Params = {
   subjectData: Ref<SubjectDataType>
 }
 
-export interface openCourseParams extends RequestOpenCourseParams {
+export interface OpenCourseParams extends RequestOpenCourseParams {
   /**公开课名称ID */
   course_id?: string
 }
 
 // 编辑或者更新
-function requestAddOrUpdate(params: openCourseParams) {
+function requestAddOrUpdate(params: OpenCourseParams) {
   if (params.course_id) {
     return editOpenCourse(params as EditOpenCourseParams)
   }
@@ -40,7 +40,7 @@ export default function useCreateListen({ toastFail, toastSuccess, subjectData }
     visible: false,
     content: '',
   })
-  const form = ref<RequestOpenCourseForm>({
+  const form = ref<OpenCourseForm>({
     /**公开课名称ID */
     // course_id: '',
     /**'公开课测试'; // 公开课名称 */

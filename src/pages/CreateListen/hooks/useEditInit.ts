@@ -1,11 +1,12 @@
-import type { OpenCourseItemResult, RequestOpenCourseForm } from '@/api/model/courseModel'
+import type { OpenCourseItemResult } from '@/api/model/courseModel'
 import type { Ref } from 'vue'
 // import useRouterParams from '@/hooks/useRouterParams'
 import usePage from '@/hooks/usePage'
 import { getAttachList } from '@/api/course'
+import type { OpenCourseForm } from '../types'
 // import dayjs from 'dayjs'
 
-export default function useEditInit(formRef: Ref<RequestOpenCourseForm>) {
+export default function useEditInit(formRef: Ref<OpenCourseForm>) {
   // const { id } = useRouterParams<{ id?: string }>()
 
   const { pageOn } = usePage()
@@ -30,7 +31,7 @@ export default function useEditInit(formRef: Ref<RequestOpenCourseForm>) {
 
     // 获取课程相关附件
     getAttachList(result.id).then((res) => {
-      const files: RequestOpenCourseForm['files'] = []
+      const files: OpenCourseForm['files'] = []
       res.attachList.forEach((att) => {
         files.push({
           name: att.name,

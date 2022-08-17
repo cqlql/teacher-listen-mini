@@ -1,9 +1,5 @@
 import { addTempOpenCourse } from '@/api/course'
-import type {
-  AddTempOpenCourseParams,
-  RequestOpenCourseParams,
-  RequestOutsideCourseForm,
-} from '@/api/model/courseModel'
+import type { AddTempOpenCourseParams, RequestOutsideCourseForm } from '@/api/model/courseModel'
 import type { SubjectDataType } from '@/pages/CreateListen/hooks/useGradeSubectData'
 import { setStorage } from '@/utils/storage'
 import Taro from '@tarojs/taro'
@@ -13,11 +9,6 @@ import useToastInject from '@/hooks/useToastInject'
 
 type Params = {
   subjectData: Ref<SubjectDataType>
-}
-
-export interface openCourseParams extends RequestOpenCourseParams {
-  /**公开课名称ID */
-  course_id?: string
 }
 
 // 新增或者编辑
