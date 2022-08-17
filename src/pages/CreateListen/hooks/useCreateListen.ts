@@ -1,6 +1,6 @@
 import { requestOpenCourse, editOpenCourse } from '@/api/course'
 import type {
-  AttachmentParams,
+  // AttachmentParams,
   EditOpenCourseParams,
   RequestOpenCourseParams,
 } from '@/api/model/courseModel'
@@ -67,41 +67,39 @@ export default function useCreateListen({ toastFail, toastSuccess, subjectData }
   async function confirm() {
     const formVal = form.value
 
-    const startTime = formVal.dateTime.split(' ')
-
     isLoading.value = true
     const res = await requestAddOrUpdate({
       /**公开课名称ID */
       course_id: formVal.course_id,
 
       /**'公开课测试'; // 公开课名称 */
-      course_name: formVal.course_name,
+      name: formVal.course_name,
       /**学段ID */
-      period: formVal.period,
+      period: Number(formVal.period),
       /**'1'; // 科目ID */
-      subject_id: formVal.subject_id,
+      subject_id: Number(formVal.subject_id),
       /**'5601661057566615964'; // 年级ID */
-      grade_id: formVal.gradeClass[0],
+      grade_id: Number(formVal.gradeClass[0]),
       /**'5015483610072272084'; // 班级ID */
-      class_id: formVal.gradeClass[1],
+      class_id: Number(formVal.gradeClass[1]),
       /**'2018-01-10'; // 开课日期 */
-      lesson_date: startTime[0],
+      s_time: dayjs(formVal.dateTime).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]'),
       /**'10:20:00'; // 开课时间 */
-      start_time: startTime[1],
+      // start_time: startTime[1],
       /**'1016730'; // 教室ID, 与 `class_room_name`选一个参数提交 */
-      class_room_id: formVal.class_room_id || '0',
+      class_room_id: Number(formVal.class_room_id) || 0,
       /**'录播室'; // 教室名（上课地点） */
       class_room_name: formVal.class_room_id ? undefined : formVal.class_room_name,
       /**'4679665164583612636'; // 科组ID */
-      subject_group_id: formVal.subject_group_id,
-      oca: formVal.files.map<AttachmentParams>((file, index) => {
-        return {
-          name: file.name, // 附件名
-          url: file.url, // 附件url
-          file_type: file.type, // 附件类型
-          display_order: index, // 显示顺序
-        }
-      }),
+      role_id: Number(formVal.subject_group_id),
+      // oca: formVal.files.map<AttachmentParams>((file, index) => {
+      //   return {
+      //     name: file.name, // 附件名
+      //     url: file.url, // 附件url
+      //     file_type: file.type, // 附件类型
+      //     display_order: index, // 显示顺序
+      //   }
+      // }),
     }).finally(() => {
       isLoading.value = false
     })

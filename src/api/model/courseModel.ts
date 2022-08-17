@@ -61,27 +61,25 @@ export interface LessonScoreItem {
 
 /**申请公开课 请求参数 */
 export interface RequestOpenCourseParams {
-  /**'公开课测试'; // 公开课名称 */
-  course_name: string
+  /** 公开课名称 */
+  name: string
   /**学段ID */
-  period: string
+  period: number
   /**'1'; // 科目ID */
-  subject_id: string
+  subject_id: number
   /**'5601661057566615964'; // 年级ID */
-  grade_id: string
+  grade_id: number
   /**'5015483610072272084'; // 班级ID */
-  class_id: string
-  /**'2018-01-10'; // 开课日期 */
-  lesson_date: string
-  /**'10:20:00'; // 开课时间 */
-  start_time: string
+  class_id: number
+  /**'2022-08-17T15:24:25'; // 开课日期 */
+  s_time: string
   /**'教室ID, 如果只有 `class_room_name`，需提交 '0' */
-  class_room_id: '0' | string
+  class_room_id: 0 | number
   /**'录播室'; // 教室名（上课地点） */
   class_room_name?: string
   /**'4679665164583612636'; // 科组ID */
-  subject_group_id: string
-  oca: AttachmentParams[]
+  role_id: number
+  // oca: AttachmentParams[]
   // dii: DimensionParams[];
   // is_prior: boolean; // false 普通公开课　true 区级优质观摩课
 }
