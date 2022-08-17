@@ -43,9 +43,7 @@ type PointList = {
   }[]
 }[]
 
-let newList: PointList = []
-
-classify<LessonScoreItem>(
+let data: Record<string, LessonScoreItem> = classify<LessonScoreItem>(
   // 原列表
   scoreList,
   // 要分类的字段名
