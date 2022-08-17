@@ -37,7 +37,7 @@ export function getClassrooms(): Promise<ClassroomsResult> {
 
 /**公开课 */
 export function getCreateListenSelectData() {
-  return httpV2.post({
+  return httpV2.get({
     url: '/207',
   })
 }
