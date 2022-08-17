@@ -46,7 +46,9 @@ type PointList = {
 let newList: PointList = []
 
 classify<LessonScoreItem>(
+  // 原列表
   scoreList,
+  // 要分类的字段名
   'dimension_id',
   // 容器
   (item) => {
