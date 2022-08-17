@@ -83,7 +83,7 @@ export default function useCreateListen({ toastFail, toastSuccess, subjectData }
       /**'5015483610072272084'; // 班级ID */
       class_id: Number(formVal.gradeClass[1]),
       /**'2018-01-10'; // 开课日期 */
-      s_time: dayjs(formVal.dateTime).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]'),
+      s_time: dayjs(formVal.dateTime).format('YYYY-MM-DDTHH:mm:ss[Z]'),
       /**'10:20:00'; // 开课时间 */
       // start_time: startTime[1],
       /**'1016730'; // 教室ID, 与 `class_room_name`选一个参数提交 */

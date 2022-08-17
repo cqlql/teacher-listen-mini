@@ -30,17 +30,7 @@ export default function getSign(obj, token) {
     const newObj = {}
     //默认情况下，对字符串排序，是按照ASCII的大小比较的，排序忽略大小写按照字母序排序。
     Object.keys(obj)
-      .sort((s1, s2) => {
-        const x1 = s1.toUpperCase()
-        const x2 = s2.toUpperCase()
-        if (x1 < x2) {
-          return -1
-        }
-        if (x1 > x2) {
-          return 1
-        }
-        return 0
-      })
+      .sort()
       .forEach(function (key) {
         let o = obj[key]
         if (o instanceof Object) {
