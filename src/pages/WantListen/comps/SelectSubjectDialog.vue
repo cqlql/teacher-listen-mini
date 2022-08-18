@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue'
 import { Radio as NutRadio, RadioGroup as NutRadiogroup } from '@nutui/nutui-taro'
-import { getCampusGradeSelect } from '@/api/select'
+import type { CampusinfoResult } from '@/api/model/selectModel'
 
 const props = defineProps<{
   modelValue: string
   visible: boolean
+  subjectsRawData: CampusinfoResult['subjects']
 }>()
 const emit = defineEmits<{
   (e: 'change', v: string)
@@ -42,26 +43,55 @@ interface ItemType {
 
 const list = ref<ItemType[]>([])
 const idRecord = ref<Record<string, ItemType>>({})
-getCampusGradeSelect().then((resData) => {
-  // 去重复
-  const newSubjects: ItemType[] = []
-  idRecord.value = resData.subjects.reduce((dict, subject) => {
-    let has = dict[subject.subject_id]
-    if (!has) {
-      let newSubjectItem = (dict[subject.subject_id] = {
-        id: subject.subject_id,
-        name: subject.subject_name,
-      })
-      newSubjects.push(newSubjectItem)
-    }
 
-    return dict
-  }, {})
-  list.value = newSubjects
+watch(
+  () => props.subjectsRawData,
+  (subjectsRawDataVal) => {
+    // 去重复
+    const newSubjects: ItemType[] = [
+      {
+        id: '0',
+        name: '全部',
+      },
+    ]
+    idRecord.value = subjectsRawDataVal.reduce((dict, subject) => {
+      let has = dict[subject.subject_id]
+      if (!has) {
+        let newSubjectItem = (dict[subject.subject_id] = {
+          id: String(subject.subject_id),
+          name: subject.subject_name,
+        })
+        newSubjects.push(newSubjectItem)
+      }
 
-  // 默认选第一个
-  // emit('update:modelValue', (selectedValue.value = newSubjects[0].id))
-})
+      return dict
+    }, {})
+    list.value = newSubjects
+
+    // 默认选第一个
+    // emit('update:modelValue', (selectedValue.value = newSubjects[0].id))
+  },
+)
+// getCampusGradeSelect().then((resData) => {
+//   // 去重复
+//   const newSubjects: ItemType[] = []
+//   idRecord.value = resData.subjects.reduce((dict, subject) => {
+//     let has = dict[subject.subject_id]
+//     if (!has) {
+//       let newSubjectItem = (dict[subject.subject_id] = {
+//         id: subject.subject_id,
+//         name: subject.subject_name,
+//       })
+//       newSubjects.push(newSubjectItem)
+//     }
+
+//     return dict
+//   }, {})
+//   list.value = newSubjects
+
+//   // 默认选第一个
+//   // emit('update:modelValue', (selectedValue.value = newSubjects[0].id))
+// })
 </script>
 <template>
   <div class="SelectSubjectDialog">

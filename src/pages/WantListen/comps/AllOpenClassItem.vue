@@ -9,7 +9,6 @@
       <div class="OpenClassPassedItem_place"> 地点：{{ data.place }} </div>
       <div class="OpenClassPassedItem_date">
         <span class="date">{{ data.date }}</span>
-        <span class="time">{{ data.time }}</span>
       </div>
     </div>
     <div class="OpenClassPassedItem_action-bar">
@@ -32,24 +31,17 @@ withDefaults(
       courseName: string
       place: string
       date: string
-      time: string
       gradClass: string
     }
   }>(),
   {
     data() {
       return {
-        course_id: '',
-        user_id: '',
-        start_time: '',
-        date_time: '',
-
         subject: '语文',
         userName: '姓名',
         courseName: '沁园春',
         place: '七年级7班',
-        date: '2020-12-12',
-        time: '21:00',
+        date: '2020-12-12 21:00',
         gradClass: '七年级1班',
       }
     },

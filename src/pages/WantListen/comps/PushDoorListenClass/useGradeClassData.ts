@@ -28,6 +28,7 @@ export interface GradeClassDataType {
   gradeList: Ref<GradeType[]>
   periodList: Ref<PeriodType[]>
   subjectListByPeriodKey: Ref<Record<string, SubjectType[]>>
+  subjectsRawData: Ref<CampusinfoResult['subjects']>
 }
 
 function numberConvertGradeName(v: number) {
@@ -90,21 +91,6 @@ function initGradeClassData(resData: CampusinfoResult) {
 
 function initPeriodsData(resData: CampusinfoResult) {
   const periodsRecord = getPeriodMap()
-  // const subjectByPeriodKey = resData.subjects.reduce<Record<string, SubjectType[]>>(
-  //   (acc, subject) => {
-  //     const periodId = subject.period
-  //     let subjectListTemp: SubjectType[] | undefined = acc[periodId]
-  //     if (!subjectListTemp) {
-  //       subjectListTemp = acc[periodId] = []
-  //     }
-  //     subjectListTemp.push({
-  //       value: String(subject.subject_id),
-  //       label: subject.subject_name,
-  //     })
-  //     return acc
-  //   },
-  //   {},
-  // )
   return {
     periodListNew: resData.periods.map((item) => {
       const periodId = item.period
@@ -137,6 +123,7 @@ export default function useGradeClassData(): GradeClassDataType {
 
   const periodList = ref<PeriodType[]>([])
   const subjectListByPeriodKey = ref<Record<string, SubjectType[]>>({})
+  const subjectsRawData = ref<CampusinfoResult['subjects']>([])
 
   getCampusinfo().then((resData) => {
     const { gradeDataNew, gradeListNew } = initGradeClassData(resData)
@@ -146,6 +133,8 @@ export default function useGradeClassData(): GradeClassDataType {
     const { periodListNew, subjectListByPeriodKeyNew } = initPeriodsData(resData)
     periodList.value = periodListNew
     subjectListByPeriodKey.value = subjectListByPeriodKeyNew
+
+    subjectsRawData.value = resData.subjects
   })
 
   return {
@@ -153,5 +142,6 @@ export default function useGradeClassData(): GradeClassDataType {
     gradeList,
     periodList,
     subjectListByPeriodKey,
+    subjectsRawData,
   }
 }

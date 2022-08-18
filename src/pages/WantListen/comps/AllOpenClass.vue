@@ -23,6 +23,7 @@
     v-model="topSearchParams.subject"
     v-model:shortName="topSearchParams.subjectShortName"
     v-model:visible="selectSubjectVisible"
+    :subjectsRawData="subjectsRawData"
     @change="topSearchParams.search"
   />
   <DatePicker
@@ -62,7 +63,10 @@ defineProps<{
 }>()
 
 provide('topSearchParams', topSearchParams)
-provide('gradeClassData', useGradeClassData())
+
+let gradeClassData = useGradeClassData()
+let { subjectsRawData } = gradeClassData
+provide('gradeClassData', gradeClassData)
 
 const { show: showSelectSubject, visible: selectSubjectVisible } = useSelectSubjectDialog()
 const { show: showDatePicker, visible: datePickerVisible } = useShowDatePicker()

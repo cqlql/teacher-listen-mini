@@ -144,6 +144,21 @@ export interface OpenCourseItemResult {
   user_name: string
 }
 
+export interface OpenCourseItemResult2 {
+  class_name: string // '1班'
+  class_room_address: string //'B栋一楼六（8）班'
+  created_date: string //'2022-08-18 20:50:50'
+  e_time: string //'2022-08-18 22:35:45'
+  id: number //4
+  // is_enable: 1
+  name: string //'test'
+  s_time: string //'2022-08-18 21:50:45'
+  // status: 10
+  // subject_id: 4
+  subject_name: string //'语文'
+  // type: 0
+}
+
 // export interface OpenCourseItemClient {
 //   date: string
 //   time: string

@@ -29,6 +29,7 @@ import type {
   LessonScoreItem,
   OpenClassListParams,
   OpenCourseItemResult,
+  OpenCourseItemResult2,
   RequestOpenCourseParams,
   userCourseList,
 } from './model/courseModel'
@@ -94,9 +95,7 @@ export function openCourseList(
 export function getCreatedCourseRecord() {}
 
 /** 公开课列表 所有通过的课*/
-export function openCourseListV1(
-  data: OpenClassListParams,
-): Promise<{ listenList: OpenCourseItemResult[] }> {
+export function openCourseListV1(data: OpenClassListParams): Promise<OpenCourseItemResult2[]> {
   return httpV2.get({
     url: '/202',
     data,
