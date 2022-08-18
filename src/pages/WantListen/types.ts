@@ -1,3 +1,10 @@
+export interface TopSearchParams {
+  subject: string
+  subjectShortName: string
+  date: string
+  // 执行搜索
+  search: () => void
+}
 export default interface CourseItem {
   course_id: string
   user_id: string

@@ -29,7 +29,7 @@ if (process.env.NODE_ENV !== 'production') {
 
   // url = '/pages/DingEvaluationRecord/DingEvaluationRecord'
   // url = '/packageECharts/pages/EvaluationStatistics/AllEvaluationStatistics'
-  // tabUrl = '/pages/ToListenClass/ToListenClass'
+  // tabUrl = '/pages/WantListen/WantListen'
 
   if (url) {
     Taro.navigateTo({ url })
@@ -46,9 +46,9 @@ function toCreateListen() {
   })
 }
 
-function toListen() {
+function toCreatedCourseRecord() {
   Taro.redirectTo({
-    url: '/pages/ListenApplicationRecord/ListenApplicationRecord',
+    url: '/pages/CreatedCourseRecord/CreatedCourseRecord',
   })
 }
 
@@ -150,7 +150,7 @@ useDidShow(() => {
       </div>
     </template>
   </ListLoad>
-  <FixedButtons @click-one="toCreateListen" @click-two="toListen" />
+  <FixedButtons @click-one="toCreateListen" @click-two="toCreatedCourseRecord" />
   <OneWeekPicker
     ref="vOneWeekPickerRef"
     v-model:visible="isExpanded"

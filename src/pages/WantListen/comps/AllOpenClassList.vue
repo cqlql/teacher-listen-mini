@@ -31,7 +31,7 @@ import ListLoad from '@/components/ListLoad/ListLoad.vue'
 // import OnceCallback from '@/utils/once-callback'
 // import { nextTick } from '@tarojs/taro'
 import { inject, ref } from 'vue'
-import type CourseItem from '../ToListenClass'
+import type CourseItem from '../types'
 import type { TopSearchParams } from '../types'
 import OpenClassPassedItem from './AllOpenClassItem.vue'
 

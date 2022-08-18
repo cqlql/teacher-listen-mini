@@ -6,7 +6,7 @@ export default {
       'pages/profile/index',
       'pages/index/HomePage',
       // 我要听课
-      'pages/ToListenClass/ToListenClass',
+      'pages/WantListen/WantListen',
       // 听评课记录（听课、授课）
       'pages/ListenEvaluationRecord/ListenEvaluationRecord',
       'pages/ListenEvaluationRecord/ListenEvaluationRecordNoSearch',
@@ -87,7 +87,7 @@ export default {
           text: '今日公开课',
         },
         {
-          pagePath: 'pages/ToListenClass/ToListenClass',
+          pagePath: 'pages/WantListen/WantListen',
           iconPath: 'static/img/add-plan.png',
           selectedIconPath: 'static/img/add-plan-active.png',
           text: '我要听课',
