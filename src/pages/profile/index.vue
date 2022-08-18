@@ -145,6 +145,7 @@ function initUserInfoByToken() {
       // nbf: 1660232077
       school_name: string //"深圳市龙岗区扬美实验学校"
     } = JSON.parse(base64url.decode(infoStr))
+    console.log('🚀 -- initUserInfoByToken -- userData', userData)
     userInfo.name = userData.name
     userInfo.teacher_code = userData.login_name
     userInfo.school = userData.school_name

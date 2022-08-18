@@ -22,7 +22,7 @@ import { openCourseList } from '@/api/course'
 import dayjs from 'dayjs'
 
 import ListLoad from '@/components/ListLoad/ListLoad.vue'
-import OpenCourseItem from './ListenApplicationItem.vue'
+import OpenCourseItem from './CreatedCourseItem.vue'
 import type { ApprovalStatus } from '../types'
 import { nextTick } from '@tarojs/taro'
 
@@ -85,7 +85,7 @@ function reqList({ page }: { page: number }) {
     failed: '1',
     passed: '2',
   }
-
+  // getCreatedCourseRecord
   return openCourseList({
     is_history: 0,
     list_mun: 10,

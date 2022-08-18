@@ -11,7 +11,7 @@ export default {
       'pages/ListenEvaluationRecord/ListenEvaluationRecord',
       'pages/ListenEvaluationRecord/ListenEvaluationRecordNoSearch',
       // 开课记录 开课审批
-      'pages/ListenApplicationRecord/ListenApplicationRecord',
+      'pages/CreatedCourseRecord/CreatedCourseRecord',
       // 创建听课
       'pages/CreateListen/CreateListen',
       // 创建校外课

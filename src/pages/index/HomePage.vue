@@ -31,8 +31,6 @@ if (process.env.NODE_ENV !== 'production') {
   // url = '/packageECharts/pages/EvaluationStatistics/AllEvaluationStatistics'
   // tabUrl = '/pages/ToListenClass/ToListenClass'
 
-  toCreateListen()
-
   if (url) {
     Taro.navigateTo({ url })
   } else if (tabUrl) {

@@ -4,7 +4,7 @@ import type { OpenCourseItemResult } from '@/api/model/courseModel'
 export type ApprovalStatus = 'pending' | 'failed' | 'passed'
 
 /* 听课申请记录项 */
-export interface ListenApplicationItem {
+export interface CreatedCourseItem {
   /** 公开课记录ID */
   id: string
   courseName: string

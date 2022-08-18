@@ -90,6 +90,8 @@ export function openCourseList(
 ): Promise<{ listenList: OpenCourseItemResult[] }> {
   return get('/lecture/v2/listenlist', data)
 }
+/** 获取新创建的课程记录列表 */
+export function getCreatedCourseRecord() {}
 
 /** 公开课列表 所有通过的课*/
 export function openCourseListV1(

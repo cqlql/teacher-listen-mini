@@ -28,7 +28,7 @@ import { provide, ref } from 'vue'
 import { reqIsLeader } from '@/api/course'
 import { getStorage, setStorage } from '@/utils/storage'
 
-import OpenClassList from './components/ListenApplicationList.vue'
+import OpenClassList from './components/CreatedCourseList.vue'
 import BtnFixedBottom from '@/components/BtnFixedBottom.vue'
 
 const tabVal = ref<ApprovalStatus>('pending')

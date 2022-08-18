@@ -53,7 +53,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { ApprovalStatus, ListenApplicationItem } from '../types'
+import type { ApprovalStatus, CreatedCourseItem } from '../types'
 
 import useToast from '@/hooks/useToast'
 import approveOpenCourse from '@/api/course'
@@ -65,7 +65,7 @@ let { toast, toastFail, toastSuccess, loading } = useToast()
 
 const props = withDefaults(
   defineProps<{
-    data: ListenApplicationItem
+    data: CreatedCourseItem
     type: ApprovalStatus
   }>(),
   {
