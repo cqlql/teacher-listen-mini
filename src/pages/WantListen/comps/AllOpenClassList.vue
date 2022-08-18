@@ -75,12 +75,12 @@ function refresh() {
 
 function reqList({ page }: { page: number }) {
   return openCourseListV1({
-    is_history: 0,
-    list_mun: 10,
-    offset: page * 10,
-    status: '2',
-    date: topSearchParams.date,
-    subject_id: topSearchParams.subject,
+    // is_history: 0,
+    pageSize: 10,
+    pageIndex: page,
+    // status: '2',
+    // date: topSearchParams.date,
+    subjectId: Number(topSearchParams.subject),
   }).then((res) => {
     let newList = res.listenList.map((item) => {
       return {

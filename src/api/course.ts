@@ -151,7 +151,7 @@ export function getUserCourse(data?: GetUserCourseParams): Promise<{
   courselist: userCourseList
 }> {
   return httpV2.get({
-    url: '/202',
+    url: '/209',
     data,
   })
 }

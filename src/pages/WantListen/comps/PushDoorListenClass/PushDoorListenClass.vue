@@ -2,7 +2,7 @@
 import { computed, provide, ref } from 'vue'
 import ByGrade from './ByGrade.vue'
 import ByTeacher from './ByTeacher.vue'
-import useGradeClassData from './useGradeClassData'
+// import useGradeClassData from './useGradeClassData'
 
 type ActiveType = 'grade' | 'teacher'
 
@@ -17,7 +17,7 @@ let isByGrade = computed(() => {
 
 // const gradeClassData = useGradeClassData()
 
-provide('gradeClassData', useGradeClassData())
+// provide('gradeClassData', useGradeClassData())
 </script>
 <template>
   <div class="PushDoorListenClass">

@@ -42,6 +42,7 @@ import PushDoorListenClass from './PushDoorListenClass/PushDoorListenClass.vue'
 import SelectSubjectDialog from './SelectSubjectDialog.vue'
 import DatePicker from './DatePicker.vue'
 import type { TopSearchParams } from '../types'
+import useGradeClassData from './PushDoorListenClass/useGradeClassData'
 
 const classType = ref<'open' | 'pushDoor'>('open')
 const topSearchParams = reactive<TopSearchParams>({
@@ -52,7 +53,7 @@ const topSearchParams = reactive<TopSearchParams>({
 })
 
 if (process.env.NODE_ENV !== 'production') {
-  classType.value = 'pushDoor'
+  // classType.value = 'pushDoor'
 }
 
 defineProps<{
@@ -61,6 +62,7 @@ defineProps<{
 }>()
 
 provide('topSearchParams', topSearchParams)
+provide('gradeClassData', useGradeClassData())
 
 const { show: showSelectSubject, visible: selectSubjectVisible } = useSelectSubjectDialog()
 const { show: showDatePicker, visible: datePickerVisible } = useShowDatePicker()

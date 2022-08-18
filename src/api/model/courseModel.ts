@@ -298,28 +298,33 @@ export interface CourseListParams {
 }
 
 export interface OpenClassListParams {
-  /* 校区ID */
-  campus_id?: string
-  /* 年级ID */
-  grade_id?: string
-  /* 科目ID */
-  subject_id?: string
-  /**是否查询历史记录 0：查询今天记录  1：查询历史记录 */
-  is_history: 0 | 1
+  // /* 校区ID */
+  // campus_id?: string
+  // /* 年级ID */
+  // grade_id?: string
+  // /* 科目ID */
+  // subject_id?: string
+  // /**是否查询历史记录 0：查询今天记录  1：查询历史记录 */
+  // is_history: 0 | 1
 
-  /* 用于过滤历史记录，只有is_history=1时，此参数生效 */
-  lesson_date?: string
-  /* 课程类型  0：公开课  1：普通课程(推门听课)，默认0 */
-  less_type?: 0 | 1
-  /**每页条数 */
-  list_mun: number
-  /**起始索引 */
-  offset: number
-  // 待审批 | 未通过 | 已通过
-  status: '0' | '1' | '2'
+  // /* 用于过滤历史记录，只有is_history=1时，此参数生效 */
+  // lesson_date?: string
+  // /* 课程类型  0：公开课  1：普通课程(推门听课)，默认0 */
+  // less_type?: 0 | 1
+  // /**每页条数 */
+  // list_mun: number
+  // /**起始索引 */
+  // offset: number
+  // // 待审批 | 未通过 | 已通过
+  // status: '0' | '1' | '2'
 
   // ! 时间 - 此参数后端目前没有
-  date?: string
+  // date?: string
+
+  pageSize: number
+  pageIndex: number
+  keyword?: number
+  subjectId: number
 }
 
 export interface ApproveOpenClassParams {
