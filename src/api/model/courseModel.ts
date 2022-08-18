@@ -70,13 +70,13 @@ export interface RequestOpenCourseParams {
   /**'5601661057566615964'; // 年级ID */
   grade_id: number
   /**'5015483610072272084'; // 班级ID */
-  class_id: number
+  classes_id: number
   /**'2022-08-17T15:24:25'; // 开课日期 */
   s_time: string
   /**'教室ID, 如果只有 `class_room_name`，需提交 '0' */
-  class_room_id: 0 | number
+  classes_room_id: 0 | number
   /**'录播室'; // 教室名（上课地点） */
-  class_room_name?: string
+  classes_room_name?: string
   /**'4679665164583612636'; // 科组ID */
   role_id: number
   // oca: AttachmentParams[]
