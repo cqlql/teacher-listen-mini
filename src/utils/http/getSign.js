@@ -11,12 +11,12 @@ export default function getSign(data, token) {
       })
     }
     if (obj instanceof Object) {
-      return objSort(obj)
+      return objKeySort(obj)
     }
     return obj
   }
 
-  function objSort(obj) {
+  function objKeySort(obj) {
     const newObj = {}
     Object.keys(obj)
       .sort((a, b) => a.localeCompare(b))
