@@ -1,4 +1,5 @@
 import { httpV1, httpV2, httpV3 } from '@/utils/http'
+import type { RequestOptionsNullable } from '@/utils/http/CreateHttp'
 import { post, get } from '@/utils/request'
 import type {
   AddTempOpenCourseParams,
@@ -95,11 +96,17 @@ export function openCourseList(
 export function getCreatedCourseRecord() {}
 
 /** 公开课列表 所有通过的课*/
-export function openCourseListV1(data: OpenClassListParams): Promise<OpenCourseItemResult2[]> {
-  return httpV2.get({
-    url: '/202',
-    data,
-  })
+export function openCourseListV1(
+  data: OpenClassListParams,
+  config: RequestOptionsNullable,
+): Promise<OpenCourseItemResult2[]> {
+  return httpV2.get(
+    {
+      url: '/202',
+      data,
+    },
+    config,
+  )
 }
 
 interface GetCourseListParams {

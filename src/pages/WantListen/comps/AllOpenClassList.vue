@@ -80,12 +80,17 @@ function refresh() {
 
 function reqList({ page }: { page: number }) {
   let date = topSearchParams.date
-  return openCourseListV1({
-    pageSize: 10,
-    pageIndex: page,
-    dateRange: date ? date + '-' + date : undefined,
-    subjectId: Number(topSearchParams.subject),
-  }).then((res) => {
+  return openCourseListV1(
+    {
+      pageSize: 10,
+      pageIndex: page,
+      dateRange: date ? date + '-' + date : undefined,
+      subjectId: Number(topSearchParams.subject),
+    },
+    {
+      reqDataRemoveUndefined: true,
+    },
+  ).then((res) => {
     let newList = res.map((item) => {
       return {
         // 新增用

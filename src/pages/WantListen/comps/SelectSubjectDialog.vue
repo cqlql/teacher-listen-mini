@@ -16,7 +16,7 @@ const emit = defineEmits<{
   (e: 'update:name', v: string)
   (e: 'update:shortName', v: string)
 }>()
-const selectedValue = ref('')
+const selectedValue = ref(props.modelValue)
 function onCancel() {}
 function onOk() {
   let id = selectedValue.value
@@ -121,7 +121,7 @@ watch(
   }
   .nut-radiogroup {
     display: block;
-
+    text-align: left;
     .nut-radio {
       // margin-bottom: 12px;
       padding: 0;
@@ -129,6 +129,9 @@ watch(
       margin-right: 0;
       margin-bottom: 10px;
       box-sizing: border-box;
+    }
+    .nut-radio__label {
+      white-space: nowrap;
     }
   }
 }

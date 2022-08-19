@@ -8,7 +8,7 @@
 
       <div class="rBtns">
         <nut-button v-if="classType === 'open'" class="tSubject" @click="showSelectSubject">{{
-          topSearchParams.subjectShortName || '全'
+          topSearchParams.subjectShortName
         }}</nut-button>
         <nut-button class="date" icon="date" @click="showDatePicker"></nut-button>
       </div>
@@ -48,8 +48,8 @@ import useGradeClassData from './PushDoorListenClass/useGradeClassData'
 
 const classType = ref<'open' | 'pushDoor'>('open')
 const topSearchParams = reactive<TopSearchParams>({
-  subject: '',
-  subjectShortName: '',
+  subject: '0',
+  subjectShortName: '全',
   date: '',
   search() {},
 })
