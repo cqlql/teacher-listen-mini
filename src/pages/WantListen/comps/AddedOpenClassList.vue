@@ -2,7 +2,7 @@
   <ListLoad
     ref="vListLoad"
     :immediate="false"
-    :startPage="1"
+    :startPage="0"
     :reqList="reqList"
     refresher-background="#f1f9fe"
     :scrollLowerEnabled="false"
