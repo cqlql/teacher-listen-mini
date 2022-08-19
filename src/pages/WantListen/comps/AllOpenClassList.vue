@@ -79,12 +79,16 @@ function refresh() {
 // }
 
 function reqList({ page }: { page: number }) {
-  let date = topSearchParams.date
+  let dateRange: string | undefined
+  if (topSearchParams.startDate) {
+    dateRange = topSearchParams.startDate + '-' + topSearchParams.endDate
+  }
+
   return openCourseListV1(
     {
       pageSize: 10,
       pageIndex: page,
-      dateRange: date ? date + '-' + date : undefined,
+      dateRange,
       subjectId: Number(topSearchParams.subject),
     },
     {

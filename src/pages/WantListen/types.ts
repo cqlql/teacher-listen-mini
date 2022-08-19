@@ -1,7 +1,9 @@
 export interface TopSearchParams {
   subject: string
   subjectShortName: string
-  date: string
+  // date: string
+  startDate: string
+  endDate: string
   // 执行搜索
   search: () => void
 }

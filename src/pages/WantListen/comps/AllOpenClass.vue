@@ -27,7 +27,8 @@
     @change="topSearchParams.search"
   />
   <DatePicker
-    v-model="topSearchParams.date"
+    v-model:startDate="topSearchParams.startDate"
+    v-model:endDate="topSearchParams.endDate"
     v-model:visible="datePickerVisible"
     valueFormat="YYYY/MM/DD"
     @select="topSearchParams.search"
@@ -50,7 +51,8 @@ const classType = ref<'open' | 'pushDoor'>('open')
 const topSearchParams = reactive<TopSearchParams>({
   subject: '0',
   subjectShortName: '全',
-  date: '',
+  startDate: '',
+  endDate: '',
   search() {},
 })
 
