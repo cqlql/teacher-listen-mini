@@ -37,6 +37,7 @@ import { delUserCourse, getUserCourse } from '@/api/course'
 import ListLoad from '@/components/ListLoad/ListLoad.vue'
 // import OnceCallback from '@/utils/once-callback'
 import { nextTick } from '@tarojs/taro'
+import dayjs from 'dayjs'
 import { ref, watch } from 'vue'
 import type CourseItem from '../types'
 import AllOpenClassItem from './AllOpenClassItem.vue'
@@ -78,7 +79,7 @@ function reqList(page) {
   return getUserCourse({
     pageIndex: page,
     pageSize: 10,
-    dateRange: '',
+    dateRange: dayjs().format('YYYY/MM/DD') + '-' + dayjs().add(6, 'day').format('YYYY/MM/DD'),
     keyword: '',
   }).then((res) => {
     let newList: CourseItem[] = res.courselist.map((item) => {
