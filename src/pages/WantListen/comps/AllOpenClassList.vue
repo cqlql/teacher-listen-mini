@@ -34,7 +34,7 @@ import { inject, ref } from 'vue'
 import type CourseItem from '../types'
 import type { TopSearchParams } from '../types'
 import OpenClassPassedItem from './AllOpenClassItem.vue'
-
+import getGrade from '@/data/getGrade.js'
 const vListLoad = ref({
   firstPageLoad() {},
 })
@@ -73,20 +73,24 @@ function refresh() {
   vListLoad.value.firstPageLoad()
 }
 
+// function objectRemoveUndefined<T>(obj: T) {
+//   obj.keys
+//   return obj
+// }
+
 function reqList({ page }: { page: number }) {
+  let date = topSearchParams.date
   return openCourseListV1({
-    // is_history: 0,
     pageSize: 10,
     pageIndex: page,
-    // status: '2',
-    // date: topSearchParams.date,
+    dateRange: date ? date + '-' + date : undefined,
     subjectId: Number(topSearchParams.subject),
   }).then((res) => {
     let newList = res.map((item) => {
       return {
         // 新增用
         course_id: item.id,
-        user_id: item.user_id,
+        user_id: item.teacher_id,
         start_time: item.s_time,
 
         // 上课日期
@@ -94,11 +98,11 @@ function reqList({ page }: { page: number }) {
         date: item.s_time,
 
         subject: item.subject_name[0],
-        userName: item.user_name,
+        userName: item.teacher_name,
         courseName: item.name,
         place: item.class_room_address,
 
-        gradClass: item.grade_name + item.class_name,
+        gradClass: getGrade(item.period, item.years) + item.class_name,
       }
     })
     return newList

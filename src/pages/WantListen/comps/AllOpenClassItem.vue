@@ -105,7 +105,7 @@ $gray-color: #888;
 }
 
 .OpenClassPassedItem_action-bar {
-  width: 90px;
+  width: 100px;
   display: flex;
   align-items: center;
   flex-direction: column;

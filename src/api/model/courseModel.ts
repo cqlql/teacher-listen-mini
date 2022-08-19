@@ -157,6 +157,11 @@ export interface OpenCourseItemResult2 {
   // subject_id: 4
   subject_name: string //'语文'
   // type: 0
+  period: number
+
+  teacher_id: number // 9360
+  teacher_name: string // "钟洁娜"
+  years: number //2020
 }
 
 // export interface OpenCourseItemClient {
@@ -333,8 +338,7 @@ export interface OpenClassListParams {
   // // 待审批 | 未通过 | 已通过
   // status: '0' | '1' | '2'
 
-  // ! 时间 - 此参数后端目前没有
-  // date?: string
+  dateRange?: string //2022/08/01-2022/08/01
 
   pageSize: number
   pageIndex: number

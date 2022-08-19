@@ -3,10 +3,16 @@ import Calendar from '@/components/Calendar/Calendar.vue'
 import type { DateItem } from '@/components/Calendar/typing'
 import dayjs from 'dayjs'
 
-defineProps<{
-  modelValue: string
-  visible: boolean
-}>()
+const props = withDefaults(
+  defineProps<{
+    modelValue: string
+    visible: boolean
+    valueFormat?: string
+  }>(),
+  {
+    valueFormat: 'YYYY-MM-DD',
+  },
+)
 
 const emit = defineEmits<{
   (e: 'update:modelValue', date: string)
@@ -15,7 +21,7 @@ const emit = defineEmits<{
 }>()
 
 function select(dateItem: DateItem) {
-  emit('update:modelValue', dayjs(dateItem.date).format('YYYY-MM-DD'))
+  emit('update:modelValue', dayjs(dateItem.date).format(props.valueFormat))
   emit('select', dateItem)
   emit('update:visible', false)
 }

@@ -29,6 +29,7 @@
   <DatePicker
     v-model="topSearchParams.date"
     v-model:visible="datePickerVisible"
+    valueFormat="YYYY/MM/DD"
     @select="topSearchParams.search"
   />
 </template>
