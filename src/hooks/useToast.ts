@@ -74,7 +74,6 @@ export default function useToast(): UseToast {
       generalShow(msg, 'warn')
     },
     toastSuccess(msg: string) {
-      console.log('🚀 -- toastSuccess -- string')
       generalShow(msg, 'success')
     },
     toastLoading,

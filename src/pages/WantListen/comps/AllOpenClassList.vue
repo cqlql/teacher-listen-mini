@@ -35,6 +35,8 @@ import type CourseItem from '../types'
 import type { TopSearchParams } from '../types'
 import OpenClassPassedItem from './AllOpenClassItem.vue'
 import getGrade from '@/data/getGrade.js'
+import useToastInject from '@/hooks/useToastInject'
+const { toastSuccess } = useToastInject()
 const vListLoad = ref({
   firstPageLoad() {},
 })
@@ -130,6 +132,7 @@ function onAddUserCourse(item: CourseItem, list: CourseItem[], index: number) {
     if (list.length === 0) {
       vListLoad.value.firstPageLoad()
     }
+    toastSuccess('添加成功')
   })
 }
 </script>
