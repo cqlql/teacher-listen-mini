@@ -37,7 +37,7 @@ interface RequestOptions {
   allowRefreshToken: boolean
 
   // 请求参数删除 undefined
-  removeUndefined: boolean
+  reqDataRemoveUndefined: boolean
 
   refreshToken: () => Promise<any>
 }
@@ -59,7 +59,7 @@ export interface RequestOptionsNullable {
 
   allowRefreshToken?: boolean
 
-  removeUndefined?: boolean
+  reqDataRemoveUndefined?: boolean
 
   resultTransform?: RequestOptions['resultTransform']
 
@@ -67,12 +67,17 @@ export interface RequestOptionsNullable {
 }
 
 function removeUndefined(obj: Record<string, any>) {
-  const newObj = {}
-  for (const [key, value] of Object.entries(obj)) {
-    if (value !== undefined) {
-      newObj[key] = value
+  if (obj instanceof Object) {
+    const newObj = {}
+    for (const [key, value] of Object.entries(obj)) {
+      if (value !== undefined) {
+        newObj[key] = value
+      }
     }
+    return newObj
   }
+
+  return obj
 }
 
 export default class CreateHttp {
@@ -86,7 +91,7 @@ export default class CreateHttp {
         withToken: true,
         fail() {},
         showErrorToast: true,
-        removeUndefined: false,
+        reqDataRemoveUndefined: false,
         allowRefreshToken: false,
         resultTransform: (data: any) => data,
         async refreshToken() {},
@@ -113,7 +118,7 @@ export default class CreateHttp {
     }
 
     let reqData = requestConfig.data
-    if (reqData && newRequestOptions.removeUndefined) {
+    if (reqData && newRequestOptions.reqDataRemoveUndefined) {
       reqData = removeUndefined(reqData)
     }
 
@@ -121,6 +126,7 @@ export default class CreateHttp {
 
     const res = await request({
       ...requestConfig,
+      data: reqData,
       url: newRequestOptions.apiUrl + newRequestOptions.urlPrefix + requestConfig.url,
     })
 
