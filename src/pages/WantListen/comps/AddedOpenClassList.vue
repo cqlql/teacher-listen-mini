@@ -75,7 +75,7 @@ function refresh() {
   vListLoad.value.firstPageLoad()
 }
 
-function reqList(page) {
+function reqList({ page }) {
   return getUserCourse({
     pageIndex: page,
     pageSize: 10,
