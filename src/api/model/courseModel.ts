@@ -366,10 +366,14 @@ export interface ApproveOpenClassResult {
 }
 
 export interface GetUserCourseParams {
-  start_date?: string
-  end_date?: string
-  /**true 倒序   false 正序 */
-  order_desc?: 'true' | 'false'
+  // start_date?: string
+  // end_date?: string
+  // /**true 倒序   false 正序 */
+  // order_desc?: 'true' | 'false'
+  pageSize: number
+  pageIndex: number
+  dateRange?: string
+  keyword: string
 }
 
 export interface AddUserCourse {

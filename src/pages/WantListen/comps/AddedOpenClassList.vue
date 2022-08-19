@@ -2,6 +2,7 @@
   <ListLoad
     ref="vListLoad"
     :immediate="false"
+    :startPage="1"
     :reqList="reqList"
     refresher-background="#f1f9fe"
     :scrollLowerEnabled="false"
@@ -73,12 +74,12 @@ function refresh() {
   vListLoad.value.firstPageLoad()
 }
 
-function reqList() {
+function reqList(page) {
   return getUserCourse({
-    // is_history: 0,
-    // list_mun: 10,
-    // offset: page * 10,
-    // status: '2',
+    pageIndex: page,
+    pageSize: 10,
+    dateRange: '',
+    keyword: '',
   }).then((res) => {
     let newList: CourseItem[] = res.courselist.map((item) => {
       return {

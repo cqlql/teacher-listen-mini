@@ -41,12 +41,13 @@ function useGetList(weekDate: Ref<Dayjs>) {
   >([])
 
   function reqList() {
-    const date = weekDate.value.format('YYYY-MM-DD')
+    const date = weekDate.value.format('YYYY/MM/DD')
 
     return getUserCourse({
-      order_desc: 'true',
-      start_date: date,
-      end_date: date,
+      pageIndex: 0,
+      pageSize: 10,
+      dateRange: date + '-' + date,
+      keyword: '',
     }).then(({ courselist }) => {
       const statusMap = {
         0: {

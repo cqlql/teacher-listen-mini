@@ -16,8 +16,6 @@ export interface SubjectDataType {
 /**
  * 学段科目数据
  * 可根据学段查找科目
- *
- *
  */
 export default function usePeriodSubjectData() {
   type Option = { id: string; name: string }
