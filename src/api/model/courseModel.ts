@@ -374,15 +374,15 @@ export interface GetUserCourseParams {
 
 export interface AddUserCourse {
   /** 课程ID*/
-  course_id: string
-  /** 用户ID*/
-  user_id: string
-  /** 上课日期*/
-  date: string
-  /** 开始时间*/
-  start_time: string
-  /** 0（新增）或1（修改），新增时如果已经在指定的日期和时间存在课程会忽略这个请求*/
-  status: '0'
+  courses_id: string
+  // /** 用户ID*/
+  // user_id: string
+  // /** 上课日期*/
+  // date: string
+  // /** 开始时间*/
+  // start_time: string
+  // /** 0（新增）或1（修改），新增时如果已经在指定的日期和时间存在课程会忽略这个请求*/
+  // status: '0'
 }
 
 export interface DimensionListParams {

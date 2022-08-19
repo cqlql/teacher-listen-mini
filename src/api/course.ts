@@ -164,7 +164,10 @@ export function getUserCourse(data?: GetUserCourseParams): Promise<{
 
 /** 添加听课计划 */
 export function addUserCourse(data: AddUserCourse): Promise<{ usercourse: any[] }> {
-  return post('/lecture/v1/addUserCourse', data)
+  return httpV2.post({
+    url: '/204',
+    data,
+  })
 }
 
 /**

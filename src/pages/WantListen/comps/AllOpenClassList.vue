@@ -120,11 +120,11 @@ function reqList({ page }: { page: number }) {
 
 function onAddUserCourse(item: CourseItem, list: CourseItem[], index: number) {
   addUserCourse({
-    course_id: item.course_id,
-    user_id: item.user_id,
-    date: item.date,
-    start_time: item.start_time,
-    status: '0',
+    courses_id: item.course_id,
+    // user_id: item.user_id,
+    // date: item.date,
+    // start_time: item.start_time,
+    // status: '0',
   }).then(() => {
     list.splice(index, 1)
     if (list.length === 0) {
