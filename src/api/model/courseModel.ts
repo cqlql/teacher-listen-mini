@@ -308,25 +308,44 @@ export type userCourseList = {
   class_room_address: string
   playback_address: string
 }[]
+// 听课过程子项
+export interface SaveListenProcessParamsDetail {
+  // id?: number //0
+  /**用户听评课计划ID */
+  user_eval_id: number //0
+  /**过程ID */
+  // process_id: number //0
+  /**类型 1：思考 2：照片 3：视频" */
+  type: 1 | 2 | 3 //0
+  /**值 */
+  val: string //'string'
+  order_index: number //0
+}
+// 听课过程保存参数
+export interface SaveListenProcessParams {
+  // evaluation_id?: string //评价主ID
+  // course_id: string //课程ID
+  // campus_id?: string //校区ID
+  // campus_name?: string //校区名
+  // school_id?: string // 学校ID
+  // school_name?: string // 学校名
+  // type: 0 | 1 //0手机1 纸
+  // is_open_course: boolean // 是否为公开课,用户区分公开课和普通课
+  // is_boutique_course: boolean // 是否为精品课
+  // is_expert_course: boolean // 是否为专家讲座
+  // lesson_evaluation_text: string // 课堂点评文字
+  // lesson_record: {
+  //   contents: RecordItemParam[]
+  // }[]
+  // //过程记录打分表
+  // Lesson_score: LessonScoreParam[]
 
-// 听课评价 提交
-export interface LessonRecordReqData {
-  evaluation_id?: string //评价主ID
-  course_id: string //课程ID
-  campus_id?: string //校区ID
-  campus_name?: string //校区名
-  school_id?: string // 学校ID
-  school_name?: string // 学校名
-  type: 0 | 1 //0手机1 纸
-  is_open_course: boolean // 是否为公开课,用户区分公开课和普通课
-  is_boutique_course: boolean // 是否为精品课
-  is_expert_course: boolean // 是否为专家讲座
-  lesson_evaluation_text: string // 课堂点评文字
-  lesson_record: {
-    contents: RecordItemParam[]
-  }[]
-  //过程记录打分表
-  Lesson_score: LessonScoreParam[]
+  // id?: number // 0
+  /**用户听评课计划ID */
+  user_eval_id: number //0
+  title: string //'string'
+  order_index: number //0
+  details: SaveListenProcessParamsDetail[]
 }
 
 // 听课详情结果

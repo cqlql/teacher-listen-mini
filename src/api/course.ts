@@ -25,7 +25,7 @@ import type {
   GetSubjectGroupsResult,
   GetUserCourseParams,
   LessonCountResult,
-  LessonRecordReqData,
+  SaveListenProcessParams,
   LessonRecordResult,
   LessonScoreItem,
   OpenClassListParams,
@@ -176,9 +176,9 @@ export function delUserCourse(id: string) {
   return get('/lecture/v1/delUserCourse', { id })
 }
 
-/** 听课评价 新增（过程记录和打分） */
-export function lessonRecord(data: LessonRecordReqData) {
-  return post('/lecture/v1/lessonrecord', data)
+/** 保存听课过程（过程记录和打分） */
+export function saveListenProcess(data: SaveListenProcessParams[]) {
+  return post('/205', data)
 }
 /** 听课评价 只有打分 修改？*/
 export function subscore(course_id: string) {

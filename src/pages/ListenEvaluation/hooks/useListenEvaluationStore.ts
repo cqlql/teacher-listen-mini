@@ -1,5 +1,5 @@
 import type { EvaluationScore, ListenEvaluationStore } from '../types'
-import { getEvaluationList, lessonRecord } from '@/api/course'
+import { getEvaluationList, saveListenProcess } from '@/api/course'
 import useRouterParams from '@/hooks/useRouterParams'
 import type { ProcessRecordStore } from './useProcessRecordStore'
 import useProcessRecordStore from './useProcessRecordStore'
@@ -8,9 +8,10 @@ import useEvaluationScoreStore from './useEvaluationScoreStore'
 import type { Ref } from 'vue'
 import type {
   FileRecordItemParam,
-  LessonRecordReqData,
+  SaveListenProcessParams,
   LessonScoreParam,
   RecordItemParam,
+  SaveListenProcessParamsDetail,
 } from '@/api/model/courseModel'
 
 export interface RouteParams {
@@ -30,57 +31,116 @@ function useSave(
 
   const { processRecordList } = processRecordStore
 
-  function resolveRequestData(): LessonRecordReqData {
-    const lessonRecordParam: LessonRecordReqData['lesson_record'] = []
+  function resolveRequestData(): SaveListenProcessParams[] {
+    // return [
+    //   {
+    //     // id: 0,
+    //     user_eval_id: 0,
+    //     title: 'string',
+    //     order_index: 0,
+    //     details: [
+    //       {
+    //         id: 0,
+    //         user_eval_id: 0,
+    //         process_id: 0,
+    //         type: 0,
+    //         val: 'string',
+    //         order_index: 0,
+    //       },
+    //     ],
+    //   },
+    // ]
+    const courseId = Number(routeParams.course_id)
+    return processRecordList.value.map((record, i) => {
+      const details: SaveListenProcessParams['details'] = record.list.map((item, j) => {
+        let val: SaveListenProcessParamsDetail['val']
+        let type: SaveListenProcessParamsDetail['type']
 
-    processRecordList.value.forEach((record) => {
-      const contents: RecordItemParam[] = []
-      lessonRecordParam.push({
-        contents,
-      })
-      contents.push({
-        content_label_type: 'body',
-        content: record.text,
-      })
-
-      record.list.forEach((item) => {
         switch (item.type) {
           case 'think':
-            contents.push({
-              content_label_type: 'think',
-              content: item.text,
-            })
+            type = 1
+            val = item.text
             break
 
           case 'picture':
           case 'drawing':
+            type = 2
+            val = JSON.stringify(item.files)
+            break
           case 'video':
-            const filesParam: FileRecordItemParam['contents'] = []
-            item.files.forEach((file) => {
-              filesParam.push({
-                file_id: file.id,
-                url: file.url,
-              })
-            })
-
-            const map: {
-              picture: 'picture'
-              drawing: 'handwriting'
-              video: 'video'
-            } = {
-              picture: 'picture',
-              drawing: 'handwriting',
-              video: 'video',
-            }
-
-            contents.push({
-              content_label_type: map[item.type],
-              contents: filesParam,
-            })
+            type = 3
+            val = JSON.stringify(item.files)
             break
         }
+
+        return {
+          // id: 0,
+          user_eval_id: courseId,
+          // process_id: 0,
+          type,
+          val,
+          order_index: j,
+        }
       })
+      return {
+        // id: 0,
+        user_eval_id: courseId,
+        title: record.text,
+        order_index: i,
+        details,
+      }
     })
+
+    // const lessonRecordParam: SaveListenProcessParams['lesson_record'] = []
+
+    // processRecordList.value.forEach((record) => {
+    //   const contents: RecordItemParam[] = []
+    //   lessonRecordParam.push({
+    //     contents,
+    //   })
+    //   contents.push({
+    //     content_label_type: 'body',
+    //     content: record.text,
+    //   })
+
+    //   record.list.forEach((item) => {
+    //     switch (item.type) {
+    //       case 'think':
+    //         contents.push({
+    //           content_label_type: 'think',
+    //           content: item.text,
+    //         })
+    //         break
+
+    //       case 'picture':
+    //       case 'drawing':
+    //       case 'video':
+    //         const filesParam: FileRecordItemParam['contents'] = []
+    //         item.files.forEach((file) => {
+    //           filesParam.push({
+    //             file_id: file.id,
+    //             url: file.url,
+    //           })
+    //         })
+
+    //         const map: {
+    //           picture: 'picture'
+    //           drawing: 'handwriting'
+    //           video: 'video'
+    //         } = {
+    //           picture: 'picture',
+    //           drawing: 'handwriting',
+    //           video: 'video',
+    //         }
+
+    //         contents.push({
+    //           content_label_type: map[item.type],
+    //           contents: filesParam,
+    //         })
+    //         break
+    //     }
+    //   })
+    // })
 
     // const lessonScore: LessonScoreParam[] = evaluationScore.value.scoreList.map((scoreItem) => {
     //   const selectedIndex = scoreItem.index
@@ -98,38 +158,38 @@ function useSave(
     //   }
     // })
 
-    const lessonScore: LessonScoreParam[] = evaluationScore.value.scoreList.reduce<
-      LessonScoreParam[]
-    >((lessonScore, scoreItem) => {
-      scoreItem.ids.forEach((itemId) => {
-        lessonScore.push({
-          dimension_id: scoreItem.id, //主维度ID
-          dimension_item_id: itemId, //维度子项 ，0 时为主维度ID
-          score: scoreItem.weight, //打分，dimensionitemId = 0，记录平均分
-        })
-      })
+    // const lessonScore: LessonScoreParam[] = evaluationScore.value.scoreList.reduce<
+    //   LessonScoreParam[]
+    // >((lessonScore, scoreItem) => {
+    //   scoreItem.ids.forEach((itemId) => {
+    //     lessonScore.push({
+    //       dimension_id: scoreItem.id, //主维度ID
+    //       dimension_item_id: itemId, //维度子项 ，0 时为主维度ID
+    //       score: scoreItem.weight, //打分，dimensionitemId = 0，记录平均分
+    //     })
+    //   })
 
-      return lessonScore
-    }, [])
+    //   return lessonScore
+    // }, [])
 
-    return {
-      course_id: routeParams.course_id, //课程ID
-      // campus_id: 'string', //校区ID
-      // campus_name: 'string', //校区名
-      // evaluation_id: 'string', //评价主ID
-      // school_id: 'string', // 学校ID
-      // school_name: 'string', // 学校名
-      type: 0, //0手机1 纸
-      is_open_course: true, // 是否为公开课,用户区分公开课和普通课
+    // return {
+    //   course_id: routeParams.course_id, //课程ID
+    //   // campus_id: 'string', //校区ID
+    //   // campus_name: 'string', //校区名
+    //   // evaluation_id: 'string', //评价主ID
+    //   // school_id: 'string', // 学校ID
+    //   // school_name: 'string', // 学校名
+    //   type: 0, //0手机1 纸
+    //   is_open_course: true, // 是否为公开课,用户区分公开课和普通课
 
-      is_boutique_course: false, // 是否为精品课
-      is_expert_course: false, // 是否为专家讲座
-      lesson_evaluation_text: evaluationScore.value.reviews,
+    //   is_boutique_course: false, // 是否为精品课
+    //   is_expert_course: false, // 是否为专家讲座
+    //   lesson_evaluation_text: evaluationScore.value.reviews,
 
-      lesson_record: lessonRecordParam,
+    //   lesson_record: lessonRecordParam,
 
-      Lesson_score: lessonScore,
-    }
+    //   Lesson_score: lessonScore,
+    // }
   }
 
   return {
@@ -143,7 +203,7 @@ function useSave(
 
       if (loading.value) return
       loading.value = true
-      await lessonRecord(resolveRequestData()).finally(() => {
+      await saveListenProcess(resolveRequestData()).finally(() => {
         loading.value = false
       })
 
