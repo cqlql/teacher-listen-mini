@@ -1,6 +1,6 @@
-export default function getGrade(period, years) {
+export default function getGrade(period: number, years: number) {
   //当前年份
-  var grade_num = new Date().getFullYear() - years
+  const grade_num = new Date().getFullYear() - years
   switch (period) {
     //小学
     case 1001:

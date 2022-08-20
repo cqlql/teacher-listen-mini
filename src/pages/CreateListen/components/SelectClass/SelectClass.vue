@@ -4,7 +4,7 @@ import type { EventChange, EventColumnchange } from '@/types/components/picker'
 import { ref, watch } from 'vue'
 import type { SelectOption } from './typing'
 import SelectBar from '@/components/Select/SelectBar.vue'
-import getGrade from '@/data/getGrade.js'
+import getGrade from '@/data/getGrade'
 import type { CreateListenSelectDataResult } from '@/api/model/selectModel'
 // import SelectMulti2 from '@/components/SelectMulti/SelectMulti2.vue'
 interface IdRecordItem {

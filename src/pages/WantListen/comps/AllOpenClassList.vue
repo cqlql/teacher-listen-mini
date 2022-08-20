@@ -34,7 +34,7 @@ import { inject, ref } from 'vue'
 import type CourseItem from '../types'
 import type { TopSearchParams } from '../types'
 import OpenClassPassedItem from './AllOpenClassItem.vue'
-import getGrade from '@/data/getGrade.js'
+import getGrade from '@/data/getGrade'
 import useToastInject from '@/hooks/useToastInject'
 const { toastSuccess } = useToastInject()
 const vListLoad = ref({

@@ -1,44 +1,45 @@
 import { getUserCourse } from '@/api/course'
+import getGrade from '@/data/getGrade'
 import type { Dayjs } from 'dayjs'
 import dayjs from 'dayjs'
 import type { Ref } from 'vue'
 import { ref } from 'vue'
 
+interface CourseItemType {
+  sujectTag: string
+  name: string
+  user_id: number
+  user_name: string
+  course_id: number
+  subject_id: number
+  grade_id: number
+  // startDate: string
+  start_time: string
+  // end_time: string
+  // school_name: string
+  // campus_name: string
+  grade_name: string
+  class_name: string
+  class_room_name: string
+  live_url: string
+  files: {
+    id: string
+    name: string
+    url: string
+  }[]
+  status: {
+    id: string
+    type: string
+    label: string
+  }
+  type: {
+    type: string
+    label: string
+  }
+}
+
 function useGetList(weekDate: Ref<Dayjs>) {
-  const myCourseList = ref<
-    {
-      sujectTag: string
-      name: string
-      user_id: string
-      user_name: string
-      course_id: string
-      subject_id: string
-      grade_id: string
-      // startDate: string
-      start_time: string
-      end_time: string
-      school_name: string
-      campus_name: string
-      grade_name: string
-      class_name: string
-      class_room_name: string
-      live_url: string
-      files: {
-        id: string
-        name: string
-        url: string
-      }[]
-      status: {
-        id: string
-        type: string
-        label: string
-      }
-      type: {
-        type: string
-        label: string
-      }
-    }[]
-  >([])
+  const myCourseList = ref<CourseItemType[]>([])
 
   function reqList() {
     const date = weekDate.value.format('YYYY/MM/DD')
@@ -48,7 +49,7 @@ function useGetList(weekDate: Ref<Dayjs>) {
       pageSize: 10,
       dateRange: date + '-' + date,
       keyword: '',
-    }).then(({ courselist }) => {
+    }).then((courselist) => {
       const statusMap = {
         0: {
           id: '0',
@@ -70,18 +71,10 @@ function useGetList(weekDate: Ref<Dayjs>) {
       const nowDate = dayjs()
 
       return (myCourseList.value = courselist.map((item) => {
-        const startDate = item.lesson_date.split('T')[0]
-        const start_time = item.start_time
-        const end_time = item.end_time
-
-        const start = dayjs(startDate + ' ' + start_time)
-        const end = dayjs(startDate + ' ' + end_time)
+        const start = dayjs(item.s_time)
+        const end = dayjs(item.e_time)
 
         let status = statusMap[1]
-        let type = {
-          type: 'warning',
-          label: '校外课',
-        }
 
         if (end.isBefore(nowDate)) {
           status = statusMap[2]
@@ -89,33 +82,35 @@ function useGetList(weekDate: Ref<Dayjs>) {
           status = statusMap[0]
         }
 
-        if (item.is_self) {
-          type = {
-            type: 'success',
-            label: '校内课',
-          }
-        }
-
         return {
           sujectTag: item.subject_name[0],
-          name: item.name,
-          user_id: item.user_id,
-          user_name: item.user_name,
-          course_id: item.course_id,
+          name: item.courses_name,
+          user_id: item.teacher_user_id,
+          user_name: item.teacher_name,
+          course_id: item.courses_id,
           subject_id: item.subject_id,
           grade_id: item.grade_id,
           // startDate: item.lesson_date.split('T')[0],
-          start_time: item.start_time.substring(0, 5),
-          end_time: item.end_time,
-          school_name: item.school_name,
-          campus_name: item.campus_name,
-          grade_name: item.grade_name,
-          class_name: item.class_name,
-          class_room_name: item.class_room_name,
-          files: item.LA,
+          start_time: start.format('HH:mm'),
+          // end_time: item.e_time,
+          // school_name: item.school_name,
+          // campus_name: item.campus_name,
+          grade_name: getGrade(item.period, item.years),
+          class_name: item.classes_name,
+          class_room_name: item.class_room_address,
+          // files: item.LA,
+          files: [],
           status,
-          type,
-          live_url: item.live_url,
+          type: item.type
+            ? {
+                type: 'warning',
+                label: '校外课',
+              }
+            : {
+                type: 'success',
+                label: '校内课',
+              },
+          live_url: item.playback_address,
         }
       }))
     })

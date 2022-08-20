@@ -279,7 +279,7 @@ export type userCourseList = {
   courses_name: string //'test'
   created_date: string //'2022-08-20 00:40:55'
   created_user_id: number //8040
-  e_time: string //'2022-08-21 01:44:00'
+
   eval_tmp_id: number //10
   grade_id: number //17
   id: number //14
@@ -287,6 +287,8 @@ export type userCourseList = {
   period: number //1001
   /** 开始时间 */
   s_time: string //'2022-08-21 00:59:00'
+  /** 结束时间 */
+  e_time: string //'2022-08-21 01:44:00'
   school_id: number //19
   section_id: number //0
   subject_id: number //1
@@ -296,13 +298,15 @@ export type userCourseList = {
   /**老师/用户id */
   teacher_user_id: number //8040
   timetable_id: number //0
-  type: number //0
+  /** 0 校内课 1 校外课 */
+  type: 0 | 1
   updated_date: string //'2022-08-20 00:40:55'
   updated_user_id: number //8040
   week: number //0
   week_id: number //0
   years: number //2020
   class_room_address: string
+  playback_address: string
 }[]
 
 // 听课评价 提交
