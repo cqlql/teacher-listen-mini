@@ -29,7 +29,7 @@ if (process.env.NODE_ENV !== 'production') {
 
   // url = '/pages/DingEvaluationRecord/DingEvaluationRecord'
   // url = '/packageECharts/pages/EvaluationStatistics/AllEvaluationStatistics'
-  tabUrl = '/pages/WantListen/WantListen'
+  // tabUrl = '/pages/WantListen/WantListen'
 
   if (url) {
     Taro.navigateTo({ url })
@@ -53,10 +53,10 @@ function toCreatedCourseRecord() {
 }
 
 function toProcessRecord(course: {
-  user_id: string
-  course_id: string
-  subject_id: string
-  grade_id: string
+  user_id: number
+  course_id: number
+  subject_id: number
+  grade_id: number
   live_url: string
 }) {
   const currentUserId = getStorage('userId')
@@ -66,9 +66,9 @@ function toProcessRecord(course: {
   Taro.navigateTo({
     url: `/pages/ListenEvaluation/ListenEvaluation?user_id=${currentUserId}&course_id=${
       course.course_id
-    }&subject_id=${course.subject_id}&grade_id=${course.grade_id}&live_url=${encodeURIComponent(
-      course.live_url,
-    )}`,
+    }&subject_id=${course.subject_id}&grade_id=${course.grade_id}&live_url=${
+      course.live_url ? encodeURIComponent(course.live_url) : ''
+    }`,
   })
 }
 
