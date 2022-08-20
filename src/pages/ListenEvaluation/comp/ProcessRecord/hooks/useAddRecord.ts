@@ -41,11 +41,23 @@ export default function useAddRecord(data: Ref<RecordItem>) {
   })
 
   function addThink() {
-    dataValue.list.push({
-      id: getTempId(),
-      type: 'think',
-      text: '',
-    })
+    // 多条思考实现
+    // dataValue.list.push({
+    //   id: getTempId(),
+    //   type: 'think',
+    //   text: '',
+    // })
+
+    // 一条思考实现
+    let thinkItem = dataValue.thinkItem
+    if (!thinkItem) {
+      thinkItem = dataValue.thinkItem = {
+        id: getTempId(),
+        type: 'think',
+        text: '',
+      }
+      dataValue.list.push(thinkItem)
+    }
   }
 
   function addPicture(fileInfo: UploadResult) {
@@ -120,7 +132,6 @@ export default function useAddRecord(data: Ref<RecordItem>) {
           }
 
           await fileUploadLoading(tempFile.tempFilePath, (fileInfo: UploadResult) => {
-            console.log(tempFile.fileType)
             switch (tempFile.fileType) {
               case 'image':
                 addPicture(fileInfo)

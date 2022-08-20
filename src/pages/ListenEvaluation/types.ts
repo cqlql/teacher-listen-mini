@@ -37,6 +37,7 @@ export interface RecordItem {
   id: string
   text: string
 
+  thinkItem?: ThinkItem
   pictureItem?: PictureItem
   videoItem?: VideoItem
   drawingItem?: DrawingItem
