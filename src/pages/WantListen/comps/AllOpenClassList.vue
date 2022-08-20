@@ -106,7 +106,7 @@ function reqList({ page }: { page: number }) {
 
         // 上课日期
         // date_time: item.lesson_date,
-        date: item.s_time,
+        date: item.s_time.replace(/:\d\d$/, ''),
 
         subject: item.subject_name[0],
         userName: item.teacher_name,

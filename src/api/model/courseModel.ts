@@ -232,43 +232,77 @@ export interface GetUserCourseResult {
 // 我的听课计划列表
 
 export type userCourseList = {
-  campus_id: string
-  campus_name: string
-  class_id: string
-  class_name: string
-  class_room_name: string
-  course_id: string
-  end_time: string
-  evaluation_type: string
-  grade_id: string
-  grade_name: string
-  is_self: string
-  lesson_date: string
-  /**直播听课url */
-  live_url: string
-  /**课程名 */
-  name: string
-  record_platform: string
-  relation: string
-  school_id: string
-  school_name: string
-  start_time: string
-  status: string
-  subject_id: string
-  subject_name: string
-  user_course_id: '0' | string
-  user_evaluation: string
-  user_id: string
-  /**老师名 */
-  user_name: string
-  /**附件 */
-  LA: {
-    display_order: string
-    file_type: string
-    id: string
-    name: string
-    url: string
-  }[]
+  // campus_id: string
+  // campus_name: string
+  // class_id: string
+  // class_name: string
+  // class_room_name: string
+  // course_id: string
+  // end_time: string
+  // evaluation_type: string
+  // grade_id: string
+  // grade_name: string
+  // is_self: string
+  // lesson_date: string
+  // /**直播听课url */
+  // live_url: string
+  // /**课程名 */
+  // name: string
+  // record_platform: string
+  // relation: string
+  // school_id: string
+  // school_name: string
+  // start_time: string
+  // status: string
+  // subject_id: string
+  // subject_name: string
+  // user_course_id: '0' | string
+  // user_evaluation: string
+  // user_id: string
+  // /**老师名 */
+  // user_name: string
+  // /**附件 */
+  // LA: {
+  //   display_order: string
+  //   file_type: string
+  //   id: string
+  //   name: string
+  //   url: string
+  // }[]
+
+  campus_id: number //7
+  classes_id: number //40
+  classes_name: string //'1班'
+  classes_no: string //'1'
+  classes_room_id: number // 17
+  courses_id: number //9
+  courses_name: string //'test'
+  created_date: string //'2022-08-20 00:40:55'
+  created_user_id: number //8040
+  e_time: string //'2022-08-21 01:44:00'
+  eval_tmp_id: number //10
+  grade_id: number //17
+  id: number //14
+  lesson_num: number //0
+  period: number //1001
+  /** 开始时间 */
+  s_time: string //'2022-08-21 00:59:00'
+  school_id: number //19
+  section_id: number //0
+  subject_id: number //1
+  subject_name: string //'语文'
+  teacher_name: string //'钟洁娜'
+  teacher_no: string //'ym115'
+  /**老师/用户id */
+  teacher_user_id: number //8040
+  timetable_id: number //0
+  type: number //0
+  updated_date: string //'2022-08-20 00:40:55'
+  updated_user_id: number //8040
+  week: number //0
+  week_id: number //0
+  years: number //2020
+  class_room_address: string
 }[]
 
 // 听课评价 提交

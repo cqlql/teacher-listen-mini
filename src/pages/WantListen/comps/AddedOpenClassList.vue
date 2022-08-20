@@ -35,6 +35,7 @@
 <script lang="ts" setup>
 import { delUserCourse, getUserCourse } from '@/api/course'
 import ListLoad from '@/components/ListLoad/ListLoad.vue'
+import getGrade from '@/data/getGrade'
 // import OnceCallback from '@/utils/once-callback'
 import { nextTick } from '@tarojs/taro'
 import dayjs from 'dayjs'
@@ -82,22 +83,22 @@ function reqList({ page }) {
     dateRange: dayjs().format('YYYY/MM/DD') + '-' + dayjs().add(6, 'day').format('YYYY/MM/DD'),
     keyword: '',
   }).then((res) => {
-    let newList: CourseItem[] = res.courselist.map((item) => {
+    let newList: CourseItem[] = res.map((item) => {
       return {
         // 新增用
-        course_id: item.course_id,
-        user_id: item.user_id,
-        start_time: item.start_time,
-        date_time: item.lesson_date, // 上课日期
-        user_course_id: item.user_course_id,
+        id: String(item.id),
+        course_id: String(item.courses_id),
+        user_id: String(item.teacher_user_id),
+        // start_time: item.s_time,
+        // date_time: item.s_time, // 上课日期
 
         subject: item.subject_name[0],
-        userName: item.user_name,
-        courseName: item.name,
-        place: item.class_room_name,
-        date: item.lesson_date.split('T')[0],
-        time: item.start_time.substring(0, 5),
-        gradClass: item.grade_name + item.class_name,
+        userName: item.teacher_name,
+        courseName: item.courses_name,
+        place: item.class_room_address,
+        date: item.s_time.replace(/:\d\d$/, ''),
+        // time: item.start_time.substring(0, 5),
+        gradClass: getGrade(item.period, item.years) + item.classes_name,
       }
     })
     return newList
@@ -105,7 +106,7 @@ function reqList({ page }) {
 }
 
 function onDeleteUserCourse(item: CourseItem, list: CourseItem[], index: number) {
-  delUserCourse(item.user_course_id).then(() => {
+  delUserCourse(item.id).then(() => {
     list.splice(index, 1)
     if (list.length === 0) {
       vListLoad.value.firstPageLoad()

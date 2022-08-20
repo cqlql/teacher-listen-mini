@@ -153,10 +153,8 @@ export function reqIsLeader(): Promise<{ is_leader: boolean }> {
 }
 
 /** 当前用户课程，包括自己的和计划听的 */
-export function getUserCourse(data?: GetUserCourseParams): Promise<{
-  courselist: userCourseList
-}> {
-  return httpV2.post({
+export function getUserCourse(data?: GetUserCourseParams): Promise<userCourseList> {
+  return httpV2.get({
     url: '/209',
     data,
   })
