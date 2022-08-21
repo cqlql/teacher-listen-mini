@@ -1,10 +1,16 @@
+/**
+  thmType 缩略图类型 0:不创建，1:创建小图，2:创建中图，3:创建中图和小图
+  bizType 业务类型 
+  OpenCoursesProcess 业务ID 当前公开课ID
+ */
+
 import { get } from '@/utils/request'
-import type { QiniuTokenResult, UploadSignatureParams } from './model/uploadModel'
+import type { QiniuTokenResult } from './model/uploadModel'
 import type { UploadTask } from '@tarojs/taro'
-import { uploadFile } from '@tarojs/taro'
+import Taro, { uploadFile } from '@tarojs/taro'
 import { getStorage } from '@/utils/storage'
-import { apiUrl, httpV3 } from '@/utils/http'
-import { TOKEN_KEY } from '@/utils/http/CreateHttp'
+import { apiUrl, refreshToken } from '@/utils/http'
+import { clearLoginInfoJumpLogin, TOKEN_KEY } from '@/utils/http/CreateHttp'
 import getSign from '@/utils/http/getSign'
 
 export interface UploadResult {
@@ -12,12 +18,7 @@ export interface UploadResult {
   url: string
 }
 
-enum Api {
-  signature = '/quality/user/v1/presigned-url',
-  uploadWX = '/100',
-}
-
-const AppId = '1494860795941629953'
+const UploadApi = '/100'
 
 export async function getQiniuToken(): Promise<QiniuTokenResult> {
   return get('/pi/v1/storage/qiniu/uptoken?type=50')
@@ -26,22 +27,13 @@ export async function minioPresignedUrl(): Promise<QiniuTokenResult> {
   return get('/pi/v1/storage/qiniu/uptoken?type=50')
 }
 
-export function uploadSignature(params: UploadSignatureParams) {
-  return httpV3.post({
-    url: Api.signature,
-    data: params,
-    header: {
-      'X-Sd-App-Id': AppId,
-    },
-  })
-}
-
 export function fileUpload(
   tempFilePath: string,
   progress?: UploadTask.OnProgressUpdateCallback,
+  allowRefreshToken = true,
 ): Promise<UploadResult> {
   return new Promise(function (resolve, reject) {
-    const uploadApiUrl = apiUrl + Api.uploadWX
+    const uploadApiUrl = apiUrl + UploadApi
     const token = getStorage('token')
     const uploadTask = uploadFile({
       url: uploadApiUrl,
@@ -49,13 +41,13 @@ export function fileUpload(
       name: 'file',
       header: {
         [TOKEN_KEY]: 'Bearer ' + token,
-        Sign: getSign('', token),
+        Sign: getSign(undefined, token),
       },
       // formData: {
       //   token: getStorage('token'),
       //   app_id: AppId,
       // },
-      success(res) {
+      async success(res) {
         console.log('🚀 -- success -- res', res)
         /**res 结构
          *
@@ -67,28 +59,70 @@ export function fileUpload(
         }
          */
 
+        let errMsg = res.errMsg
+
         if (res.statusCode === 200) {
-          const data: ResultTypeV3 = JSON.parse(res.data)
-          const fileId = data.data.id
-          uploadSignature({
-            type: '1',
-            name: 'file',
-            id: fileId,
-          })
-            .then((res) => {
-              resolve({
-                id: fileId,
-                url: res.presigned_url,
-              })
-            })
-            .catch((e) => {
-              reject(e)
-            })
-        } else {
-          reject(res.errMsg)
+          const data: ResultTypeV2 = JSON.parse(res.data)
+          const code = data.Basis.Code
+          if (code === 200) {
+            // 处理正确情况
+            console.log('🚀 -- success -- data', data)
+            return
+          }
+
+          errMsg = data.Basis.Msg
+
+          if (code === 401) {
+            res.statusCode = 401
+          }
+
+          // const fileId = data.data.id
+          // uploadSignature({
+          //   type: '1',
+          //   name: 'file',
+          //   id: fileId,
+          // })
+          //   .then((res) => {
+          //     resolve({
+          //       id: fileId,
+          //       url: res.presigned_url,
+          //     })
+          //   })
+          //   .catch((e) => {
+          //     reject(e)
+          //   })
         }
+
+        if (res.statusCode === 401) {
+          if (allowRefreshToken) {
+            try {
+              await refreshToken()
+              // 重新请求
+              return fileUpload(
+                tempFilePath,
+                progress,
+                false, // 重复请求如果还是token过期，将不再 RefreshToken
+              )
+                .then(resolve)
+                .catch(reject)
+            } catch (error) {
+              console.error('❌ -- refreshToken', error)
+            }
+          }
+          clearLoginInfoJumpLogin()
+        }
+
+        Taro.showToast({
+          title: errMsg,
+          icon: 'error',
+        })
+        reject(errMsg)
       },
       fail(res) {
+        Taro.showToast({
+          title: res.errMsg,
+          icon: 'error',
+        })
         reject(res.errMsg)
       },
     })

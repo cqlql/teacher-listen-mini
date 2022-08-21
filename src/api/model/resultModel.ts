@@ -4,3 +4,8 @@ interface ResultTypeV3 {
   message: string
   success: boolean
 }
+
+interface ResultTypeV2 {
+  Basis: { Code: number; Msg: string }
+  Result: any
+}

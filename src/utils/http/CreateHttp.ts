@@ -79,6 +79,14 @@ function removeUndefined(obj: Record<string, any>) {
 
   return obj
 }
+// 清理登录信息并跳到登录页
+export function clearLoginInfoJumpLogin() {
+  setStorage('token', '')
+  setStorage('refreshToken', '')
+  Taro.redirectTo({
+    url: '/pages/login/auth',
+  })
+}
 
 export default class CreateHttp {
   requestOptions: RequestOptions
@@ -154,11 +162,7 @@ export default class CreateHttp {
 
       // 不需要 RefreshToken 或者 RefreshToken 出错情况执行
       // 清理登录信息并跳到登录页
-      setStorage('token', '')
-      setStorage('refreshToken', '')
-      Taro.redirectTo({
-        url: '/pages/login/auth',
-      })
+      clearLoginInfoJumpLogin()
       return Promise.reject(new Error(message))
     }
 
