@@ -14,7 +14,7 @@ export interface UploadResult {
 
 enum Api {
   signature = '/quality/user/v1/presigned-url',
-  uploadWX = '/file/v1/upload-for-wx-mini-program',
+  uploadWX = '/100',
 }
 
 const AppId = '1494860795941629953'
@@ -56,10 +56,11 @@ export function fileUpload(
       //   app_id: AppId,
       // },
       success(res) {
+        console.log('🚀 -- success -- res', res)
         /**res 结构
          *
         {
-          data: "{"code":"200","data":{"id":1498126259707555840},"message":"ok","success":true}"
+          data: "{"Basis":{"Code":3,"Sign":"","Msg":"签名失败"},"Result":"d9481dd9cf492c5fcae93fcc8ec922dc"}"
           errMsg: "uploadFile:ok"
           header: {Server: "openresty/1.17.8.2", Date: "Fri, 10 Dec 2021 16:06:55 GMT", Content-Type: "application/json", Content-Length: "76", Connection: "keep-alive", …}
           statusCode: 200
