@@ -178,7 +178,10 @@ export function delUserCourse(id: string) {
 
 /** 保存听课过程（过程记录和打分） */
 export function saveListenProcess(data: SaveListenProcessParams[]) {
-  return post('/205', data)
+  return httpV2.post({
+    url: '/205',
+    data,
+  })
 }
 /** 听课评价 只有打分 修改？*/
 export function subscore(course_id: string) {
