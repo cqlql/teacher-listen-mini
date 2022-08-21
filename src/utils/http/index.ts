@@ -2,7 +2,7 @@ import { getStorage, setStorage } from '../storage'
 import CreateHttp from './CreateHttp'
 
 // const apiUrl = 'https://app.shenduedu.com'
-const apiUrl = 'http://ting.api.weifos.com'
+export const apiUrl = 'http://ting.api.weifos.com'
 
 /*
 code:'200',

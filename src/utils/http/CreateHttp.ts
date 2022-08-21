@@ -8,7 +8,7 @@ import { getStorage, setStorage } from '../storage'
 //   get: () => Promise<any>
 // }
 
-const TOKEN_KEY = 'Authorization'
+export const TOKEN_KEY = 'Authorization'
 
 interface ResultType {
   code: number

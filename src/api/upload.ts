@@ -1,9 +1,11 @@
-import { get, servers } from '@/utils/request'
+import { get } from '@/utils/request'
 import type { QiniuTokenResult, UploadSignatureParams } from './model/uploadModel'
 import type { UploadTask } from '@tarojs/taro'
 import { uploadFile } from '@tarojs/taro'
 import { getStorage } from '@/utils/storage'
-import { httpV3 } from '@/utils/http'
+import { apiUrl, httpV3 } from '@/utils/http'
+import { TOKEN_KEY } from '@/utils/http/CreateHttp'
+import getSign from '@/utils/http/getSign'
 
 export interface UploadResult {
   id: string
@@ -39,15 +41,20 @@ export function fileUpload(
   progress?: UploadTask.OnProgressUpdateCallback,
 ): Promise<UploadResult> {
   return new Promise(function (resolve, reject) {
-    const uploadApiUrl = servers.api + Api.uploadWX
+    const uploadApiUrl = apiUrl + Api.uploadWX
+    const token = getStorage('token')
     const uploadTask = uploadFile({
       url: uploadApiUrl,
       filePath: tempFilePath,
       name: 'file',
-      formData: {
-        token: getStorage('token'),
-        app_id: AppId,
+      header: {
+        [TOKEN_KEY]: 'Bearer ' + token,
+        Sign: getSign('', token),
       },
+      // formData: {
+      //   token: getStorage('token'),
+      //   app_id: AppId,
+      // },
       success(res) {
         /**res 结构
          *
