@@ -162,6 +162,9 @@ export interface OpenCourseItemResult2 {
   teacher_id: number // 9360
   teacher_name: string // "钟洁娜"
   years: number //2020
+
+  /**0 未添加 1 已添加 */
+  is_add: 0 | 1
 }
 
 // export interface OpenCourseItemClient {
