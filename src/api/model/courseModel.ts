@@ -80,7 +80,7 @@ export interface RequestOpenCourseParams {
   /**'4679665164583612636'; // 科组ID */
   role_id: number
   /**资源附件 */
-  att_urls?: string[]
+  att_urls?: { url: string }[]
   // oca: AttachmentParams[]
   // dii: DimensionParams[];
   // is_prior: boolean; // false 普通公开课　true 区级优质观摩课
@@ -408,15 +408,15 @@ export interface OpenClassListParams {
   subjectId?: number
   /**是否是查当前用户的公开课 */
   byUser?: boolean
-  /**-1：所有状态，0：待审核，2：未通过，10：已审核 */
+  /**-1：所有状态，0：待审核，2：未通过，10：已通过 */
   status: -1 | 0 | 2 | 10
 }
 
 export interface ApproveOpenClassParams {
-  /** 1表示拒绝或撤销, 2表示通过 */
-  status: '1' | '2'
+  /** 2表示拒绝, 10表示通过 */
+  status: 2 | 10
   /**公开课ID */
-  course_id: string
+  id: string
 }
 
 export interface ApproveOpenClassResult {

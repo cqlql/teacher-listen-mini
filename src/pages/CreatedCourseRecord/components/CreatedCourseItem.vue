@@ -56,12 +56,12 @@
 import type { ApprovalStatus, CreatedCourseItem } from '../types'
 
 import useToast from '@/hooks/useToast'
-import approveOpenCourse from '@/api/course'
+import { approveOpenCourse, revokeOpenCourse } from '@/api/course'
 import Taro from '@tarojs/taro'
 import type { Ref } from 'vue'
 import { inject } from 'vue'
 
-let { toast, toastFail, toastSuccess, loading } = useToast()
+let { toast, toastSuccess, loading } = useToast()
 
 const props = withDefaults(
   defineProps<{
@@ -97,9 +97,9 @@ function reviewBefore() {
   loading.value = true
 }
 
-function showErrMsg(type: 0 | 1 | 2 | 3) {
-  toastFail(['没有审批权限', '提交的课程ID不存在', '审批有效时间已过', '后台发生异常'][type])
-}
+// function showErrMsg(type: 0 | 1 | 2 | 3) {
+//   toastFail(['没有审批权限', '提交的课程ID不存在', '审批有效时间已过', '后台发生异常'][type])
+// }
 
 function onEdit() {
   Taro.navigateTo({
@@ -114,46 +114,33 @@ function onEdit() {
 async function onPassed() {
   reviewBefore()
 
-  const result = await approveOpenCourse({
-    status: '2',
-    course_id: props.data.id,
+  await approveOpenCourse({
+    status: 10,
+    id: props.data.id,
   })
-  if (result.success) {
-    emits('refresh')
-    needRefreshType.value = 'passed'
-    toastSuccess('通过成功')
-  } else {
-    showErrMsg(result.type)
-  }
+  emits('refresh')
+  needRefreshType.value = 'passed'
+  toastSuccess('通过成功')
 }
 
 async function onRefuse() {
   reviewBefore()
-  const result = await approveOpenCourse({
-    status: '1',
-    course_id: props.data.id,
+  await approveOpenCourse({
+    status: 2,
+    id: props.data.id,
   })
-  if (result.success) {
-    emits('refresh')
-    needRefreshType.value = 'failed'
-    toastSuccess('拒绝成功')
-  } else {
-    showErrMsg(result.type)
-  }
+  emits('refresh')
+  needRefreshType.value = 'failed'
+  toastSuccess('拒绝成功')
 }
 async function onRevoke() {
   reviewBefore()
-  const result = await approveOpenCourse({
-    status: '1',
-    course_id: props.data.id,
+  await revokeOpenCourse({
+    id: props.data.id,
   })
-  if (result.success) {
-    emits('refresh')
-    needRefreshType.value = 'failed'
-    toastSuccess('撤销成功')
-  } else {
-    showErrMsg(result.type)
-  }
+  emits('refresh')
+  needRefreshType.value = 'failed'
+  toastSuccess('撤销成功')
 }
 </script>
 <style lang="scss">

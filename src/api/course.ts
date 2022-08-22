@@ -137,10 +137,21 @@ export function getCourseList(data: GetCourseListParams): Promise<GetCourseListR
 /**
  * 审核公开课申请
  */
-export default function approveOpenCourse(
-  data: ApproveOpenClassParams,
-): Promise<ApproveOpenClassResult> {
-  return post('/lecture/v1/approveOpenCourse', data)
+export function approveOpenCourse(data: ApproveOpenClassParams): Promise<ApproveOpenClassResult> {
+  return httpV2.get({
+    url: '/212',
+    data,
+  })
+}
+
+/**
+ * 撤销公开课申请
+ */
+export function revokeOpenCourse(data: { id: string }): Promise<ApproveOpenClassResult> {
+  return httpV2.get({
+    url: '/213',
+    data,
+  })
 }
 
 /**
