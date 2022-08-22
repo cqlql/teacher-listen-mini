@@ -32,12 +32,14 @@ const props = withDefaults(
 
     popTitle?: string
     placeholder?: string
+    selectBefore?: () => boolean
   }>(),
   {
     options: () => [],
     idProp: 'id',
     nameProp: 'name',
     popTitle: '',
+    selectBefore: () => true,
   },
 )
 
@@ -76,6 +78,7 @@ const nameFinal = computed(() => {
 function confirm() {}
 
 function barClick() {
+  if (props.selectBefore() === false) return
   visible.value = true
 }
 </script>

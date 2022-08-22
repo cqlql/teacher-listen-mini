@@ -17,7 +17,7 @@ import ButtonBlock from '@/components/Button/ButtonBlock.vue'
 import useInitSelectDate from './hooks/useInitSelectDate'
 // import dayjs from 'dayjs'
 
-let { toast, toastFail, toastSuccess } = useToast()
+let { toast, toastFail, toastSuccess, toastWarn } = useToast()
 
 // const { periodOptions, subjectData, subjectGroups } = useGradeSubectData()
 
@@ -32,13 +32,21 @@ let { form, isLoading, confirm, promptPopup, periodChange } = useCreateListen({
 
 useEditInit(form)
 
+function periodSelectBefore() {
+  if (form.value.period) {
+    return true
+  }
+  toastWarn('必须先选学段')
+  return false
+}
+
 // 自动填充
 if (process.env.NODE_ENV !== 'production') {
   form.value = {
     course_name: 'test',
     period: '1001',
-    subject_id: '1',
-    gradeClass: ['17', '40'],
+    subject_id: '3',
+    gradeClass: ['52', '2124'],
     dateTime: require('dayjs')(new Date()).add(1, 'hour').format('YYYY-MM-DD HH:mm:ss'),
     class_room_id: '17',
     class_room_name: '六（7）班',
@@ -73,12 +81,15 @@ if (process.env.NODE_ENV !== 'production') {
         <SelectCheck
           v-model="form.subject_id"
           :options="(subjectData[form.period] as any)"
+          :selectBefore="periodSelectBefore"
           placeholder="请选择科目"
         />
       </FormItem>
       <FormItem label="授课对象">
         <SelectClass
           :classRawData="classRawData"
+          :period="form.period"
+          :selectBefore="periodSelectBefore"
           v-model="form.gradeClass"
           placeholder="请选择授课对象"
         />
