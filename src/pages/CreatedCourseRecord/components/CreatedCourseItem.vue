@@ -56,7 +56,7 @@
 import type { ApprovalStatus, CreatedCourseItem } from '../types'
 
 import useToast from '@/hooks/useToast'
-import { approveOpenCourse, revokeOpenCourse } from '@/api/course'
+import { approveOpenCourse } from '@/api/course'
 import Taro from '@tarojs/taro'
 import type { Ref } from 'vue'
 import { inject } from 'vue'
@@ -135,7 +135,8 @@ async function onRefuse() {
 }
 async function onRevoke() {
   reviewBefore()
-  await revokeOpenCourse({
+  await approveOpenCourse({
+    status: 0,
     id: props.data.id,
   })
   emits('refresh')

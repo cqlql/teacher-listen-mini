@@ -79,6 +79,8 @@ export interface RequestOpenCourseParams {
   classes_room_name?: string
   /**'4679665164583612636'; // 科组ID */
   role_id: number
+  /**  类型 0：公开课1：推门听课 2：校外课*/
+  type: number
   /**资源附件 */
   att_urls?: { url: string }[]
   // oca: AttachmentParams[]
@@ -413,8 +415,8 @@ export interface OpenClassListParams {
 }
 
 export interface ApproveOpenClassParams {
-  /** 2表示拒绝, 10表示通过 */
-  status: 2 | 10
+  /** 0 待审核 2表示拒绝, 10表示通过 */
+  status: 0 | 2 | 10
   /**公开课ID */
   id: string
 }

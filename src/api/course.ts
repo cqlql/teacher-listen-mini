@@ -145,7 +145,7 @@ export function approveOpenCourse(data: ApproveOpenClassParams): Promise<Approve
 }
 
 /**
- * 撤销公开课申请
+ *  公开课申请 使失效
  */
 export function revokeOpenCourse(data: { id: string }): Promise<ApproveOpenClassResult> {
   return httpV2.get({
