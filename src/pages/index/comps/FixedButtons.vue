@@ -38,13 +38,23 @@ defineEmits<{
 }>()
 
 const boxClassName = ref<'' | 'open'>('')
+let inside = false
 function toggle() {
+  inside = true
   boxClassName.value = boxClassName.value ? '' : 'open'
 }
 
-function close() {
+function outsideClose() {
+  if (inside) {
+    inside = false
+    return
+  }
   boxClassName.value = ''
 }
+
+defineExpose({
+  outsideClose,
+})
 </script>
 <style lang="scss">
 .HomePage_FixedButtons {

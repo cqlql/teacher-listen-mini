@@ -9,6 +9,7 @@ import OneWeekPicker from '@/components/OneWeek/OneWeekPicker.vue'
 import useWeekDateSelect from './hook/useWeekDateSelect'
 import { getStorage, setStorage } from '@/utils/storage'
 import useLoadData from './hook/useLoadData'
+import { ref } from 'vue'
 
 const { isExpanded, weekDate, weekBtnText, isToday, weekItems } = useWeekDateSelect()
 const { vListLoad, myCourseList, reqList, handleWeekDayChange, goToday } = useLoadData(weekDate)
@@ -77,87 +78,99 @@ useDidShow(() => {
   // 防止 ListenApplicationRecord 触发两次请求
   setStorage('pageTemp', '')
 })
+
+const vFixedButtons = ref({
+  outsideClose() {},
+})
 </script>
 <template>
-  <div class="HomePage_top">
-    <ButtonSelect v-model:isExpanded="isExpanded">
-      {{ isToday ? '今天' : weekBtnText }}
-    </ButtonSelect>
-    <nut-button v-show="!isToday" class="todayBtn" @click="goToday">回今日</nut-button>
-  </div>
-  <ListLoad
-    class="HomePage_listLoad"
-    ref="vListLoad"
-    :reqList="reqList"
-    refresher-background="#fff"
-    :scrollLowerEnabled="false"
-  >
-    <template #default>
-      <div class="HomePage">
-        <div class="HomePage_banners">
-          <div
-            v-for="course of myCourseList"
-            :key="course.course_id"
-            class="container"
-            :class="course.status.type"
-          >
-            <div class="title">
-              <span class="tag">{{ course.sujectTag }}</span>
-              <span class="title-name">《{{ course.name }}》</span>
-            </div>
-
-            <div class="main-info">
-              <span class="time">{{ course.start_time }}</span>
-              <!-- <span class="date">{{ course.startDate }}</span> -->
-              <span class="teacher">{{ course.user_name }}老师</span>
-            </div>
-            <!-- <div class="info-row">{{ course.school_name }}{{ course.campus_name }}</div> -->
-            <div class="info-row">授课班级：{{ course.grade_name }}{{ course.class_name }}</div>
-            <div class="info-row">授课地点：{{ course.class_room_name }}</div>
-
-            <div v-if="course.files.length" class="files">
-              <span v-for="file of course.files" :key="file.id" class="file">{{ file.name }}</span>
-            </div>
-
-            <span class="status" :class="course.status.type">{{ course.status.label }}</span>
-
-            <div class="bottom">
-              <div class="tags">
-                <span class="tag" :class="course.type.type">
-                  <nut-icon name="mask-close"></nut-icon>
-                  <span>{{ course.type.label }}</span>
-                </span>
-                <span class="tag">
-                  <nut-icon name="mask-close"></nut-icon>
-                  <span>公开课</span>
-                </span>
+  <div @click="vFixedButtons.outsideClose">
+    <div class="HomePage_top">
+      <ButtonSelect v-model:isExpanded="isExpanded">
+        {{ isToday ? '今天' : weekBtnText }}
+      </ButtonSelect>
+      <nut-button v-show="!isToday" class="todayBtn" @click="goToday">回今日</nut-button>
+    </div>
+    <ListLoad
+      class="HomePage_listLoad"
+      ref="vListLoad"
+      :reqList="reqList"
+      refresher-background="#fff"
+      :scrollLowerEnabled="false"
+    >
+      <template #default>
+        <div class="HomePage">
+          <div class="HomePage_banners">
+            <div
+              v-for="course of myCourseList"
+              :key="course.course_id"
+              class="container"
+              :class="course.status.type"
+            >
+              <div class="title">
+                <span class="tag">{{ course.sujectTag }}</span>
+                <span class="title-name">《{{ course.name }}》</span>
               </div>
-              <div class="btn">
-                <nut-button
-                  v-if="course.status.id === '2'"
-                  type="primary"
-                  size="small"
-                  @click="toProcessRecord(course)"
-                  >听课记录</nut-button
-                >
-                <nut-button v-else type="primary" size="small" @click="toProcessRecord(course)"
-                  >进入听课</nut-button
-                >
+
+              <div class="main-info">
+                <span class="time">{{ course.start_time }}</span>
+                <!-- <span class="date">{{ course.startDate }}</span> -->
+                <span class="teacher">{{ course.user_name }}老师</span>
+              </div>
+              <!-- <div class="info-row">{{ course.school_name }}{{ course.campus_name }}</div> -->
+              <div class="info-row">授课班级：{{ course.grade_name }}{{ course.class_name }}</div>
+              <div class="info-row">授课地点：{{ course.class_room_name }}</div>
+
+              <div v-if="course.files.length" class="files">
+                <span v-for="file of course.files" :key="file.id" class="file">{{
+                  file.name
+                }}</span>
+              </div>
+
+              <span class="status" :class="course.status.type">{{ course.status.label }}</span>
+
+              <div class="bottom">
+                <div class="tags">
+                  <span class="tag" :class="course.type.type">
+                    <nut-icon name="mask-close"></nut-icon>
+                    <span>{{ course.type.label }}</span>
+                  </span>
+                  <span class="tag">
+                    <nut-icon name="mask-close"></nut-icon>
+                    <span>公开课</span>
+                  </span>
+                </div>
+                <div class="btn">
+                  <nut-button
+                    v-if="course.status.id === '2'"
+                    type="primary"
+                    size="small"
+                    @click="toProcessRecord(course)"
+                    >听课记录</nut-button
+                  >
+                  <nut-button v-else type="primary" size="small" @click="toProcessRecord(course)"
+                    >进入听课</nut-button
+                  >
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </template>
-  </ListLoad>
-  <FixedButtons @click-one="toCreateListen" @click-two="toCreatedCourseRecord" />
-  <OneWeekPicker
-    ref="vOneWeekPickerRef"
-    v-model:visible="isExpanded"
-    v-model:date="weekDate"
-    v-model:itemsData="weekItems"
-    @change="handleWeekDayChange"
-  ></OneWeekPicker>
+      </template>
+    </ListLoad>
+    <FixedButtons
+      ref="vFixedButtons"
+      @click-one="toCreateListen"
+      @click-two="toCreatedCourseRecord"
+    />
+    <OneWeekPicker
+      ref="vOneWeekPickerRef"
+      v-model:visible="isExpanded"
+      v-model:date="weekDate"
+      v-model:itemsData="weekItems"
+      @change="handleWeekDayChange"
+    ></OneWeekPicker>
+  </div>
 </template>
 
 <style lang="scss">
