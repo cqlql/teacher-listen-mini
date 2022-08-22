@@ -37,7 +37,7 @@ const vOpenClassList2 = ref({ refresh() {} })
 const vOpenClassList3 = ref({ refresh() {} })
 
 // 是否有审批权限
-const isLeader = ref(false)
+const isLeader = ref(true)
 provide('isLeader', isLeader)
 reqIsLeader().then((res) => {
   isLeader.value = res.is_leader

@@ -1,5 +1,6 @@
 import { requestOpenCourse, editOpenCourse } from '@/api/course'
 import type {
+  AttachmentParams,
   // AttachmentParams,
   EditOpenCourseParams,
   RequestOpenCourseParams,
@@ -94,14 +95,9 @@ export default function useCreateListen({ toastSuccess, subjectData }: Params) {
       classes_room_name: formVal.class_room_id ? undefined : formVal.class_room_name,
       /**'4679665164583612636'; // 科组ID */
       role_id: Number(formVal.subject_group_id),
-      // oca: formVal.files.map<AttachmentParams>((file, index) => {
-      //   return {
-      //     name: file.name, // 附件名
-      //     url: file.url, // 附件url
-      //     file_type: file.type, // 附件类型
-      //     display_order: index, // 显示顺序
-      //   }
-      // }),
+      att_urls: formVal.files.map((file) => {
+        return file.url
+      }),
     }).finally(() => {
       isLoading.value = false
     })

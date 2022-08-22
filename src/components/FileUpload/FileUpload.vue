@@ -76,7 +76,7 @@ function select() {
           console.error(e)
         }
       }
-      emits('update:modelValue', files)
+      emits('update:modelValue', props.modelValue.concat(files))
     },
   })
 }

@@ -80,7 +80,7 @@ export interface RequestOpenCourseParams {
   /**'4679665164583612636'; // 科组ID */
   role_id: number
   /**资源附件 */
-  att_url?: string[]
+  att_urls?: string[]
   // oca: AttachmentParams[]
   // dii: DimensionParams[];
   // is_prior: boolean; // false 普通公开课　true 区级优质观摩课
