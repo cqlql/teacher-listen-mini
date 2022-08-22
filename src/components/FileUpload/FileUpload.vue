@@ -4,13 +4,13 @@
 </template>
 
 <script lang="ts" setup>
-import type { FileObject } from '@/api/model/courseModel'
 import useFileUpload from '@/hooks/useFileUpload'
 import useToast from '@/hooks/useToast'
 import { computed } from 'vue'
 
 import fileTypeId from './file-type-id'
 import FileUploadBase from './FileUploadBase.vue'
+import type { FileObject } from './types'
 
 const props = defineProps<{
   modelValue: FileObject[]
@@ -52,9 +52,18 @@ function select() {
         }
         try {
           toastLoading(msg(0))
-          const fileInfo = await fileUpload(path, (res) => {
-            toast.msg = msg(res.progress)
-          }).finally(() => {
+          const fileInfo = await fileUpload(
+            path,
+            {
+              thmType: 1,
+              OpenCoursesProcess: 0,
+            },
+            {
+              progress(res) {
+                toast.msg = msg(res.progress)
+              },
+            },
+          ).finally(() => {
             toastClose()
           })
           let fileUrl = fileInfo.url

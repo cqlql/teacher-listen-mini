@@ -1,16 +1,16 @@
-import type { EvaluationScore, ListenEvaluationStore } from '../types'
+import type { /* EvaluationScore,  */ ListenEvaluationStore } from '../types'
 import { getEvaluationList, saveListenProcess } from '@/api/course'
 import useRouterParams from '@/hooks/useRouterParams'
 import type { ProcessRecordStore } from './useProcessRecordStore'
 import useProcessRecordStore from './useProcessRecordStore'
 import useToastInject from '@/hooks/useToastInject'
 import useEvaluationScoreStore from './useEvaluationScoreStore'
-import type { Ref } from 'vue'
+// import type { Ref } from 'vue'
 import type {
-  FileRecordItemParam,
+  // FileRecordItemParam,
   SaveListenProcessParams,
-  LessonScoreParam,
-  RecordItemParam,
+  // LessonScoreParam,
+  // RecordItemParam,
   SaveListenProcessParamsDetail,
 } from '@/api/model/courseModel'
 
@@ -25,7 +25,7 @@ export interface RouteParams {
 function useSave(
   routeParams: RouteParams,
   processRecordStore: ProcessRecordStore,
-  evaluationScore: Ref<EvaluationScore>,
+  // evaluationScore: Ref<EvaluationScore>,
 ) {
   const { loading, toastSuccess } = useToastInject()
 
@@ -230,7 +230,7 @@ export default function useListenEvaluationStore(): ListenEvaluationStore {
   const { evaluationScore, editInit: evaluationScoreEditInit } =
     useEvaluationScoreStore(routeParams)
 
-  const { save } = useSave(routeParams, processRecordStore, evaluationScore)
+  const { save } = useSave(routeParams, processRecordStore /* , evaluationScore */)
 
   // 编辑初始
   getEvaluationList({

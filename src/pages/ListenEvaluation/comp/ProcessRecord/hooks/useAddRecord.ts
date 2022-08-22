@@ -15,9 +15,18 @@ export default function useAddRecord(data: Ref<RecordItem>) {
 
   function fileUploadLoading(tempFilePath: string, cb: (fileInfo: UploadResult) => void) {
     toastLoading('上传开始')
-    return fileUpload(tempFilePath, (res) => {
-      toast.msg = `上传文件：${res.progress * 0.99}%`
-    })
+    return fileUpload(
+      tempFilePath,
+      {
+        thmType: 1,
+        OpenCoursesProcess: 0,
+      },
+      {
+        progress(res) {
+          toast.msg = `上传文件：${res.progress * 0.99}%`
+        },
+      },
+    )
       .then(cb)
       .catch((e) => {
         toastFail('上传失败 ' + e)

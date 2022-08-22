@@ -4,12 +4,12 @@
   OpenCoursesProcess 业务ID 当前公开课ID
  */
 
-import { get } from '@/utils/request'
-import type { QiniuTokenResult } from './model/uploadModel'
+// import { get } from '@/utils/request'
+// import type { QiniuTokenResult } from './model/uploadModel'
 import type { UploadTask } from '@tarojs/taro'
 import Taro, { uploadFile } from '@tarojs/taro'
 import { getStorage } from '@/utils/storage'
-import { apiUrl, refreshToken } from '@/utils/http'
+import { refreshToken } from '@/utils/http'
 import { clearLoginInfoJumpLogin, TOKEN_KEY } from '@/utils/http/CreateHttp'
 import getSign from '@/utils/http/getSign'
 
@@ -21,18 +21,54 @@ export interface UploadResult {
 const UploadUrlBase = 'http://ting.res.weifos.com'
 const UploadApi = '/100'
 
-export async function getQiniuToken(): Promise<QiniuTokenResult> {
-  return get('/pi/v1/storage/qiniu/uptoken?type=50')
+// export async function getQiniuToken(): Promise<QiniuTokenResult> {
+//   return get('/pi/v1/storage/qiniu/uptoken?type=50')
+// }
+// export async function minioPresignedUrl(): Promise<QiniuTokenResult> {
+//   return get('/pi/v1/storage/qiniu/uptoken?type=50')
+// }
+
+export interface FileUploadParams {
+  /**
+   * 缩略图类型
+   * 0:不创建，1:创建小图，2:创建中图，3:创建中图和小图
+   */
+  thmType: 0 | 1 | 2 | 3
+  /**
+   * 业务类型
+   */
+  bizType?: 'OCAttachment'
+  /**
+   * 业务id
+   * 新增情況业务id给0 ，修改情況业务id给当前公开课id
+   */
+  OpenCoursesProcess: 0 | number
 }
-export async function minioPresignedUrl(): Promise<QiniuTokenResult> {
-  return get('/pi/v1/storage/qiniu/uptoken?type=50')
+interface FileUploadOptionsRequired {
+  progress?: UploadTask.OnProgressUpdateCallback
+  allowRefreshToken: boolean
+}
+export interface FileUploadOptions {
+  progress?: FileUploadOptionsRequired['progress']
+  allowRefreshToken?: FileUploadOptionsRequired['allowRefreshToken']
 }
 
 export function fileUpload(
   tempFilePath: string,
-  progress?: UploadTask.OnProgressUpdateCallback,
-  allowRefreshToken = true,
+  params: FileUploadParams,
+  options?: FileUploadOptions,
 ): Promise<UploadResult> {
+  const newParams: FileUploadParams = {
+    bizType: 'OCAttachment',
+    ...params,
+  }
+
+  const newOptions: FileUploadOptionsRequired = {
+    allowRefreshToken: true,
+    ...options,
+  }
+
+  console.log('🚀 -- newParams', newParams)
   return new Promise(function (resolve, reject) {
     const uploadApiUrl = UploadUrlBase + UploadApi
     const token = getStorage('token')
@@ -44,12 +80,8 @@ export function fileUpload(
         [TOKEN_KEY]: 'Bearer ' + token,
         Sign: getSign(undefined, token),
       },
-      // formData: {
-      //   token: getStorage('token'),
-      //   app_id: AppId,
-      // },
+      formData: newParams,
       async success(res) {
-        console.log('🚀 -- success -- res', res)
         /**res 结构
          *
         {
@@ -95,15 +127,15 @@ export function fileUpload(
         }
 
         if (res.statusCode === 401) {
-          if (allowRefreshToken) {
+          if (newOptions.allowRefreshToken) {
             try {
               await refreshToken()
               // 重新请求
-              return fileUpload(
-                tempFilePath,
-                progress,
-                false, // 重复请求如果还是token过期，将不再 RefreshToken
-              )
+              return fileUpload(tempFilePath, params, {
+                ...options,
+                // 重复请求如果还是token过期，将不再 RefreshToken
+                allowRefreshToken: false,
+              })
                 .then(resolve)
                 .catch(reject)
             } catch (error) {
@@ -128,8 +160,8 @@ export function fileUpload(
       },
     })
 
-    if (progress) {
-      uploadTask.progress(progress)
+    if (newOptions.progress) {
+      uploadTask.progress(newOptions.progress)
       // toast.msg = msg(res.progress)
       // console.log('上传进度', res.progress);
       // console.log('已经上传的数据长度', res.totalBytesSent);
