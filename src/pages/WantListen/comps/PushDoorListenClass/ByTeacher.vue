@@ -84,14 +84,12 @@ function search() {
 
 function reqList({ page }) {
   return getCourseList({
-    list_mun: 10,
-    page,
+    pageSize: 10,
+    pageIndex: page,
     subject_id: searchOptions.subject,
-    period_id: searchOptions.period,
-    user_name: searchOptions.keyword,
-    lesson_date: topSearchParams.date,
-  }).then((res) => {
-    return res.getCurriculum
+    period: Number(searchOptions.period),
+    teacher_name: searchOptions.keyword,
+    // lesson_date: topSearchParams.date,
   })
 }
 

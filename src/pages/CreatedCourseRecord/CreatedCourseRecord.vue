@@ -92,6 +92,11 @@ useDidShow(() => {
   .nut-tabs__content {
     height: calc(100vh - 46px);
   }
+
+  .BtnFixedBottom {
+    bottom: constant(safe-area-inset-bottom);
+    bottom: env(safe-area-inset-bottom);
+  }
 }
 
 // .OpenClass_tabpane {

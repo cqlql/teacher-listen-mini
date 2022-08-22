@@ -23,7 +23,7 @@
     >
       <span class="rotate">开课记录</span>
     </a>
-    <a class="btn add" @click="onOpen">
+    <a class="btn add" @click="toggle">
       <nut-icon name="close" />
     </a>
   </div>
@@ -38,8 +38,12 @@ defineEmits<{
 }>()
 
 const boxClassName = ref<'' | 'open'>('')
-function onOpen() {
+function toggle() {
   boxClassName.value = boxClassName.value ? '' : 'open'
+}
+
+function close() {
+  boxClassName.value = ''
 }
 </script>
 <style lang="scss">

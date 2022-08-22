@@ -6,8 +6,8 @@
         <nut-radio shape="button" label="pushDoor">推门听课</nut-radio>
       </nut-radiogroup>
 
-      <div class="rBtns">
-        <nut-button v-if="classType === 'open'" class="tSubject" @click="showSelectSubject">{{
+      <div class="rBtns" v-if="classType === 'open'">
+        <nut-button class="tSubject" @click="showSelectSubject">{{
           topSearchParams.subjectShortName
         }}</nut-button>
         <nut-button class="date" icon="date" @click="showDatePicker"></nut-button>
