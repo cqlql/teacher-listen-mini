@@ -406,6 +406,8 @@ export interface OpenClassListParams {
   pageIndex: number
   keyword?: number
   subjectId: number
+  /**是否是查当前用户的公开课 */
+  byUser?: boolean
 }
 
 export interface ApproveOpenClassParams {
