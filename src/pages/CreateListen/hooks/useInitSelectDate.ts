@@ -1,10 +1,13 @@
 import type { CreateListenSelectDataResult } from '@/api/model/selectModel'
 import { getCreateListenSelectData } from '@/api/select'
 import getPeriodMap from '@/data/get-period-map'
+import useRouterParams from '@/hooks/useRouterParams'
 // import { getSubjectGroups } from '@/api/select'
 // import usePeriodSubjectData from '@/hooks/usePeriodSubjectData'
 import classify from '@/utils/each/classify'
+import type { Ref } from 'vue'
 import { ref } from 'vue'
+import type { OpenCourseForm } from '../types'
 
 export interface SubjectDataType {
   [key: string]: SubjectInfo[]
@@ -18,14 +21,15 @@ interface SubjectInfo {
 }
 
 type Option = { id: string; name: string }
-export default function useInitSelectDate() {
+export default function useInitSelectDate(formRef: Ref<OpenCourseForm>) {
+  const { id } = useRouterParams<{ id?: string }>() // 公开课id
   const periodOptions = ref<Option[]>([])
   const subjectData = ref<SubjectDataType>({})
   const subjectGroups = ref<{ id: string; name: string }[]>([])
   const classRawData = ref<CreateListenSelectDataResult['schoolGradeClasses']>([])
   const classRoomsRawDate = ref<CreateListenSelectDataResult['classRooms']>([])
 
-  getCreateListenSelectData().then((res) => {
+  getCreateListenSelectData(id ? Number(id) : 0).then((res) => {
     const periodMap = getPeriodMap()
     periodOptions.value = res.periods.map((periodItem) => {
       const id = periodItem.period
@@ -57,7 +61,27 @@ export default function useInitSelectDate() {
         name: role.name,
       }
     })
+
+    // 编辑情况初始
+    if (id) {
+      initEdit(res.entity)
+    }
   })
+
+  function initEdit(rawData: CreateListenSelectDataResult['entity']) {
+    formRef.value = {
+      course_id: String(rawData.id),
+      course_name: rawData.name,
+      period: String(rawData.period),
+      subject_id: String(rawData.subject_id),
+      gradeClass: [String(rawData.grade_id), String(rawData.classes_id)],
+      dateTime: rawData.s_time.replace(/:\d\d$/, ''),
+      class_room_id: String(rawData.classes_room_id),
+      class_room_name: rawData.class_room_name,
+      subject_group_id: String(rawData.role_id),
+      files: [],
+    }
+  }
 
   return {
     periodOptions,

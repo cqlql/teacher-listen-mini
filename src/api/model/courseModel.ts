@@ -61,6 +61,8 @@ export interface LessonScoreItem {
 
 /**申请公开课 请求参数 */
 export interface RequestOpenCourseParams {
+  /**公开课ID */
+  id: number
   /** 公开课名称 */
   name: string
   /**学段ID */
@@ -88,10 +90,10 @@ export interface RequestOpenCourseParams {
   // is_prior: boolean; // false 普通公开课　true 区级优质观摩课
 }
 /**编辑公开课 请求参数 */
-export interface EditOpenCourseParams extends RequestOpenCourseParams {
-  /**公开课名称ID */
-  course_id: string
-}
+// export interface EditOpenCourseParams extends RequestOpenCourseParams {
+//   /**公开课名称ID */
+//   id: string
+// }
 
 /**校外课 form */
 export interface RequestOutsideCourseForm {

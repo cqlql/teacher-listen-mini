@@ -11,7 +11,6 @@ import type {
   CoursesRecordListResult,
   DimensionListParams,
   DimensionListResult,
-  EditOpenCourseParams,
   GetAllEvaluationResult,
   GetAttachListResult,
   GetCourseListResult,
@@ -76,10 +75,10 @@ export function requestOpenCourse(data: RequestOpenCourseParams) {
   })
 }
 
-/** 编辑校外课 */
-export function editOpenCourse(data: EditOpenCourseParams) {
-  return post('/lecture/v1/EditOpenCourse', data)
-}
+/** 编辑公开课 */
+// export function editOpenCourse(data: EditOpenCourseParams) {
+//   return post('/lecture/v1/EditOpenCourse', data)
+// }
 
 /** 添加/编辑校外课 */
 export function addTempOpenCourse(data: AddTempOpenCourseParams) {

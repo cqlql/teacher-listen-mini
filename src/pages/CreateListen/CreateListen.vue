@@ -12,25 +12,55 @@ import SelectClass from './components/SelectClass/SelectClass.vue'
 
 import useToast from '@/hooks/useToast'
 import useCreateListen from './hooks/useCreateListen'
-import useEditInit from './hooks/useEditInit'
+// import useEditInit from './hooks/useEditInit'
 import ButtonBlock from '@/components/Button/ButtonBlock.vue'
 import useInitSelectDate from './hooks/useInitSelectDate'
+import type { OpenCourseForm } from './types'
+import { ref } from 'vue'
+import dayjs from 'dayjs'
 // import dayjs from 'dayjs'
+
+const form = ref<OpenCourseForm>({
+  /**公开课名称ID */
+  // course_id: '',
+  /**'公开课测试'; // 公开课名称 */
+  course_name: '',
+  /**学段ID */
+  period: '',
+  /**'1'; // 科目ID */
+  subject_id: '',
+  /** 年级班级ID : ['5601661057566615964','5015483610072272084']  */
+  gradeClass: [],
+  /**'2018-01-10 10:20:00''; // 开课日期时间 */
+  // dateTime: '',
+  dateTime: dayjs(new Date()).format('YYYY-MM-DD HH:mm'),
+  /**'1016730'; // 教室ID, 与 `class_room_name`选一个参数提交 */
+  class_room_id: '',
+  /**'录播室'; // 教室名（上课地点） */
+  class_room_name: '',
+  /**'4679665164583612636'; // 科组ID */
+  subject_group_id: '',
+  /**学校ID */
+  /**学校ID */
+
+  files: [],
+})
 
 let { toast, toastFail, toastSuccess, toastWarn } = useToast()
 
 // const { periodOptions, subjectData, subjectGroups } = useGradeSubectData()
 
 const { periodOptions, subjectData, subjectGroups, classRawData, classRoomsRawDate } =
-  useInitSelectDate()
+  useInitSelectDate(form)
 
-let { form, isLoading, confirm, promptPopup, periodChange } = useCreateListen({
+let { isLoading, confirm, promptPopup, periodChange } = useCreateListen({
+  form,
   toastFail,
   toastSuccess,
   subjectData,
 })
 
-useEditInit(form)
+// useEditInit(form)
 
 function periodSelectBefore() {
   if (form.value.period) {

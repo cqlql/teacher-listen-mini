@@ -149,4 +149,29 @@ export interface CreateListenSelectDataResult {
     // remarks: '121232'
     // updated_user_id: 0
   }[]
+
+  entity: {
+    campus_id: number //7
+    classes_id: number //2124
+    classes_name: string //'1班'
+    classes_no: string //'1'
+    classes_room_id: number //17
+    created_date: string //'2022-08-22 20:30:51'
+    created_user_id: number //7842
+    e_time: string //'2022-08-22 22:14:14'
+    grade_id: number //52
+    id: number //14
+    is_enable: true
+    name: string //'test'
+    period: number //1001
+    role_id: number //4
+    s_time: string //'2022-08-22 21:29:14'
+    school_id: number //19
+    status: number //0
+    subject_id: number //3
+    type: number //0
+    updated_date: string //'2022-08-23 00:11:31'
+    updated_user_id: number //7842
+    years: number //2020
+  }
 }

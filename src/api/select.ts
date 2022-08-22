@@ -36,9 +36,16 @@ export function getClassrooms(): Promise<ClassroomsResult> {
   return get('/lecture/v1/classrooms').then((res) => res.classrooms)
 }
 
-/**创建公开课的选择数据 */
-export function getCreateListenSelectData(): Promise<CreateListenSelectDataResult> {
+/**
+ * 创建公开课的选择数据
+ * @param id 公开课id，新增情况给0
+ * @returns
+ */
+export function getCreateListenSelectData(id: 0 | number): Promise<CreateListenSelectDataResult> {
   return httpV2.get({
     url: '/207',
+    data: {
+      id,
+    },
   })
 }

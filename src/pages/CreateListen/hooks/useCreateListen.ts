@@ -1,7 +1,7 @@
-import { requestOpenCourse, editOpenCourse } from '@/api/course'
+import { requestOpenCourse } from '@/api/course'
 import type {
   // AttachmentParams,
-  EditOpenCourseParams,
+
   RequestOpenCourseParams,
 } from '@/api/model/courseModel'
 import { setStorage } from '@/utils/storage'
@@ -15,55 +15,31 @@ import type { SubjectDataType } from './useGradeSubectData'
 type FunStr = (p: string) => void
 
 type Params = {
+  form: Ref<OpenCourseForm>
   toastSuccess: FunStr
   toastFail: FunStr
   subjectData: Ref<SubjectDataType>
 }
 
-export interface OpenCourseParams extends RequestOpenCourseParams {
-  /**公开课名称ID */
-  course_id?: string
-}
+// export interface OpenCourseParams extends RequestOpenCourseParams {
+//   /**公开课ID */
+//   id?: string
+// }
 
 // 编辑或者更新
-function requestAddOrUpdate(params: OpenCourseParams) {
-  if (params.course_id) {
-    return editOpenCourse(params as EditOpenCourseParams)
-  }
+function requestAddOrUpdate(params: RequestOpenCourseParams) {
+  // if (params.id) {
+  //   return editOpenCourse(params as EditOpenCourseParams)
+  // }
   return requestOpenCourse(params)
 }
 
-export default function useCreateListen({ toastSuccess, subjectData }: Params) {
+export default function useCreateListen({ form, toastSuccess, subjectData }: Params) {
   const isLoading = ref(false)
 
   const promptPopup = reactive({
     visible: false,
     content: '',
-  })
-  const form = ref<OpenCourseForm>({
-    /**公开课名称ID */
-    // course_id: '',
-    /**'公开课测试'; // 公开课名称 */
-    course_name: '',
-    /**学段ID */
-    period: '',
-    /**'1'; // 科目ID */
-    subject_id: '',
-    /** 年级班级ID : ['5601661057566615964','5015483610072272084']  */
-    gradeClass: [],
-    /**'2018-01-10 10:20:00''; // 开课日期时间 */
-    // dateTime: '',
-    dateTime: dayjs(new Date()).format('YYYY-MM-DD HH:mm'),
-    /**'1016730'; // 教室ID, 与 `class_room_name`选一个参数提交 */
-    class_room_id: '',
-    /**'录播室'; // 教室名（上课地点） */
-    class_room_name: '',
-    /**'4679665164583612636'; // 科组ID */
-    subject_group_id: '',
-    /**学校ID */
-    /**学校ID */
-
-    files: [],
   })
 
   async function confirm() {
@@ -72,7 +48,8 @@ export default function useCreateListen({ toastSuccess, subjectData }: Params) {
     isLoading.value = true
     await requestAddOrUpdate({
       /**公开课名称ID */
-      course_id: formVal.course_id,
+      id: Number(formVal.course_id),
+      type: 0,
 
       /**'公开课测试'; // 公开课名称 */
       name: formVal.course_name,
