@@ -18,6 +18,7 @@ export interface UploadResult {
   url: string
 }
 
+const UploadUrlBase = 'http://ting.res.weifos.com'
 const UploadApi = '/100'
 
 export async function getQiniuToken(): Promise<QiniuTokenResult> {
@@ -33,7 +34,7 @@ export function fileUpload(
   allowRefreshToken = true,
 ): Promise<UploadResult> {
   return new Promise(function (resolve, reject) {
-    const uploadApiUrl = apiUrl + UploadApi
+    const uploadApiUrl = UploadUrlBase + UploadApi
     const token = getStorage('token')
     const uploadTask = uploadFile({
       url: uploadApiUrl,

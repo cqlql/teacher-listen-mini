@@ -4,6 +4,24 @@ import CreateHttp from './CreateHttp'
 // const apiUrl = 'https://app.shenduedu.com'
 export const apiUrl = 'http://ting.api.weifos.com'
 
+export async function refreshToken() {
+  const { accessToken } = await httpV2.post(
+    {
+      url: '/101',
+      data: {
+        refreshToken: getStorage('refreshToken'),
+      },
+    },
+    {
+      allowRefreshToken: false,
+      withToken: false,
+      showErrorToast: false,
+    },
+  )
+
+  setStorage('token', accessToken)
+}
+
 /*
 code:'200',
 message: '',
@@ -58,23 +76,7 @@ export const httpV2 = new CreateHttp({
 
   allowRefreshToken: true,
 
-  async refreshToken() {
-    const { accessToken } = await httpV2.post(
-      {
-        url: '/101',
-        data: {
-          refreshToken: getStorage('refreshToken'),
-        },
-      },
-      {
-        allowRefreshToken: false,
-        withToken: false,
-        showErrorToast: false,
-      },
-    )
-
-    setStorage('token', accessToken)
-  },
+  refreshToken,
 
   // 结果数据格式统一
   resultTransform(data, res) {
