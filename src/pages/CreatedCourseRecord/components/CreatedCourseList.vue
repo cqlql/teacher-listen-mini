@@ -18,13 +18,14 @@
 import type { Ref } from 'vue'
 import { inject, ref, watch } from 'vue'
 import OnceCallback from '@/utils/once-callback'
-import { openCourseList } from '@/api/course'
+import { openCourseListV1 } from '@/api/course'
 import dayjs from 'dayjs'
 
 import ListLoad from '@/components/ListLoad/ListLoad.vue'
 import OpenCourseItem from './CreatedCourseItem.vue'
 import type { ApprovalStatus } from '../types'
 import { nextTick } from '@tarojs/taro'
+import getGrade from '@/data/getGrade'
 
 const vListLoad = ref({
   firstPageLoad() {},
@@ -77,37 +78,32 @@ function refresh() {
 
 function reqList({ page }: { page: number }) {
   let statusMap: {
-    pending: '0'
-    failed: '1'
-    passed: '2'
+    pending: 0
+    failed: 2
+    passed: 10
   } = {
-    pending: '0',
-    failed: '1',
-    passed: '2',
+    pending: 0,
+    failed: 2,
+    passed: 10,
   }
   // getCreatedCourseRecord
-  return openCourseList({
-    is_history: 0,
-    list_mun: 10,
-    offset: page * 10,
+  return openCourseListV1({
+    pageSize: 10,
+    pageIndex: page,
+
     status: statusMap[props.type],
   }).then((res) => {
-    let newList = res.listenList.map((item) => {
-      let date = item.lesson_date.split('T')[0]
-      let dateTime = dayjs(date + ' ' + item.start_time).format('YYYY年MM月DD日_HH时mm分')
-
-      let dateTimeArr = dateTime.split('_')
-
+    let newList = res.map((item) => {
       return {
         id: item.id,
         courseName: item.name,
-        userName: item.user_name,
+        userName: item.teacher_name,
         subjectName: item.subject_name,
-        gradeNme: item.grade_name,
+        gradeName: getGrade(item.period, item.years),
         className: item.class_name,
-        date: date,
-        dateLocal: dateTimeArr[0],
-        time: dateTimeArr[1],
+        date: item.s_time.split(' ')[0],
+        dateTimeLocal: dayjs(item.s_time).format('YYYY年MM月DD日 HH时mm分'),
+
         rawData: item,
       }
     })

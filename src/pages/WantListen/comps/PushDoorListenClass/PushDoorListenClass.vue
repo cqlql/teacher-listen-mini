@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, provide, ref } from 'vue'
+import { computed, ref } from 'vue'
 import ByGrade from './ByGrade.vue'
 import ByTeacher from './ByTeacher.vue'
 // import useGradeClassData from './useGradeClassData'

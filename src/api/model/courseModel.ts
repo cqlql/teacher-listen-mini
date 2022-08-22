@@ -405,9 +405,11 @@ export interface OpenClassListParams {
   pageSize: number
   pageIndex: number
   keyword?: number
-  subjectId: number
+  subjectId?: number
   /**是否是查当前用户的公开课 */
   byUser?: boolean
+  /**-1：所有状态，0：待审核，2：未通过，10：已审核 */
+  status: -1 | 0 | 2 | 10
 }
 
 export interface ApproveOpenClassParams {

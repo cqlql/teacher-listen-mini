@@ -12,7 +12,7 @@
           </span>
           <span class="h-time">{{ data.date }}</span>
         </div>
-        <div class="time-val">{{ data.dateLocal }} {{ data.time }}</div>
+        <div class="time-val">{{ data.dateTimeLocal }} </div>
         <div class="u-name-wrap">
           <span class="u-name-icon"> </span>
           <span class="u-name-tag">{{ data.subjectName[0] }}</span>
@@ -78,8 +78,7 @@ const props = withDefaults(
         gradeName: '', //'一年级',
         className: '', //'4班',
         date: '2021-12-12',
-        dateLocal: '2021年12月12日',
-        time: '12时12分',
+        dateTimeLocal: '2021年12月12日 12时12分',
       }
     },
   },

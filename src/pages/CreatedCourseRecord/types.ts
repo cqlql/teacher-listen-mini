@@ -13,7 +13,6 @@ export interface CreatedCourseItem {
   gradeName: string
   className: string
   date: string
-  dateLocal: string
-  time: string
+  dateTimeLocal: string
   rawData?: OpenCourseItemResult
 }

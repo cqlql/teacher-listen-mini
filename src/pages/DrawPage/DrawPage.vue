@@ -125,9 +125,18 @@ function onSave() {
     canvas: canvas as any,
     success(res) {
       toastLoading('上传开始')
-      fileUpload(res.tempFilePath, (res) => {
-        toast.msg = `上传文件：${res.progress * 0.99}%`
-      })
+      fileUpload(
+        res.tempFilePath,
+        {
+          thmType: 2,
+          bizId: 0,
+        },
+        {
+          progress: (res) => {
+            toast.msg = `上传文件：${res.progress * 0.99}%`
+          },
+        },
+      )
         .then((imgInfo) => {
           eventChannel.emit('confirm', imgInfo)
         })

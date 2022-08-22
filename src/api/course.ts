@@ -86,19 +86,17 @@ export function addTempOpenCourse(data: AddTempOpenCourseParams) {
   return post('/lecture/v1/addTempOpenCourse', data)
 }
 
-/** 获取公开课列表（已申请）*/
+/** 获取开课记录（未审核）*/
 export function openCourseList(
   data: CourseListParams,
 ): Promise<{ listenList: OpenCourseItemResult[] }> {
   return get('/lecture/v2/listenlist', data)
 }
-/** 获取新创建的课程记录列表 */
-export function getCreatedCourseRecord() {}
 
-/** 公开课列表 所有通过的课*/
+/** 公开课列表*/
 export function openCourseListV1(
   data: OpenClassListParams,
-  config: RequestOptionsNullable,
+  config?: RequestOptionsNullable,
 ): Promise<OpenCourseItemResult2[]> {
   return httpV2.get(
     {

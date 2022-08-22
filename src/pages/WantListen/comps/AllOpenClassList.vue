@@ -92,6 +92,7 @@ function reqList({ page }: { page: number }) {
       pageIndex: page,
       dateRange,
       subjectId: Number(topSearchParams.subject),
+      status: 10,
     },
     {
       reqDataRemoveUndefined: true,
