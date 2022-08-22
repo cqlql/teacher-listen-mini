@@ -56,7 +56,7 @@ function select() {
             path,
             {
               thmType: 1,
-              OpenCoursesProcess: 0,
+              bizId: 0,
             },
             {
               progress(res) {
@@ -72,7 +72,6 @@ function select() {
             url: fileUrl,
             type: fileTypeId(fileUrl),
           })
-          console.log('🚀 -- success -- files', files)
         } catch (e) {
           console.error(e)
         }

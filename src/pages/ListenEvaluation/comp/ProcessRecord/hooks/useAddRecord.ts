@@ -19,7 +19,7 @@ export default function useAddRecord(data: Ref<RecordItem>) {
       tempFilePath,
       {
         thmType: 1,
-        OpenCoursesProcess: 0,
+        bizId: 0,
       },
       {
         progress(res) {

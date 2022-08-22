@@ -42,7 +42,7 @@ export interface FileUploadParams {
    * 业务id
    * 新增情況业务id给0 ，修改情況业务id给当前公开课id
    */
-  OpenCoursesProcess: 0 | number
+  bizId: 0 | number
 }
 interface FileUploadOptionsRequired {
   progress?: UploadTask.OnProgressUpdateCallback
@@ -68,7 +68,6 @@ export function fileUpload(
     ...options,
   }
 
-  console.log('🚀 -- newParams', newParams)
   return new Promise(function (resolve, reject) {
     const uploadApiUrl = UploadUrlBase + UploadApi
     const token = getStorage('token')
@@ -99,7 +98,11 @@ export function fileUpload(
           const code = data.Basis.Code
           if (code === 200) {
             // 处理正确情况
-            console.log('🚀 -- success -- data', data)
+
+            resolve({
+              id: '',
+              url: data.Result,
+            })
             return
           }
 
