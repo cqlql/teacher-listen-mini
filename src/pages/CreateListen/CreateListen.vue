@@ -14,7 +14,7 @@ import useToast from '@/hooks/useToast'
 import useCreateListen from './hooks/useCreateListen'
 // import useEditInit from './hooks/useEditInit'
 import ButtonBlock from '@/components/Button/ButtonBlock.vue'
-import useInitSelectDate from './hooks/useInitSelectDate'
+import useInitDate from './hooks/useInitDate'
 import type { OpenCourseForm } from './types'
 import { ref } from 'vue'
 import dayjs from 'dayjs'
@@ -51,7 +51,7 @@ let { toast, toastFail, toastSuccess, toastWarn } = useToast()
 // const { periodOptions, subjectData, subjectGroups } = useGradeSubectData()
 
 const { periodOptions, subjectData, subjectGroups, classRawData, classRoomsRawDate } =
-  useInitSelectDate(form)
+  useInitDate(form)
 
 let { isLoading, confirm, promptPopup } = useCreateListen({
   form,

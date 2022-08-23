@@ -21,7 +21,7 @@ interface SubjectInfo {
 }
 
 type Option = { id: string; name: string }
-export default function useInitSelectDate(formRef: Ref<OpenCourseForm>) {
+export default function useInitDate(formRef: Ref<OpenCourseForm>) {
   const { id } = useRouterParams<{ id?: string }>() // 公开课id
   const periodOptions = ref<Option[]>([])
   const subjectData = ref<SubjectDataType>({})
