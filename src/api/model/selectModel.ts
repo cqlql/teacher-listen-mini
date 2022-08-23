@@ -173,5 +173,8 @@ export interface CreateListenSelectDataResult {
     updated_date: string //'2022-08-23 00:11:31'
     updated_user_id: number //7842
     years: number //2020
+    // 自定义授课地点
+    address: string //''
+    att_urls: { url: string }[]
   }
 }

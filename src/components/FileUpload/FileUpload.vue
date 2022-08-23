@@ -6,6 +6,7 @@
 <script lang="ts" setup>
 import useFileUpload from '@/hooks/useFileUpload'
 import useToast from '@/hooks/useToast'
+import { getFileNameByPath } from '@/utils/file'
 import { computed } from 'vue'
 
 import fileTypeId from './file-type-id'
@@ -79,10 +80,6 @@ function select() {
       emits('update:modelValue', props.modelValue.concat(files))
     },
   })
-}
-
-function getFileNameByPath(path: string) {
-  return path.match(/[^/]+$/)?.[0] || 'file'
 }
 
 // function req() {

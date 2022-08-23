@@ -68,7 +68,7 @@ export default function useCreateListen({ form, toastSuccess, subjectData }: Par
       /**'1016730'; // 教室ID, 与 `class_room_name`选一个参数提交 */
       classes_room_id: Number(formVal.class_room_id) || 0,
       /**'录播室'; // 教室名（上课地点） */
-      classes_room_name: formVal.class_room_id ? undefined : formVal.class_room_name,
+      address: formVal.class_room_id ? undefined : formVal.class_room_name,
       /**'4679665164583612636'; // 科组ID */
       role_id: Number(formVal.subject_group_id),
       att_urls: formVal.files.map((file) => {

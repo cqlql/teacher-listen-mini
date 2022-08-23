@@ -78,7 +78,7 @@ export interface RequestOpenCourseParams {
   /**'教室ID, 如果只有 `class_room_name`，需提交 '0' */
   classes_room_id: 0 | number
   /**'录播室'; // 教室名（上课地点） */
-  classes_room_name?: string
+  address?: string
   /**'4679665164583612636'; // 科组ID */
   role_id: number
   /**  类型 0：公开课1：推门听课 2：校外课*/

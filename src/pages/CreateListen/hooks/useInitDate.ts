@@ -5,6 +5,7 @@ import useRouterParams from '@/hooks/useRouterParams'
 // import { getSubjectGroups } from '@/api/select'
 // import usePeriodSubjectData from '@/hooks/usePeriodSubjectData'
 import classify from '@/utils/each/classify'
+import { getFileNameByPath } from '@/utils/file'
 import type { Ref } from 'vue'
 import { ref } from 'vue'
 import type { OpenCourseForm } from '../types'
@@ -64,11 +65,25 @@ export default function useInitDate(formRef: Ref<OpenCourseForm>) {
 
     // 编辑情况初始
     if (id) {
-      initEdit(res.entity)
+      initEdit(res.entity, res.classRooms)
     }
   })
 
-  function initEdit(rawData: CreateListenSelectDataResult['entity']) {
+  function initEdit(
+    rawData: CreateListenSelectDataResult['entity'],
+    classRoomsRawDateVal: CreateListenSelectDataResult['classRooms'],
+  ) {
+    function findClassRoomName(classRoomId: number) {
+      let classRoomName = ''
+      classRoomsRawDateVal.some((classRoom) => {
+        if (classRoom.id === classRoomId) {
+          classRoomName = classRoom.address
+          return true
+        }
+      })
+      return classRoomName
+    }
+
     formRef.value = {
       course_id: String(rawData.id),
       course_name: rawData.name,
@@ -77,9 +92,17 @@ export default function useInitDate(formRef: Ref<OpenCourseForm>) {
       gradeClass: [String(rawData.grade_id), String(rawData.classes_id)],
       dateTime: rawData.s_time.replace(/:\d\d$/, ''),
       class_room_id: String(rawData.classes_room_id),
-      class_room_name: rawData.class_room_name,
+      class_room_name: rawData.classes_room_id
+        ? findClassRoomName(rawData.classes_room_id)
+        : rawData.address,
       subject_group_id: String(rawData.role_id),
-      files: [],
+      files: rawData.att_urls.map((att) => {
+        return {
+          url: att.url,
+          name: getFileNameByPath(att.url),
+          type: '0',
+        }
+      }),
     }
   }
 
