@@ -203,13 +203,11 @@ export function dimensionList(data: DimensionListParams): Promise<DimensionListR
   return get('/lecture/v1/dimensionlist', data)
 }
 
-// 获取我的听课评价 - 过程记录与评分
-export function getEvaluationList(
-  params: GetEvaluationListParams,
-): Promise<GetEvaluationListResult> {
-  return httpV3.get({
-    url: '/lecture/v1/list',
-    data: params,
+// 获取我的听课评价 - 过程记录
+export function getEvaluationList(data: { id: number }): Promise<GetEvaluationListResult> {
+  return httpV2.get({
+    url: '/216',
+    data,
   })
 }
 

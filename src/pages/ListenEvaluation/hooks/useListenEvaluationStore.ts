@@ -252,12 +252,10 @@ export default function useListenEvaluationStore(): ListenEvaluationStore {
 
   const { save } = useSave(routeParams, processRecordStore /* , evaluationScore */)
 
-  // 编辑初始
+  // 编辑初始 - 过程记录
   getEvaluationList({
-    /**课程ID */
-    course_id: routeParams.course_id,
-    /**评课人ID */
-    user_id: routeParams.user_id,
+    // 课评ID
+    id: Number(routeParams.id),
   }).then((res) => {
     processRecordStore.editInit(res)
     evaluationScoreEditInit(res)
