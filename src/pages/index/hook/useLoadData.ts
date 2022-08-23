@@ -4,39 +4,7 @@ import type { Dayjs } from 'dayjs'
 import dayjs from 'dayjs'
 import type { Ref } from 'vue'
 import { ref } from 'vue'
-
-interface CourseItemType {
-  sujectTag: string
-  name: string
-  user_id: number
-  user_name: string
-  course_id: number
-  subject_id: number
-  grade_id: number
-  // startDate: string
-  start_time: string
-  // end_time: string
-  // school_name: string
-  // campus_name: string
-  grade_name: string
-  class_name: string
-  class_room_name: string
-  live_url: string
-  files: {
-    id: string
-    name: string
-    url: string
-  }[]
-  status: {
-    id: string
-    type: string
-    label: string
-  }
-  type: {
-    type: string
-    label: string
-  }
-}
+import type { CourseItemType } from '../types'
 
 function useGetList(weekDate: Ref<Dayjs>) {
   const myCourseList = ref<CourseItemType[]>([])
@@ -83,6 +51,7 @@ function useGetList(weekDate: Ref<Dayjs>) {
         }
 
         return {
+          id: item.id,
           sujectTag: item.subject_name[0],
           name: item.courses_name,
           user_id: item.teacher_user_id,

@@ -15,6 +15,7 @@ import type {
 } from '@/api/model/courseModel'
 
 export interface RouteParams {
+  id: string
   course_id: string
   subject_id: string
   grade_id: string
@@ -50,7 +51,7 @@ function useSave(
     //     ],
     //   },
     // ]
-    const courseId = Number(routeParams.course_id)
+    const userEvalId = Number(routeParams.id)
     return processRecordList.value.map((record, i) => {
       const details: SaveListenProcessParams['details'] = record.list.map((item, j) => {
         let val: SaveListenProcessParamsDetail['val']
@@ -75,7 +76,7 @@ function useSave(
 
         return {
           // id: 0,
-          user_eval_id: courseId,
+          user_eval_id: userEvalId,
           // process_id: 0,
           type,
           val,
@@ -84,7 +85,7 @@ function useSave(
       })
       return {
         // id: 0,
-        user_eval_id: courseId,
+        user_eval_id: userEvalId,
         title: record.text,
         order_index: i,
         details,
@@ -224,8 +225,6 @@ export default function useListenEvaluationStore(): ListenEvaluationStore {
   //   }
   // }
 
-  const { course_id: courseId } = routeParams
-
   const processRecordStore = useProcessRecordStore()
   const { evaluationScore, editInit: evaluationScoreEditInit } =
     useEvaluationScoreStore(routeParams)
@@ -235,7 +234,7 @@ export default function useListenEvaluationStore(): ListenEvaluationStore {
   // 编辑初始
   getEvaluationList({
     /**课程ID */
-    course_id: courseId,
+    course_id: routeParams.course_id,
     /**评课人ID */
     user_id: routeParams.user_id,
   }).then((res) => {

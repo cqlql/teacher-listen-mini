@@ -37,7 +37,7 @@ export interface FileUploadParams {
   /**
    * 业务类型
    */
-  bizType?: 'OCAttachment'
+  bizType: 'OCAttachment' | 'OCProcess'
   /**
    * 业务id
    * 新增情況业务id给0 ，修改情況业务id给当前公开课id
@@ -58,11 +58,6 @@ export function fileUpload(
   params: FileUploadParams,
   options?: FileUploadOptions,
 ): Promise<UploadResult> {
-  const newParams: FileUploadParams = {
-    bizType: 'OCAttachment',
-    ...params,
-  }
-
   const newOptions: FileUploadOptionsRequired = {
     allowRefreshToken: true,
     ...options,
@@ -79,7 +74,7 @@ export function fileUpload(
         [TOKEN_KEY]: 'Bearer ' + token,
         Sign: getSign(undefined, token),
       },
-      formData: newParams,
+      formData: params,
       async success(res) {
         /**res 结构
          *

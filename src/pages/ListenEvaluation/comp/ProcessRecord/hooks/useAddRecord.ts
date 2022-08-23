@@ -20,6 +20,7 @@ export default function useAddRecord(data: Ref<RecordItem>) {
       {
         thmType: 1,
         bizId: 0,
+        bizType: 'OCProcess',
       },
       {
         progress(res) {

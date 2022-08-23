@@ -10,6 +10,7 @@ import useWeekDateSelect from './hook/useWeekDateSelect'
 import { getStorage, setStorage } from '@/utils/storage'
 import useLoadData from './hook/useLoadData'
 import { ref } from 'vue'
+import type { CourseItemType } from './types'
 
 const { isExpanded, weekDate, weekBtnText, isToday, weekItems } = useWeekDateSelect()
 const { vListLoad, myCourseList, reqList, handleWeekDayChange, goToday } = useLoadData(weekDate)
@@ -53,21 +54,17 @@ function toCreatedCourseRecord() {
   })
 }
 
-function toProcessRecord(course: {
-  user_id: number
-  course_id: number
-  subject_id: number
-  grade_id: number
-  live_url: string
-}) {
+function toProcessRecord(course: CourseItemType) {
   const currentUserId = getStorage('userId')
   // console.log(
   //   `/pages/ListenEvaluation/ListenEvaluation?user_id=${currentUserId}&course_id=${course.course_id}&subject_id=${course.subject_id}&grade_id=${course.grade_id}&live_url=${course.live_url}`,
   // )
   Taro.navigateTo({
-    url: `/pages/ListenEvaluation/ListenEvaluation?user_id=${currentUserId}&course_id=${
-      course.course_id
-    }&subject_id=${course.subject_id}&grade_id=${course.grade_id}&live_url=${
+    url: `/pages/ListenEvaluation/ListenEvaluation?id=${
+      course.id
+    }&user_id=${currentUserId}&course_id=${course.course_id}&subject_id=${
+      course.subject_id
+    }&grade_id=${course.grade_id}&live_url=${
       course.live_url ? encodeURIComponent(course.live_url) : ''
     }`,
   })

@@ -58,6 +58,7 @@ function select() {
             {
               thmType: 1,
               bizId: 0,
+              bizType: 'OCAttachment',
             },
             {
               progress(res) {
