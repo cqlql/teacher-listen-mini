@@ -11,7 +11,7 @@ import type {
   SaveListenProcessParams,
   // LessonScoreParam,
   // RecordItemParam,
-  SaveListenProcessParamsDetail,
+  // SaveListenProcessParamsDetail,
 } from '@/api/model/courseModel'
 
 export interface RouteParams {
@@ -53,35 +53,49 @@ function useSave(
     // ]
     const userEvalId = Number(routeParams.id)
     return processRecordList.value.map((record, i) => {
-      const details: SaveListenProcessParams['details'] = record.list.map((item, j) => {
-        let val: SaveListenProcessParamsDetail['val']
-        let type: SaveListenProcessParamsDetail['type']
-
+      const details: SaveListenProcessParams['details'] = []
+      let orderIndex = 0
+      record.list.forEach((item) => {
         switch (item.type) {
           case 'think':
-            type = 1
-            val = item.text
+            details.push({
+              // id: 0,
+              user_eval_id: userEvalId,
+              // process_id: 0,
+              type: 1,
+              val: item.text,
+              order_index: orderIndex,
+            })
             break
 
           case 'picture':
           case 'drawing':
-            type = 2
-            val = JSON.stringify(item.files)
+            item.files.forEach((file) => {
+              details.push({
+                // id: 0,
+                user_eval_id: userEvalId,
+                // process_id: 0,
+                type: 2,
+                val: file.url,
+                order_index: orderIndex,
+              })
+            })
             break
           case 'video':
-            type = 3
-            val = JSON.stringify(item.files)
+            item.files.forEach((file) => {
+              details.push({
+                // id: 0,
+                user_eval_id: userEvalId,
+                // process_id: 0,
+                type: 3,
+                val: file.url,
+                order_index: orderIndex,
+              })
+            })
             break
         }
 
-        return {
-          // id: 0,
-          user_eval_id: userEvalId,
-          // process_id: 0,
-          type,
-          val,
-          order_index: j,
-        }
+        orderIndex++
       })
       return {
         // id: 0,
