@@ -53,7 +53,7 @@ let { toast, toastFail, toastSuccess, toastWarn } = useToast()
 const { periodOptions, subjectData, subjectGroups, classRawData, classRoomsRawDate } =
   useInitSelectDate(form)
 
-let { isLoading, confirm, promptPopup, periodChange } = useCreateListen({
+let { isLoading, confirm, promptPopup } = useCreateListen({
   form,
   toastFail,
   toastSuccess,
@@ -61,6 +61,22 @@ let { isLoading, confirm, promptPopup, periodChange } = useCreateListen({
 })
 
 // useEditInit(form)
+
+const vSelectClass = ref({
+  clear() {},
+})
+
+function periodChange(period_id: string) {
+  // 如果学段中没有此科目将清理掉
+  const subjectList = subjectData.value[period_id]
+  const subject = form.value.subject_id
+  if (!subjectList.some((item) => subject === item.subject_id)) {
+    form.value.subject_id = ''
+  }
+
+  // 清理 gradeClass
+  vSelectClass.value.clear()
+}
 
 function periodSelectBefore() {
   if (form.value.period) {
@@ -72,23 +88,23 @@ function periodSelectBefore() {
 
 // 自动填充
 if (process.env.NODE_ENV !== 'production') {
-  form.value = {
-    course_name: 'test',
-    period: '1001',
-    subject_id: '3',
-    gradeClass: ['52', '2124'],
-    dateTime: require('dayjs')(new Date()).add(1, 'hour').format('YYYY-MM-DD HH:mm:ss'),
-    class_room_id: '17',
-    class_room_name: '六（7）班',
-    subject_group_id: '4',
-    files: [
-      {
-        name: 'GKtmpMHEsNuR3b8b12cbf9436ae636d67b108dbdfe27.webp',
-        url: 'https://s3-cn-south-1.qiniucs.com/smallpi/3b8b12cbf9436ae636d67b108dbdfe27.webp?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FlOuHhYOGakSvFFka9eBRf5emNuGpEcCEZmtNsLd%2F20220304%2Fcn-south-1%2Fs3%2Faws4_request&X-Amz-Date=20220304T033536Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=6a85cea80d11f607d414c192c7f402d2f3eabb729ce0a65a049a512225432a1f',
-        type: '51',
-      },
-    ],
-  }
+  // form.value = {
+  //   course_name: 'test',
+  //   period: '1001',
+  //   subject_id: '3',
+  //   gradeClass: ['52', '2124'],
+  //   dateTime: require('dayjs')(new Date()).add(1, 'hour').format('YYYY-MM-DD HH:mm:ss'),
+  //   class_room_id: '17',
+  //   class_room_name: '六（7）班',
+  //   subject_group_id: '4',
+  //   files: [
+  //     {
+  //       name: 'GKtmpMHEsNuR3b8b12cbf9436ae636d67b108dbdfe27.webp',
+  //       url: 'https://s3-cn-south-1.qiniucs.com/smallpi/3b8b12cbf9436ae636d67b108dbdfe27.webp?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FlOuHhYOGakSvFFka9eBRf5emNuGpEcCEZmtNsLd%2F20220304%2Fcn-south-1%2Fs3%2Faws4_request&X-Amz-Date=20220304T033536Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=6a85cea80d11f607d414c192c7f402d2f3eabb729ce0a65a049a512225432a1f',
+  //       type: '51',
+  //     },
+  //   ],
+  // }
 }
 </script>
 
@@ -117,6 +133,7 @@ if (process.env.NODE_ENV !== 'production') {
       </FormItem>
       <FormItem label="授课对象">
         <SelectClass
+          ref="vSelectClass"
           :classRawData="classRawData"
           :period="form.period"
           :selectBefore="periodSelectBefore"

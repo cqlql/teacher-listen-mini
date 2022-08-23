@@ -45,10 +45,6 @@ watch(
     gradeListRef.value = periodIdRecord.value[props.period]
 
     updateRang()
-
-    // 清理
-    name.value = ''
-    emits('update:modelValue', [])
   },
 )
 
@@ -112,6 +108,14 @@ watch(
     updateRang()
   },
 )
+
+defineExpose({
+  // 清理
+  clear() {
+    name.value = ''
+    emits('update:modelValue', [])
+  },
+})
 
 function gradeClassSort() {
   for (let [, gradeList] of Object.entries(periodIdRecord.value)) {

@@ -108,7 +108,6 @@ export default function useCreateListen({ form, toastSuccess, subjectData }: Par
   }
 
   return {
-    form,
     confirm,
     isLoading,
     promptPopup,

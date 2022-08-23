@@ -61,7 +61,7 @@ import Taro from '@tarojs/taro'
 import type { Ref } from 'vue'
 import { inject } from 'vue'
 
-let { toast, toastSuccess, loading } = useToast()
+let { toast, toastSuccess, loading, toastClose } = useToast()
 
 const props = withDefaults(
   defineProps<{
@@ -117,7 +117,7 @@ async function onPassed() {
   await approveOpenCourse({
     status: 10,
     id: props.data.id,
-  })
+  }).finally(toastClose)
   emits('refresh')
   needRefreshType.value = 'passed'
   toastSuccess('通过成功')
@@ -128,7 +128,7 @@ async function onRefuse() {
   await approveOpenCourse({
     status: 2,
     id: props.data.id,
-  })
+  }).finally(toastClose)
   emits('refresh')
   needRefreshType.value = 'failed'
   toastSuccess('拒绝成功')
@@ -138,7 +138,7 @@ async function onRevoke() {
   await approveOpenCourse({
     status: 0,
     id: props.data.id,
-  })
+  }).finally(toastClose)
   emits('refresh')
   needRefreshType.value = 'failed'
   toastSuccess('撤销成功')
