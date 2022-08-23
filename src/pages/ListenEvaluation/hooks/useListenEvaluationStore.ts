@@ -70,6 +70,7 @@ function useSave(
                 val: item.text,
                 order_index: orderIndex,
               })
+              orderIndex++
               break
 
             case 'picture':
@@ -83,6 +84,7 @@ function useSave(
                   val: file.url,
                   order_index: orderIndex,
                 })
+                orderIndex++
               })
               break
             case 'video':
@@ -95,12 +97,12 @@ function useSave(
                   val: file.url,
                   order_index: orderIndex,
                 })
+                orderIndex++
               })
               break
           }
-
-          orderIndex++
         })
+
         return {
           // id: 0,
           user_eval_id: userEvalId,
