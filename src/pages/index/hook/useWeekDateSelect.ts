@@ -1,4 +1,5 @@
 import { getLessonCount } from '@/api/course'
+import type { LessonCountResult } from '@/api/model/courseModel'
 import type { DateItem } from '@/components/OneWeek/typing'
 import dayjs from 'dayjs'
 import { watch, ref } from 'vue'
@@ -14,14 +15,17 @@ export default function useWeekDateSelect() {
 
   watch([isExpanded, weekItems], ([isExpandedValue, weekItemsValue]) => {
     if (isExpandedValue) {
-      getLessonCount().then(({ lesson_count: resList }) => {
-        let index = 0
+      getLessonCount().then((list) => {
+        const resItemMap: Record<string, LessonCountResult> = list.reduce((record, item) => {
+          record[item.created_date.replace(/\d+\/\d\d\//, '')] = item
+          return record
+        }, {})
+
         weekItemsValue.forEach((items) => {
           items.forEach((item) => {
             if (item.value) {
-              const resItem = resList[index]
-              item.info = resItem ? `${resItem} 节` : ''
-              index += 1
+              const resItem = resItemMap[item.value]
+              item.info = resItem ? `${resItem.count} 节` : ''
             }
           })
         })

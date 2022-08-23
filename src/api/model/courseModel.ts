@@ -529,7 +529,8 @@ export interface GetAttachListResult {
 }
 
 export interface LessonCountResult {
-  lesson_count: number[]
+  count: number
+  created_date: string
 }
 
 export interface CoursesRecordListParams {

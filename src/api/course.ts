@@ -50,8 +50,10 @@ export function coursesRecordList(data: CoursesRecordListParams): Promise<Course
 }
 
 /** 最近一周听课任务 参数range_type=latest_week最近一周,参数默认值（可不提交） */
-export function getLessonCount(): Promise<LessonCountResult> {
-  return get('/lecture/v1/lesson_count')
+export function getLessonCount(): Promise<LessonCountResult[]> {
+  return httpV2.get({
+    url: '/214',
+  })
   // return new Promise((resolve) => {
   //   resolve({
   //     lesson_count: [
