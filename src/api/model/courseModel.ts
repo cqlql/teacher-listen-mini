@@ -348,13 +348,15 @@ export interface SaveListenProcessParams {
   // }[]
   // //过程记录打分表
   // Lesson_score: LessonScoreParam[]
-
-  // id?: number // 0
-  /**用户听评课计划ID */
-  user_eval_id: number //0
-  title: string //'string'
-  order_index: number //0
-  details: SaveListenProcessParamsDetail[]
+  id: number
+  process_list: {
+    // id?: number // 0
+    /**用户听评课计划ID */
+    user_eval_id: number //0
+    title: string //'string'
+    order_index: number //0
+    details: SaveListenProcessParamsDetail[]
+  }[]
 }
 
 // 听课详情结果

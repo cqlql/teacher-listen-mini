@@ -5,13 +5,13 @@ import ChartBarCustom from '@/components/ChartBarCustom.vue'
 import { ref } from 'vue'
 import { getStorage } from '@/utils/storage'
 import { Empty } from '@nutui/nutui-taro'
-import type { GetListenAndTeachStatisticsParams } from '@/api/model/courseModel'
 import useToastInject from '@/hooks/useToastInject'
 import useCountStatistics from './hooks/useCountStatistics'
 import useEvaluationStatistics from './hooks/useEvaluationStatistics'
+import type { DateRangeType } from '@/api/statistic'
 const { toastLoading, toastClose } = useToastInject()
 
-const rangeType = ref<GetListenAndTeachStatisticsParams['range_type']>('this_semester')
+const rangeType = ref<DateRangeType>(3)
 const userId = getStorage('userId')
 
 const {
@@ -38,9 +38,9 @@ tabChange()
 <template>
   <div class="EvaluationStatistics">
     <nut-tabs class="nut-tabs3 blue" v-model="rangeType" @change="tabChange">
-      <nut-tabpane pane-key="this_semester" title="本学期"></nut-tabpane>
-      <nut-tabpane pane-key="this_month" title="本月"></nut-tabpane>
-      <nut-tabpane pane-key="this_week" title="本周"></nut-tabpane>
+      <nut-tabpane :pane-key="3" title="本学期"></nut-tabpane>
+      <nut-tabpane :pane-key="2" title="本月"></nut-tabpane>
+      <nut-tabpane :pane-key="1" title="本周"></nut-tabpane>
     </nut-tabs>
     <CardPlus title2="听授课次数统计：">
       <Empty v-if="countEmpty"></Empty>

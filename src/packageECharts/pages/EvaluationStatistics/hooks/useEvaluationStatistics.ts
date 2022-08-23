@@ -1,5 +1,5 @@
-import { getEvaluationStatistics } from '@/api/course'
-import type { GetListenAndTeachStatisticsParams } from '@/api/model/courseModel'
+import type { DateRangeType } from '@/api/statistic'
+import { getMyEvaluationStatistics } from '@/api/statistic'
 import type { ChartBarCustomItem } from '@/components/ChartBarCustom'
 import { ref } from 'vue'
 
@@ -7,10 +7,9 @@ export default function useEvaluationStatistics(userId) {
   const empty = ref(false)
   const chartBarData = ref<ChartBarCustomItem[]>([])
 
-  function update(rangeType: GetListenAndTeachStatisticsParams['range_type']) {
-    return getEvaluationStatistics({
-      user_id: userId,
-      range_type: rangeType,
+  function update(dateRange: DateRangeType) {
+    return getMyEvaluationStatistics({
+      dateRange,
     }).then((res) => {
       const list: ChartBarCustomItem[] = []
       res.evaluation_count.forEach((item) => {

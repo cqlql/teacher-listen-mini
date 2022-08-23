@@ -187,7 +187,7 @@ export function delUserCourse(id: string) {
 }
 
 /** 保存听课过程（过程记录和打分） */
-export function saveListenProcess(data: SaveListenProcessParams[]) {
+export function saveListenProcess(data: SaveListenProcessParams) {
   return httpV2.post({
     url: '/205',
     data,

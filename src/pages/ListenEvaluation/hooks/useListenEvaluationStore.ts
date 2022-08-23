@@ -9,6 +9,7 @@ import useEvaluationScoreStore from './useEvaluationScoreStore'
 import type {
   // FileRecordItemParam,
   SaveListenProcessParams,
+  SaveListenProcessParamsDetail,
   // LessonScoreParam,
   // RecordItemParam,
   // SaveListenProcessParamsDetail,
@@ -32,7 +33,7 @@ function useSave(
 
   const { processRecordList } = processRecordStore
 
-  function resolveRequestData(): SaveListenProcessParams[] {
+  function resolveRequestData(): SaveListenProcessParams {
     // return [
     //   {
     //     // id: 0,
@@ -52,59 +53,63 @@ function useSave(
     //   },
     // ]
     const userEvalId = Number(routeParams.id)
-    return processRecordList.value.map((record, i) => {
-      const details: SaveListenProcessParams['details'] = []
-      let orderIndex = 0
-      record.list.forEach((item) => {
-        switch (item.type) {
-          case 'think':
-            details.push({
-              // id: 0,
-              user_eval_id: userEvalId,
-              // process_id: 0,
-              type: 1,
-              val: item.text,
-              order_index: orderIndex,
-            })
-            break
 
-          case 'picture':
-          case 'drawing':
-            item.files.forEach((file) => {
+    return {
+      id: userEvalId,
+      process_list: processRecordList.value.map((record, i) => {
+        const details: SaveListenProcessParamsDetail[] = []
+        let orderIndex = 0
+        record.list.forEach((item) => {
+          switch (item.type) {
+            case 'think':
               details.push({
                 // id: 0,
                 user_eval_id: userEvalId,
                 // process_id: 0,
-                type: 2,
-                val: file.url,
+                type: 1,
+                val: item.text,
                 order_index: orderIndex,
               })
-            })
-            break
-          case 'video':
-            item.files.forEach((file) => {
-              details.push({
-                // id: 0,
-                user_eval_id: userEvalId,
-                // process_id: 0,
-                type: 3,
-                val: file.url,
-                order_index: orderIndex,
+              break
+
+            case 'picture':
+            case 'drawing':
+              item.files.forEach((file) => {
+                details.push({
+                  // id: 0,
+                  user_eval_id: userEvalId,
+                  // process_id: 0,
+                  type: 2,
+                  val: file.url,
+                  order_index: orderIndex,
+                })
               })
-            })
-            break
+              break
+            case 'video':
+              item.files.forEach((file) => {
+                details.push({
+                  // id: 0,
+                  user_eval_id: userEvalId,
+                  // process_id: 0,
+                  type: 3,
+                  val: file.url,
+                  order_index: orderIndex,
+                })
+              })
+              break
+          }
+
+          orderIndex++
+        })
+        return {
+          // id: 0,
+          user_eval_id: userEvalId,
+          title: record.text,
+          order_index: i,
+          details,
         }
-
-        orderIndex++
-      })
-      return {
-        // id: 0,
-        user_eval_id: userEvalId,
-        title: record.text,
-        order_index: i,
-        details,
-      }
-    })
+      }),
+    }
 
     // const lessonRecordParam: SaveListenProcessParams['lesson_record'] = []
 
