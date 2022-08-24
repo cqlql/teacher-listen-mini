@@ -1,5 +1,5 @@
-import type { /* EvaluationScore,  */ ListenEvaluationStore } from '../types'
-import { getEvaluationList, saveListenProcess } from '@/api/course'
+import type { /* EvaluationScore,  */ ListenEvaluationStore, RecordChildItem } from '../types'
+import { getEvaluationScore, getProcessRecord, saveListenProcess } from '@/api/course'
 import useRouterParams from '@/hooks/useRouterParams'
 import type { ProcessRecordStore } from './useProcessRecordStore'
 import useProcessRecordStore from './useProcessRecordStore'
@@ -59,44 +59,37 @@ function useSave(
       process_list: processRecordList.value.map((record, i) => {
         const details: SaveListenProcessParamsDetail[] = []
         let orderIndex = 0
+        function createDetailItem(
+          type: RecordChildItem['type'],
+          value,
+        ): SaveListenProcessParamsDetail {
+          const typeMap: Record<RecordChildItem['type'], SaveListenProcessParamsDetail['type']> = {
+            think: 1,
+            picture: 5,
+            drawing: 10,
+            video: 15,
+          }
+          return {
+            // id: 0,
+            user_eval_id: userEvalId,
+            // process_id: 0,
+            type: typeMap[type],
+            val: value,
+            order_index: orderIndex,
+          }
+        }
         record.list.forEach((item) => {
           switch (item.type) {
             case 'think':
-              details.push({
-                // id: 0,
-                user_eval_id: userEvalId,
-                // process_id: 0,
-                type: 1,
-                val: item.text,
-                order_index: orderIndex,
-              })
+              details.push(createDetailItem(item.type, item.text))
               orderIndex++
               break
 
             case 'picture':
             case 'drawing':
-              item.files.forEach((file) => {
-                details.push({
-                  // id: 0,
-                  user_eval_id: userEvalId,
-                  // process_id: 0,
-                  type: 2,
-                  val: file.url,
-                  order_index: orderIndex,
-                })
-                orderIndex++
-              })
-              break
             case 'video':
               item.files.forEach((file) => {
-                details.push({
-                  // id: 0,
-                  user_eval_id: userEvalId,
-                  // process_id: 0,
-                  type: 3,
-                  val: file.url,
-                  order_index: orderIndex,
-                })
+                details.push(createDetailItem(item.type, file.url))
                 orderIndex++
               })
               break
@@ -253,11 +246,17 @@ export default function useListenEvaluationStore(): ListenEvaluationStore {
   const { save } = useSave(routeParams, processRecordStore /* , evaluationScore */)
 
   // 编辑初始 - 过程记录
-  getEvaluationList({
+  getProcessRecord({
     // 课评ID
     id: Number(routeParams.id),
   }).then((res) => {
     processRecordStore.editInit(res)
+  })
+
+  // 编辑初始 - 听课评价
+  getEvaluationScore({
+    id: Number(routeParams.id),
+  }).then((res) => {
     evaluationScoreEditInit(res)
   })
 

@@ -307,8 +307,8 @@ export type userCourseList = {
   /**老师/用户id */
   teacher_user_id: number //8040
   timetable_id: number //0
-  /** 0 公开课 1 校内课 2 校外课 */
-  type: 0 | 1 | 2
+  /** 0 校内课 1 校外课 */
+  type: 0 | 1
   updated_date: string //'2022-08-20 00:40:55'
   updated_user_id: number //8040
   week: number //0
@@ -324,8 +324,8 @@ export interface SaveListenProcessParamsDetail {
   user_eval_id: number //0
   /**过程ID */
   // process_id: number //0
-  /**类型 1：思考 2：照片 3：视频" */
-  type: 1 | 2 | 3 //0
+  /**类型 1：思考 5：照片 10：手写 15：视频" */
+  type: 1 | 5 | 10 | 15 //0
   /**值 */
   val: string //'string'
   order_index: number //0

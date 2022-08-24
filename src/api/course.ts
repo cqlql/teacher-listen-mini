@@ -204,9 +204,17 @@ export function dimensionList(data: DimensionListParams): Promise<DimensionListR
 }
 
 // 获取我的听课评价 - 过程记录
-export function getEvaluationList(data: { id: number }): Promise<GetEvaluationListResult> {
+export function getProcessRecord(data: { id: number }): Promise<SaveListenProcessParams> {
   return httpV2.get({
     url: '/216',
+    data,
+  })
+}
+
+// 获取我的听课评价 - 评价打分
+export function getEvaluationScore(data: { id: number }): Promise<SaveListenProcessParams> {
+  return httpV2.get({
+    url: '/217',
     data,
   })
 }
