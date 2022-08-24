@@ -1,46 +1,38 @@
 import { dimensionList } from '@/api/course'
-import type { GetEvaluationListResult } from '@/api/model/courseModel'
+import type { GetEvaluationListResult, GetEvaluationScoreResult } from '@/api/model/courseModel'
 import { getStorage } from '@/utils/storage'
 import { ref } from 'vue'
 import type { EvaluationScore, ScoreItem } from '../types'
 import type { RouteParams } from './useListenEvaluationStore'
 
-function initEvaluationScore(
-  routeParams,
+async function initEvaluationScore(
+  res: GetEvaluationScoreResult,
 ): Promise<{ record: Record<string, ScoreItem>; scoreList: ScoreItem[] }> {
-  return dimensionList({
-    subject_id: routeParams.subject_id,
-    grade_id: routeParams.grade_id,
-    campus_id: getStorage('campusId'),
-  }).then((res) => {
-    const record: Record<string, any> = {}
-    const scoreList: ScoreItem[] = []
+  // return dimensionList({
+  //   subject_id: routeParams.subject_id,
+  //   grade_id: routeParams.grade_id,
+  //   campus_id: getStorage('campusId'),
+  // })
 
-    res.dimensionList.forEach((item) => {
-      const id = item.dimension_id
-      const newItem: ScoreItem = {
-        id,
-        ids: [],
-        name: item.dimension_name,
-        weight: item.weight,
-        options: item.item_info.map((item) => {
-          return {
-            id: item.item_id,
-            name: item.item_name,
-          }
-        }),
+  const scoreList: ScoreItem[] = []
+
+  scoreList.push({
+    id: '',
+    ids: [],
+    name: '',
+    weight: '', //item.weight,
+    options: res.evalTmpDetails.map((item) => {
+      return {
+        id: String(item.id),
+        name: item.name,
       }
-
-      record[id] = newItem
-
-      scoreList.push(newItem)
-    })
-
-    return {
-      record,
-      scoreList,
-    }
+    }),
   })
+
+  return {
+    scoreList,
+    record: {},
+  }
 }
 
 export default function useEvaluationScoreStore(routeParams: RouteParams) {
@@ -51,19 +43,20 @@ export default function useEvaluationScoreStore(routeParams: RouteParams) {
 
   return {
     evaluationScore,
-    async editInit(res: GetEvaluationListResult) {
+    async editInit(res: GetEvaluationScoreResult) {
       const evaluationScoreValue = evaluationScore.value
-      const { record, scoreList } = await initEvaluationScore(routeParams)
+      const { record, scoreList } = await initEvaluationScore(res)
       evaluationScoreValue.scoreList = scoreList
+      console.log('🚀 -- editInit -- scoreList', scoreList)
 
-      res.scoreList?.forEach((scoreItem) => {
-        const currentRecord = record[scoreItem.dimension_id]
-        currentRecord.ids.push(scoreItem.dimension_item_id)
-      })
+      // res.scoreList?.forEach((scoreItem) => {
+      //   const currentRecord = record[scoreItem.dimension_id]
+      //   currentRecord.ids.push(scoreItem.dimension_item_id)
+      // })
 
-      res.lessonRecordList?.forEach((record) => {
-        evaluationScoreValue.reviews = record.lesson_evaluation_text
-      })
+      // res.lessonRecordList?.forEach((record) => {
+      //   evaluationScoreValue.reviews = record.lesson_evaluation_text
+      // })
     },
   }
 }

@@ -1,5 +1,10 @@
-import type { /* EvaluationScore,  */ ListenEvaluationStore, RecordChildItem } from '../types'
-import { getEvaluationScore, getProcessRecord, saveListenProcess } from '@/api/course'
+import type { EvaluationScore, ListenEvaluationStore, RecordChildItem } from '../types'
+import {
+  getEvaluationScore,
+  getProcessRecord,
+  saveEvaluationScoreReq,
+  saveListenProcess,
+} from '@/api/course'
 import useRouterParams from '@/hooks/useRouterParams'
 import type { ProcessRecordStore } from './useProcessRecordStore'
 import useProcessRecordStore from './useProcessRecordStore'
@@ -7,6 +12,7 @@ import useToastInject from '@/hooks/useToastInject'
 import useEvaluationScoreStore from './useEvaluationScoreStore'
 // import type { Ref } from 'vue'
 import type {
+  SaveEvaluationScoreReqParams,
   // FileRecordItemParam,
   SaveListenProcessParams,
   SaveListenProcessParamsDetail,
@@ -14,6 +20,7 @@ import type {
   // RecordItemParam,
   // SaveListenProcessParamsDetail,
 } from '@/api/model/courseModel'
+import type { Ref } from 'vue'
 
 export interface RouteParams {
   id: string
@@ -27,31 +34,13 @@ export interface RouteParams {
 function useSave(
   routeParams: RouteParams,
   processRecordStore: ProcessRecordStore,
-  // evaluationScore: Ref<EvaluationScore>,
+  evaluationScore: Ref<EvaluationScore>,
 ) {
   const { loading, toastSuccess } = useToastInject()
 
   const { processRecordList } = processRecordStore
 
   function resolveRequestData(): SaveListenProcessParams {
-    // return [
-    //   {
-    //     // id: 0,
-    //     user_eval_id: 0,
-    //     title: 'string',
-    //     order_index: 0,
-    //     details: [
-    //       {
-    //         id: 0,
-    //         user_eval_id: 0,
-    //         process_id: 0,
-    //         type: 0,
-    //         val: 'string',
-    //         order_index: 0,
-    //       },
-    //     ],
-    //   },
-    // ]
     const userEvalId = Number(routeParams.id)
 
     return {
@@ -105,106 +94,20 @@ function useSave(
         }
       }),
     }
+  }
 
-    // const lessonRecordParam: SaveListenProcessParams['lesson_record'] = []
-
-    // processRecordList.value.forEach((record) => {
-    //   const contents: RecordItemParam[] = []
-    //   lessonRecordParam.push({
-    //     contents,
-    //   })
-    //   contents.push({
-    //     content_label_type: 'body',
-    //     content: record.text,
-    //   })
-
-    //   record.list.forEach((item) => {
-    //     switch (item.type) {
-    //       case 'think':
-    //         contents.push({
-    //           content_label_type: 'think',
-    //           content: item.text,
-    //         })
-    //         break
-
-    //       case 'picture':
-    //       case 'drawing':
-    //       case 'video':
-    //         const filesParam: FileRecordItemParam['contents'] = []
-    //         item.files.forEach((file) => {
-    //           filesParam.push({
-    //             file_id: file.id,
-    //             url: file.url,
-    //           })
-    //         })
-
-    //         const map: {
-    //           picture: 'picture'
-    //           drawing: 'handwriting'
-    //           video: 'video'
-    //         } = {
-    //           picture: 'picture',
-    //           drawing: 'handwriting',
-    //           video: 'video',
-    //         }
-
-    //         contents.push({
-    //           content_label_type: map[item.type],
-    //           contents: filesParam,
-    //         })
-    //         break
-    //     }
-    //   })
-    // })
-
-    // const lessonScore: LessonScoreParam[] = evaluationScore.value.scoreList.map((scoreItem) => {
-    //   const selectedIndex = scoreItem.index
-    //   let itemId = '0'
-    //   let score = '0'
-    //   if (selectedIndex > -1) {
-    //     const option = scoreItem.options[selectedIndex]
-    //     itemId = option.id
-    //     score = scoreItem.weight
-    //   }
-    //   return {
-    //     dimension_id: scoreItem.id, //主维度ID
-    //     dimension_item_id: itemId, //维度子项 ，0 时为主维度ID
-    //     score: score, //打分，dimensionitemId = 0，记录平均分
-    //   }
-    // })
-
-    // const lessonScore: LessonScoreParam[] = evaluationScore.value.scoreList.reduce<
-    //   LessonScoreParam[]
-    // >((lessonScore, scoreItem) => {
-    //   scoreItem.ids.forEach((itemId) => {
-    //     lessonScore.push({
-    //       dimension_id: scoreItem.id, //主维度ID
-    //       dimension_item_id: itemId, //维度子项 ，0 时为主维度ID
-    //       score: scoreItem.weight, //打分，dimensionitemId = 0，记录平均分
-    //     })
-    //   })
-
-    //   return lessonScore
-    // }, [])
-
-    // return {
-    //   course_id: routeParams.course_id, //课程ID
-    //   // campus_id: 'string', //校区ID
-    //   // campus_name: 'string', //校区名
-    //   // evaluation_id: 'string', //评价主ID
-    //   // school_id: 'string', // 学校ID
-    //   // school_name: 'string', // 学校名
-    //   type: 0, //0手机1 纸
-    //   is_open_course: true, // 是否为公开课,用户区分公开课和普通课
-
-    //   is_boutique_course: false, // 是否为精品课
-    //   is_expert_course: false, // 是否为专家讲座
-    //   lesson_evaluation_text: evaluationScore.value.reviews,
-
-    //   lesson_record: lessonRecordParam,
-
-    //   Lesson_score: lessonScore,
-    // }
+  function resolveEvaluationScoreRequestData(): SaveEvaluationScoreReqParams {
+    const evaluationScoreVal = evaluationScore.value
+    return {
+      id: Number(routeParams.id),
+      comments: evaluationScoreVal.reviews,
+      eval_tmp_details: evaluationScoreVal.scoreList[0].options.map((option) => {
+        return {
+          eval_tmp_deatils_id: Number(option.id),
+          name: option.name,
+        }
+      }),
+    }
   }
 
   return {
@@ -219,6 +122,16 @@ function useSave(
       if (loading.value) return
       loading.value = true
       await saveListenProcess(resolveRequestData()).finally(() => {
+        loading.value = false
+      })
+
+      toastSuccess('保存成功')
+    },
+
+    async saveEvaluationScore() {
+      if (loading.value) return
+      loading.value = true
+      await saveEvaluationScoreReq(resolveEvaluationScoreRequestData()).finally(() => {
         loading.value = false
       })
 
@@ -240,10 +153,11 @@ export default function useListenEvaluationStore(): ListenEvaluationStore {
   // }
 
   const processRecordStore = useProcessRecordStore()
-  const { evaluationScore, editInit: evaluationScoreEditInit } =
-    useEvaluationScoreStore(routeParams)
 
-  const { save } = useSave(routeParams, processRecordStore /* , evaluationScore */)
+  const evaluationScoreStore = useEvaluationScoreStore(routeParams)
+  const { evaluationScore } = evaluationScoreStore
+
+  const { save, saveEvaluationScore } = useSave(routeParams, processRecordStore, evaluationScore)
 
   // 编辑初始 - 过程记录
   getProcessRecord({
@@ -253,15 +167,16 @@ export default function useListenEvaluationStore(): ListenEvaluationStore {
     processRecordStore.editInit(res)
   })
 
-  // 编辑初始 - 听课评价
+  // 评价选项/编辑 初始 - 听课评价
   getEvaluationScore({
     id: Number(routeParams.id),
   }).then((res) => {
-    evaluationScoreEditInit(res)
+    evaluationScoreStore.editInit(res)
   })
 
   return {
     save,
+    saveEvaluationScore,
     liveClassUrl: decodeURIComponent(routeParams.live_url),
     evaluationScore: evaluationScore,
     processRecordStore,

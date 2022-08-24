@@ -64,6 +64,7 @@ export interface EvaluationScore {
 
 export interface ListenEvaluationStore {
   save: () => void
+  saveEvaluationScore: () => void
   liveClassUrl: string
   evaluationScore: Ref<EvaluationScore>
   processRecordStore: ProcessRecordStore

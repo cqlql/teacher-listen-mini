@@ -9,7 +9,7 @@
             :key="item.id"
             class="EvaluationScore_item"
           >
-            <div class="name">{{ item.name }}：</div>
+            <!-- <div class="name">{{ item.name }}：</div> -->
             <nut-checkboxgroup v-model="item.ids" direction="horizontal">
               <nut-checkbox
                 v-for="option of item.options"
@@ -51,10 +51,12 @@ import { inject } from 'vue'
 import type { ListenEvaluationStore } from '../../types'
 import ButtonBlock from '@/components/Button/ButtonBlock.vue'
 
-const { evaluationScore, save } = inject('listenEvaluationStore') as ListenEvaluationStore
+const { evaluationScore, saveEvaluationScore } = inject(
+  'listenEvaluationStore',
+) as ListenEvaluationStore
 
 function onConfirm() {
-  save()
+  saveEvaluationScore()
 }
 </script>
 <style lang="scss">

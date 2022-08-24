@@ -32,6 +32,8 @@ import type {
   OpenCourseItemResult2,
   RequestOpenCourseParams,
   userCourseList,
+  GetEvaluationScoreResult,
+  SaveEvaluationScoreReqParams,
 } from './model/courseModel'
 
 /** 获取听课、授课记录 */
@@ -193,6 +195,15 @@ export function saveListenProcess(data: SaveListenProcessParams) {
     data,
   })
 }
+
+/**saveEvaluationScoreReq */
+export function saveEvaluationScoreReq(data: SaveEvaluationScoreReqParams) {
+  return httpV2.post({
+    url: '/206',
+    data,
+  })
+}
+
 /** 听课评价 只有打分 修改？*/
 export function subscore(course_id: string) {
   return get('/lecture/v1/subscore', { course_id })
@@ -212,7 +223,7 @@ export function getProcessRecord(data: { id: number }): Promise<SaveListenProces
 }
 
 // 获取我的听课评价 - 评价打分
-export function getEvaluationScore(data: { id: number }): Promise<SaveListenProcessParams> {
+export function getEvaluationScore(data: { id: number }): Promise<GetEvaluationScoreResult> {
   return httpV2.get({
     url: '/217',
     data,

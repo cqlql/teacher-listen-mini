@@ -68,7 +68,7 @@ export default function useProcessRecordStore(): ProcessRecordStore {
                 text: detail.val,
               })
               break
-            case 2:
+            case 5:
               let pictureItem = newRecordItem.pictureItem
               if (!pictureItem) {
                 pictureItem = {
@@ -85,21 +85,24 @@ export default function useProcessRecordStore(): ProcessRecordStore {
                 url: detail.val,
               })
               break
-            // case 'handwriting':
-            //   const drawingItem: RecordChildItem = {
-            //     id: getTempId(),
-            //     type: 'drawing',
-            //     files: content.contents.map((item) => {
-            //       return {
-            //         id: item.file_id,
-            //         url: item.url,
-            //       }
-            //     }),
-            //   }
-            //   newRecordItem.list.push(drawingItem)
-            //   newRecordItem.drawingItem = drawingItem
-            //   break
-            case 3:
+            case 10:
+              let drawingItem = newRecordItem.drawingItem
+              if (!drawingItem) {
+                drawingItem = {
+                  id: getTempId(),
+                  type: 'drawing',
+                  files: [],
+                }
+                newRecordItem.list.push(drawingItem)
+                newRecordItem.drawingItem = drawingItem
+              }
+
+              drawingItem.files.push({
+                id: '',
+                url: detail.val,
+              })
+              break
+            case 15:
               let videoItem = newRecordItem.videoItem
               if (!videoItem) {
                 videoItem = {

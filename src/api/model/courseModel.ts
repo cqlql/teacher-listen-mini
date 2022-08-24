@@ -727,3 +727,23 @@ export interface GetCourseListResult {
   week: number //4
   week_id: number //81
 }
+
+export interface GetEvaluationScoreResult {
+  evalTmpDetails: {
+    eval_tmp_id: number //10
+    id: number //3
+    name: string //'准备充分'
+    order_index: number //0
+  }[]
+
+  userEvalDetails: {}[]
+}
+
+export interface SaveEvaluationScoreReqParams {
+  id: number
+  comments: string
+  eval_tmp_details: {
+    eval_tmp_deatils_id: number // 0
+    name: string
+  }[]
+}
