@@ -5,11 +5,11 @@ heroText: false
 tagline: false
 ---
 
-## 有时间优化
-
-我要听课-所有的课 请求年级班级数据缓存，期望只请求一次，因为前端排序耗费资源 src\pages\ToListenClass\comps\PushDoorListenClass\useGradeClassData.ts
+## 问题
 
 公开课列表 科目选择 需要选全部 需要滚动
+
+推门听课，按老师签名失败
 
 ## 导航
 
