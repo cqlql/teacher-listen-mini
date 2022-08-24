@@ -50,6 +50,21 @@ function useGetList(weekDate: Ref<Dayjs>) {
           status = statusMap[0]
         }
 
+        const typeMap = {
+          0: {
+            type: 'success',
+            label: '公开课',
+          },
+          1: {
+            type: 'warning',
+            label: '校内课',
+          },
+          2: {
+            type: 'info',
+            label: '校外课',
+          },
+        }
+
         return {
           id: item.id,
           sujectTag: item.subject_name[0],
@@ -70,15 +85,7 @@ function useGetList(weekDate: Ref<Dayjs>) {
           // files: item.LA,
           files: [],
           status,
-          type: item.type
-            ? {
-                type: 'warning',
-                label: '校外课',
-              }
-            : {
-                type: 'success',
-                label: '校内课',
-              },
+          type: typeMap[item.type],
           live_url: item.playback_address,
         }
       }))

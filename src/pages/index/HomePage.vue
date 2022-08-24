@@ -30,7 +30,7 @@ if (process.env.NODE_ENV !== 'production') {
   // tabUrl = '/pages/ListenEvaluationRecord/ListenEvaluationRecord'
 
   // url = '/pages/DingEvaluationRecord/DingEvaluationRecord'
-  // url = '/packageECharts/pages/EvaluationStatistics/AllEvaluationStatistics'
+  url = '/packageECharts/pages/EvaluationStatistics/MyEvaluationStatistics'
   // tabUrl = '/pages/WantListen/WantListen'
 
   if (url) {
@@ -102,10 +102,10 @@ const vFixedButtons = ref({
               v-for="course of myCourseList"
               :key="course.course_id"
               class="container"
-              :class="course.status.type"
+              :class="course.type.type"
             >
               <div class="title">
-                <span class="tag">{{ course.sujectTag }}</span>
+                <span class="tag" :class="course.type.type">{{ course.sujectTag }}</span>
                 <span class="title-name">《{{ course.name }}》</span>
               </div>
 
@@ -132,10 +132,10 @@ const vFixedButtons = ref({
                     <nut-icon name="mask-close"></nut-icon>
                     <span>{{ course.type.label }}</span>
                   </span>
-                  <span class="tag">
+                  <!-- <span class="tag">
                     <nut-icon name="mask-close"></nut-icon>
                     <span>公开课</span>
-                  </span>
+                  </span> -->
                 </div>
                 <div class="btn">
                   <nut-button
@@ -171,6 +171,7 @@ const vFixedButtons = ref({
 </template>
 
 <style lang="scss">
+$outsideColor: #d295e4;
 .HomePage_top {
   padding: 0 12px;
   display: inline-flex;
@@ -224,6 +225,13 @@ const vFixedButtons = ref({
       // font-size: 14px;
       text-align: center;
       vertical-align: middle;
+
+      &.warning {
+        background-color: $warning-color;
+      }
+      &.info {
+        background-color: $outsideColor;
+      }
     }
   }
 
@@ -314,6 +322,9 @@ const vFixedButtons = ref({
 
     .tag.warning {
       color: $warning-color;
+    }
+    .tag.info {
+      color: $outsideColor;
     }
     .tag > .nut-icon {
       vertical-align: middle;

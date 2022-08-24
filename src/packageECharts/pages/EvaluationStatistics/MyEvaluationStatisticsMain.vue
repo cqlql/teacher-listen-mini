@@ -11,7 +11,7 @@ import useEvaluationStatistics from './hooks/useEvaluationStatistics'
 import type { DateRangeType } from '@/api/statistic'
 const { toastLoading, toastClose } = useToastInject()
 
-const rangeType = ref<DateRangeType>(3)
+const rangeType = ref<DateRangeType>(2)
 const userId = getStorage('userId')
 
 const {
