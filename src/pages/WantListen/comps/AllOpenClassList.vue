@@ -1,20 +1,24 @@
 <template>
   <ListLoad ref="vListLoad" :startPage="0" :reqList="reqList" refresher-background="#f1f9fe">
-    <template #default="{ list: listCurrent }">
+    <template #default="{ list }: { list: CourseItem[] }">
       <div class="OpenClassList">
         <OpenClassPassedItem
-          v-for="(item, index) of listCurrent"
-          :key="item.id"
+          v-for="(item, index) of list"
+          :key="item.course_id"
           :data="item"
           type="all"
           @refresh="refresh"
         >
           <template #btns>
+            <nut-button v-if="item.is_add === 0" size="small" disabled type="default"
+              >已添加</nut-button
+            >
             <nut-button
+              v-else
               size="small"
               type="primary"
               plain
-              @click="onAddUserCourse(item, listCurrent, index)"
+              @click="onAddUserCourse(item, list, index)"
             >
               添加到听课
             </nut-button>
@@ -98,11 +102,11 @@ function reqList({ page }: { page: number }) {
       reqDataRemoveUndefined: true,
     },
   ).then((res) => {
-    let newList = res.map((item) => {
+    let newList: CourseItem[] = res.map((item) => {
       return {
         // 新增用
-        course_id: item.id,
-        user_id: item.teacher_id,
+        course_id: String(item.id),
+        user_id: String(item.teacher_id),
         start_time: item.s_time,
 
         // 上课日期
@@ -115,6 +119,8 @@ function reqList({ page }: { page: number }) {
         place: item.class_room_address,
 
         gradClass: getGrade(item.period, item.years) + item.class_name,
+
+        is_add: item.is_add,
       }
     })
     return newList

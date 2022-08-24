@@ -8,7 +8,6 @@ export interface TopSearchParams {
   search: () => void
 }
 export default interface CourseItem {
-  id: string
   course_id: string
   user_id: string
   // start_time: string
@@ -21,4 +20,6 @@ export default interface CourseItem {
   date: string
   // time: string
   gradClass: string
+  /**0 未添加 1 已添加 */
+  is_add: 0 | 1
 }
