@@ -96,22 +96,25 @@ export interface RequestOpenCourseParams {
 // }
 
 /**校外课 form */
-export interface RequestOutsideCourseForm {
-  /**公开课名称ID */
-  course_id?: string
-  /**'公开课测试'; // 公开课名称 */
-  course_name: string
+export interface RequestOutsideCourseParams {
+  /**公开课ID */
+  id?: number
+  /** 公开课名称 */
+  name: string
   /**学段ID */
-  period: string
+  period: number
   /**'1'; // 科目ID */
-  subject_id: string
-  /**'2018-01-10 10:20:00''; // 开课日期时间 */
-  dateTime: string
+  subject_id: number
 
-  /** 授课班级 */
-  teach_target: string
-  /**授课地点 */
-  class_room_name: string
+  classes_name: string
+
+  /**'2022-08-17T15:24:25'; // 开课日期 */
+  s_time: string
+
+  /**'录播室'; // 教室名（上课地点） */
+  address?: string
+  /**  类型 0：公开课1：推门听课 2：校外课*/
+  type: 2
 }
 
 // 申请公开课记录结果项

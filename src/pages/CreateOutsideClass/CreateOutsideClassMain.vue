@@ -11,16 +11,52 @@ import useEditInit from './hooks/useEditInit'
 import ButtonBlock from '@/components/Button/ButtonBlock.vue'
 import useGradeSubectData from '../CreateListen/hooks/useGradeSubectData'
 import DatetimePicker from '@/components/DatePicker/DatetimePicker.vue'
-
+import useInitDate from './hooks/useInitDateOutside'
+import { ref } from 'vue'
+import type { OutsideCourseForm } from './types'
+import useToast from '@/hooks/useToast'
 // import dayjs from 'dayjs'
 
-const { periodOptions, subjectData /* , subjectGroups */ } = useGradeSubectData()
-
-let { form, isLoading, confirm, promptPopup, periodChange } = useCreateOutsideClass({
-  subjectData,
+const form = ref<OutsideCourseForm>({
+  /**公开课名称ID */
+  // course_id: '',
+  /**'公开课测试'; // 公开课名称 */
+  course_name: '',
+  /**授课学校 */
+  school_name: '',
+  /**授课老师 */
+  teacher_name: '',
+  /**学段ID */
+  period: '',
+  /**'1'; // 科目ID */
+  subject_id: '',
+  /**'2018-01-10 10:20:00''; // 开课日期时间 */
+  dateTime: '',
+  // 授课班级
+  teach_target: '',
+  /**授课地点 */
+  class_room_name: '',
 })
+let { toast, toastFail, toastSuccess, toastWarn } = useToast()
+const { periodOptions, subjectData, subjectGroups, classRawData, classRoomsRawDate } =
+  useInitDate(form)
 
-useEditInit(form)
+let { isLoading, confirm, promptPopup, periodChange } = useCreateOutsideClass(
+  {
+    subjectData,
+  },
+  form,
+)
+
+// useEditInit(form)
+
+function periodSelectBefore() {
+  if (form.value.period) {
+    return true
+  }
+  toastWarn('必须先选学段')
+  return false
+}
 
 // 自动填充
 if (process.env.NODE_ENV !== 'production') {
@@ -28,6 +64,8 @@ if (process.env.NODE_ENV !== 'production') {
   form.value = {
     course_name: '校外课 test' + require('dayjs')().format('YYYY-MM-DD HH:mm'),
     period: '1001',
+    school_name: '超人学校',
+    teacher_name: '超人A',
     subject_id: '1',
     teach_target: '二年级三班',
     dateTime: require('dayjs')(new Date()).add(1, 'hour').format('YYYY-MM-DD HH:mm:ss'),
@@ -44,9 +82,12 @@ if (process.env.NODE_ENV !== 'production') {
       <FormItem label="课程名称">
         <InputPlus v-model="form.course_name" placeholder="请输入课程名称" />
       </FormItem>
-      <!-- <FormItem label="授课老师">
-        <InputPlus v-model="form.user_name" placeholder="请输入授课老师" />
-      </FormItem> -->
+      <FormItem label="授课学校">
+        <InputPlus v-model="form.school_name" placeholder="请输入学校" />
+      </FormItem>
+      <FormItem label="授课老师">
+        <InputPlus v-model="form.teacher_name" placeholder="请输入授课老师" />
+      </FormItem>
       <FormItem label="学段">
         <SelectCheck
           v-model="form.period"
@@ -60,8 +101,7 @@ if (process.env.NODE_ENV !== 'production') {
         <SelectCheck
           v-model="form.subject_id"
           :options="(subjectData[form.period] as any)"
-          idProp="subject_id"
-          nameProp="subject_name"
+          :selectBefore="periodSelectBefore"
           placeholder="请选择科目"
         />
       </FormItem>
@@ -81,7 +121,7 @@ if (process.env.NODE_ENV !== 'production') {
     <div class="CreateListen_bot-btn">
       <ButtonBlock :loading="isLoading" @click="confirm">提交</ButtonBlock>
     </div>
-
+    <nut-toast v-bind="toast" v-model:visible="toast.show" />
     <nut-dialog
       no-cancel-btn
       title=""

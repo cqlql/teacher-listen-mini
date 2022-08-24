@@ -34,6 +34,7 @@ import type {
   userCourseList,
   GetEvaluationScoreResult,
   SaveEvaluationScoreReqParams,
+  RequestOutsideCourseParams,
 } from './model/courseModel'
 
 /** 获取听课、授课记录 */
@@ -72,7 +73,7 @@ export function getLessonCount(): Promise<LessonCountResult[]> {
 }
 
 /** 申请公开课 */
-export function requestOpenCourse(data: RequestOpenCourseParams) {
+export function requestOpenCourse(data: RequestOpenCourseParams | RequestOutsideCourseParams) {
   return httpV2.post({
     url: '/208',
     data,
