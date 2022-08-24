@@ -30,7 +30,7 @@ if (process.env.NODE_ENV !== 'production') {
   // tabUrl = '/pages/ListenEvaluationRecord/ListenEvaluationRecord'
 
   // url = '/pages/DingEvaluationRecord/DingEvaluationRecord'
-  url = '/packageECharts/pages/EvaluationStatistics/MyEvaluationStatistics'
+  // url = '/packageECharts/pages/EvaluationStatistics/MyEvaluationStatistics'
   // tabUrl = '/pages/WantListen/WantListen'
 
   if (url) {
