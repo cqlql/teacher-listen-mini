@@ -17,7 +17,7 @@ export default function useWeekDateSelect() {
     if (isExpandedValue) {
       getLessonCount().then((list) => {
         const resItemMap: Record<string, LessonCountResult> = list.reduce((record, item) => {
-          record[item.created_date.replace(/\d+\/\d\d\//, '')] = item
+          record[item.s_time.replace(/\d+\/\d\d\//, '')] = item
           return record
         }, {})
 

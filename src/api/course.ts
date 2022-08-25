@@ -14,8 +14,6 @@ import type {
   GetAllEvaluationResult,
   GetAttachListResult,
   GetCourseListResult,
-  GetEvaluationListParams,
-  GetEvaluationListResult,
   GetFullCourseStatisticsParams,
   GetFullCourseStatisticsResult,
   GetListenAndTeachStatisticsParams,
@@ -57,19 +55,6 @@ export function getLessonCount(): Promise<LessonCountResult[]> {
   return httpV2.get({
     url: '/214',
   })
-  // return new Promise((resolve) => {
-  //   resolve({
-  //     lesson_count: [
-  //       1, // 今天的听课任务数
-  //       2, // 明天...
-  //       3,
-  //       4,
-  //       5,
-  //       6,
-  //       7,
-  //     ],
-  //   })
-  // })
 }
 
 /** 申请公开课 */
