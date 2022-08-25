@@ -65,24 +65,15 @@ getSemesterSelectData()
       }
     }
 
-    SemesterSelectOptions.value = [
-      {
-        label: '本学期',
-        ...splitDateRange(res.curSemester),
-      },
-      {
-        label: '上学期',
-        ...splitDateRange(res.lastSemester),
-      },
-      {
-        label: '本学年',
-        ...splitDateRange(res.curYearSemester),
-      },
-      {
-        label: '上学年',
-        ...splitDateRange(res.lastYearSemester),
-      },
-    ]
+    let options: SemesterRangeOption[] = []
+    for (let [, item] of Object.entries(res)) {
+      options.push({
+        label: item.name,
+        ...splitDateRange(item.val),
+      })
+    }
+
+    SemesterSelectOptions.value = options
   })
   .finally(() => {
     semesterSelectDataLoading.value = false

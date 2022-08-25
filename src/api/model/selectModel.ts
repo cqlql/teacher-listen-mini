@@ -181,11 +181,23 @@ export interface CreateListenSelectDataResult {
 
 export interface GetSemesterSelectDataResult {
   /**本学期 */
-  curSemester: string
+  curSemester: {
+    name: string
+    val: string
+  }
   /**本学年 */
-  curYearSemester: string
+  curYearSemester: {
+    name: string
+    val: string
+  }
   /**上学期 */
-  lastSemester: string
+  lastSemester: {
+    name: string
+    val: string
+  }
   /**上学年 */
-  lastYearSemester: string
+  lastYearSemester: {
+    name: string
+    val: string
+  }
 }
