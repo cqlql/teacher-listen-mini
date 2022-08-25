@@ -17,6 +17,8 @@ tagline: false
 
 我要听课-已添加课-移除计划问题
 
+听课记录 详情页对接
+
 ## 导航
 
 <HomeView></HomeView>
