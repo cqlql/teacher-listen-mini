@@ -1,7 +1,10 @@
 <script lang="ts" setup>
-import CreateOutsideClass from '../CreateOutsideClass/CreateOutsideClass.vue'
+import ToastProvider from '@/components/ToastProvider/ToastProvider.vue'
+import CreateOutsideClassMain from '../CreateOutsideClass/CreateOutsideClassMain.vue'
 </script>
 
 <template>
-  <CreateOutsideClass> </CreateOutsideClass>
+  <ToastProvider>
+    <CreateOutsideClassMain />
+  </ToastProvider>
 </template>

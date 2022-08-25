@@ -1,15 +1,15 @@
 export default function getCourseTypeMap() {
   return {
     0: {
-      type: 'success',
+      type: 'open',
       label: '公开课',
     },
     1: {
-      type: 'warning',
+      type: 'inside',
       label: '校内课',
     },
     2: {
-      type: 'info',
+      type: 'outside',
       label: '校外课',
     },
   }

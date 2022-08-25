@@ -16,7 +16,7 @@ export default function useEditInit(formRef: Ref<OutsideCourseForm>) {
 
   function editInitFill(result: AddedCourseItem) {
     formRef.value = {
-      course_id: result.course_id,
+      id: result.id,
       course_name: result.courseName,
       period: result.period, //result.courseName,
       subject_id: result.subject_id,

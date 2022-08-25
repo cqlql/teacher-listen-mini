@@ -36,7 +36,7 @@ export default function useCreateListen({ subjectData }: Params, form: Ref<Outsi
     isLoading.value = true
     await requestOpenCourse({
       /**公开课名称ID */
-      // id: formVal.course_id,
+      id: formVal.id ? Number(formVal.id) : undefined,
       /**'公开课测试'; // 公开课名称 */
       name: formVal.course_name,
 
@@ -56,7 +56,7 @@ export default function useCreateListen({ subjectData }: Params, form: Ref<Outsi
       isLoading.value = false
     })
     // if (res.success) {
-    toastSuccess((formVal.course_id ? '编辑' : '添加') + '成功')
+    toastSuccess((formVal.id ? '编辑' : '添加') + '成功')
 
     setStorage('pageTemp', 'needReload')
     Taro.navigateBack()

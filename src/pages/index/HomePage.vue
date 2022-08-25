@@ -31,6 +31,7 @@ if (process.env.NODE_ENV !== 'production') {
 
   // url = '/pages/DingEvaluationRecord/DingEvaluationRecord'
   // url = '/packageECharts/pages/EvaluationStatistics/MyEvaluationStatistics'
+  // url = '/packageECharts/pages/EvaluationStatistics/AllEvaluationStatistics'
   // tabUrl = '/pages/WantListen/WantListen'
 
   if (url) {
@@ -171,7 +172,12 @@ const vFixedButtons = ref({
 </template>
 
 <style lang="scss">
+$openColor: #3aa6ff;
+$openBc: #eaf0fe;
+$insideColor: #ffb21f;
+$insideBc: #fff5dc;
 $outsideColor: #d295e4;
+$outsideBc: #fbf5ff;
 .HomePage_top {
   padding: 0 12px;
   display: inline-flex;
@@ -195,7 +201,7 @@ $outsideColor: #d295e4;
   padding: 0 15px;
 
   .container {
-    background-color: #fff5dc;
+    background-color: $openBc;
     border-radius: 10px;
     padding: 12px 12px 15px;
     position: relative;
@@ -203,11 +209,11 @@ $outsideColor: #d295e4;
     margin-bottom: 15px;
     // background-image: linear-gradient(0deg, #eaf0fe 0%, #d3e0ff 100%);
 
-    &.success {
-      background-color: #eaf0fe;
+    &.inside {
+      background-color: $insideBc;
     }
-    &.info {
-      background-color: #fbf5ff;
+    &.outside {
+      background-color: $outsideBc;
       // background-image: linear-gradient(180deg, #f7dcff 0%, #fff 100%);
     }
   }
@@ -217,7 +223,7 @@ $outsideColor: #d295e4;
     .tag {
       width: 22px;
       height: 22px;
-      background-color: #87b7fd;
+      background-color: $openColor;
       line-height: 22px;
       color: #fff;
       border-radius: 22px;
@@ -226,10 +232,10 @@ $outsideColor: #d295e4;
       text-align: center;
       vertical-align: middle;
 
-      &.warning {
-        background-color: $warning-color;
+      &.inside {
+        background-color: $insideColor;
       }
-      &.info {
+      &.outside {
         background-color: $outsideColor;
       }
     }

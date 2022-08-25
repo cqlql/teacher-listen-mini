@@ -7,7 +7,7 @@
     refresher-background="#f1f9fe"
     :scrollLowerEnabled="false"
   >
-    <template #default="{ list: listCurrent }: { list: AddedCourseItem[] }">
+    <template #default="{ list: listCurrent }: ReqListResultType">
       <div class="OpenClassList">
         <AllOpenClassItem
           v-for="(item, index) of listCurrent"
@@ -45,12 +45,18 @@ import { delUserCourse, getUserCourse } from '@/api/course'
 import ListLoad from '@/components/ListLoad/ListLoad.vue'
 import getGrade from '@/data/getGrade'
 // import OnceCallback from '@/utils/once-callback'
-import Taro, { nextTick } from '@tarojs/taro'
+import Taro, { nextTick, useDidShow } from '@tarojs/taro'
 import dayjs from 'dayjs'
 import { ref, watch } from 'vue'
 import type { AddedCourseItem } from '../types'
 import AllOpenClassItem from './AllOpenClassItem.vue'
 import TagFlag from '@/components/Tag/TagFlag.vue'
+import { getStorage, setStorage } from '@/utils/storage'
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+interface ReqListResultType {
+  list: AddedCourseItem[]
+}
 
 const vListLoad = ref({
   firstPageLoad() {},
@@ -96,7 +102,6 @@ function reqList({ page }) {
       return {
         // 新增用
         id: String(item.id),
-        course_id: String(item.courses_id),
         user_id: String(item.teacher_user_id),
         teacher_name: item.teacher_name,
 
@@ -140,7 +145,17 @@ function onEditOutsideCourse(item: AddedCourseItem) {
     },
   })
 }
+
+useDidShow(() => {
+  // 添加开课申请，back 后，需要重新加载
+  if (getStorage('pageTemp') === 'needReload') {
+    vListLoad.value.firstPageLoad()
+  }
+
+  setStorage('pageTemp', '')
+})
 </script>
+
 <style lang="scss">
 $openColor: #3aa6ff;
 $openBc: #eaf0fe;
@@ -194,7 +209,8 @@ $outsideBc: #fbf5ff;
 
   .nut-button {
     height: 23px;
-    width: 90px;
+    width: 80px;
+    padding: 0 8px;
   }
 }
 </style>
