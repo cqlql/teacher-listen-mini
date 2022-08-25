@@ -57,7 +57,6 @@ watch(
   (v) => {
     let d = dayjs(v || undefined)
     let arrVal = (currDate.value = d.toArray())
-    console.log('🚀 -- arrVal', arrVal)
     updateDay(arrVal)
     updateSelectedIndexs(arrVal)
   },

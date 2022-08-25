@@ -51,7 +51,8 @@ withDefaults(
 <style lang="scss">
 $primary-color: #70abff;
 $gray-color: #888;
-
+// $openColor: #3aa6ff;
+$openBc: #eaf0fe;
 .OpenClassPassedItem {
   display: flex;
   // border: 1px solid #ddd;
@@ -60,6 +61,7 @@ $gray-color: #888;
   box-shadow: -1px 1px 13px 0 rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   margin: 10px;
+  // background-color: $openBc;
 }
 
 .OpenClassPassedItem_detail {

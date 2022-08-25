@@ -7,23 +7,31 @@
     refresher-background="#f1f9fe"
     :scrollLowerEnabled="false"
   >
-    <template #default="{ list: listCurrent }">
+    <template #default="{ list: listCurrent }: { list: AddedCourseItem[] }">
       <div class="OpenClassList">
         <AllOpenClassItem
           v-for="(item, index) of listCurrent"
           :key="item.id"
           :data="item"
           type="all"
+          :class="item.type"
           @refresh="refresh"
         >
           <template #btns>
+            <TagFlag :class="item.type">{{ item.typeName }}</TagFlag>
             <nut-button
-              v-if="item.user_course_id !== '0'"
               size="small"
               type="danger"
               plain
               @click="onDeleteUserCourse(item, listCurrent, index)"
               >移出计划</nut-button
+            >
+            <nut-button
+              v-if="item.type === 'outside'"
+              size="small"
+              plain
+              @click="onEditOutsideCourse(item)"
+              >修改</nut-button
             >
           </template>
         </AllOpenClassItem>
@@ -37,11 +45,12 @@ import { delUserCourse, getUserCourse } from '@/api/course'
 import ListLoad from '@/components/ListLoad/ListLoad.vue'
 import getGrade from '@/data/getGrade'
 // import OnceCallback from '@/utils/once-callback'
-import { nextTick } from '@tarojs/taro'
+import Taro, { nextTick } from '@tarojs/taro'
 import dayjs from 'dayjs'
 import { ref, watch } from 'vue'
-import type CourseItem from '../types'
+import type { AddedCourseItem } from '../types'
 import AllOpenClassItem from './AllOpenClassItem.vue'
+import TagFlag from '@/components/Tag/TagFlag.vue'
 
 const vListLoad = ref({
   firstPageLoad() {},
@@ -83,29 +92,37 @@ function reqList({ page }) {
     dateRange: dayjs().format('YYYY/MM/DD') + '-' + dayjs().add(6, 'day').format('YYYY/MM/DD'),
     keyword: '',
   }).then((res) => {
-    let newList: CourseItem[] = res.map((item) => {
+    let newList: AddedCourseItem[] = res.map((item) => {
       return {
         // 新增用
         id: String(item.id),
         course_id: String(item.courses_id),
         user_id: String(item.teacher_user_id),
-        // start_time: item.s_time,
-        // date_time: item.s_time, // 上课日期
+        teacher_name: item.teacher_name,
 
         subject: item.subject_name[0],
+        subject_id: String(item.subject_id),
+        period: String(item.period),
         userName: item.teacher_name,
+        school_name: item.school_name,
         courseName: item.courses_name,
         place: item.class_room_address,
         date: item.s_time.replace(/:\d\d$/, ''),
         // time: item.start_time.substring(0, 5),
-        gradClass: getGrade(item.period, item.years) + item.classes_name,
+        gradClass:
+          item.type === 2
+            ? item.classes_name
+            : getGrade(item.period, item.years) + item.classes_name,
+
+        type: ['open', 'inside', 'outside'][item.type] as AddedCourseItem['type'],
+        typeName: ['公开课', '校内课', '校外课'][item.type] as AddedCourseItem['type'],
       }
     })
     return newList
   })
 }
 
-function onDeleteUserCourse(item: CourseItem, list: CourseItem[], index: number) {
+function onDeleteUserCourse(item: AddedCourseItem, list: AddedCourseItem[], index: number) {
   delUserCourse(item.id).then(() => {
     list.splice(index, 1)
     if (list.length === 0) {
@@ -113,9 +130,71 @@ function onDeleteUserCourse(item: CourseItem, list: CourseItem[], index: number)
     }
   })
 }
+
+function onEditOutsideCourse(item: AddedCourseItem) {
+  Taro.navigateTo({
+    url: '/pages/EditOutsideClass/EditOutsideClass?id=' + item.id,
+    success: function (res) {
+      // 向子页面传值
+      res.eventChannel.emit('transferData', item)
+    },
+  })
+}
 </script>
-<!-- <style lang="scss">
+<style lang="scss">
+$openColor: #3aa6ff;
+$openBc: #eaf0fe;
+$insideColor: #ffb21f;
+$insideBc: #fff5dc;
+$outsideColor: #d295e4;
+$outsideBc: #fbf5ff;
 .OpenClassList {
   // padding: 16px 0 16px;
+
+  .OpenClassPassedItem {
+    // position: relative;
+    padding-right: 5px;
+
+    &.open {
+      background-color: $openBc;
+    }
+    &.inside {
+      background-color: $insideBc;
+    }
+    &.outside {
+      background-color: $outsideBc;
+    }
+  }
+
+  .TagFlag {
+    // position: absolute;
+    right: 0;
+    top: -10px;
+
+    &.open {
+      background-color: $openColor;
+
+      &::after {
+        border-bottom-color: $openBc;
+      }
+    }
+    &.inside {
+      background-color: $insideColor;
+      &::after {
+        border-bottom-color: $insideBc;
+      }
+    }
+    &.outside {
+      background-color: $outsideColor;
+      &::after {
+        border-bottom-color: $outsideBc;
+      }
+    }
+  }
+
+  .nut-button {
+    height: 23px;
+    width: 90px;
+  }
 }
-</style> -->
+</style>

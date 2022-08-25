@@ -311,6 +311,8 @@ export type userCourseList = {
   subject_id: number //1
   subject_name: string //'语文'
   teacher_name: string //'钟洁娜'
+  /**学校名 */
+  school_name: string
   teacher_no: string //'ym115'
   /**老师/用户id */
   teacher_user_id: number //8040

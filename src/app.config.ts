@@ -16,6 +16,7 @@ export default {
       'pages/CreateListen/CreateListen',
       // 创建校外课
       'pages/CreateOutsideClass/CreateOutsideClass',
+      'pages/EditOutsideClass/EditOutsideClass',
       // 听课评价 过程记录
       'pages/ListenEvaluation/ListenEvaluation',
       // 听课记录详情

@@ -20,7 +20,6 @@ interface SubjectInfo {
 
 type Option = { id: string; name: string }
 export default function useInitDate(formRef: Ref<OutsideCourseForm>) {
-  console.log('🚀 -- useInitDate -- formRef', formRef)
   const { id } = useRouterParams<{ id?: string }>() // 公开课id
   const periodOptions = ref<Option[]>([])
   const subjectData = ref<SubjectDataType>({})
@@ -60,50 +59,7 @@ export default function useInitDate(formRef: Ref<OutsideCourseForm>) {
         name: role.name,
       }
     })
-
-    // 编辑情况初始
-    if (id) {
-      initEdit(res.entity, res.classRooms)
-    }
   })
-
-  function initEdit(
-    rawData: CreateListenSelectDataResult['entity'],
-    classRoomsRawDateVal: CreateListenSelectDataResult['classRooms'],
-  ) {
-    console.log('🚀 -- useInitDate -- classRoomsRawDateVal', classRoomsRawDateVal)
-    console.log('🚀 -- useInitDate -- rawData', rawData)
-    // function findClassRoomName(classRoomId: number) {
-    //   let classRoomName = ''
-    //   classRoomsRawDateVal.some((classRoom) => {
-    //     if (classRoom.id === classRoomId) {
-    //       classRoomName = classRoom.address
-    //       return true
-    //     }
-    //   })
-    //   return classRoomName
-    // }
-    // formRef.value = {
-    //   course_id: String(rawData.id),
-    //   course_name: rawData.name,
-    //   period: String(rawData.period),
-    //   subject_id: String(rawData.subject_id),
-    //   gradeClass: [String(rawData.grade_id), String(rawData.classes_id)],
-    //   dateTime: rawData.s_time.replace(/:\d\d$/, ''),
-    //   class_room_id: String(rawData.classes_room_id),
-    //   class_room_name: rawData.classes_room_id
-    //     ? findClassRoomName(rawData.classes_room_id)
-    //     : rawData.address,
-    //   subject_group_id: String(rawData.role_id),
-    //   files: rawData.att_urls.map((att) => {
-    //     return {
-    //       url: att.url,
-    //       name: getFileNameByPath(att.url),
-    //       type: '0',
-    //     }
-    //   }),
-    // }
-  }
 
   return {
     periodOptions,

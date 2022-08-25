@@ -48,7 +48,7 @@ let { isLoading, confirm, promptPopup, periodChange } = useCreateOutsideClass(
   form,
 )
 
-// useEditInit(form)
+useEditInit(form)
 
 function periodSelectBefore() {
   if (form.value.period) {
@@ -69,7 +69,6 @@ if (process.env.NODE_ENV !== 'production') {
     subject_id: '1',
     teach_target: '二年级三班',
     dateTime: require('dayjs')(new Date()).add(1, 'hour').format('YYYY-MM-DD HH:mm:ss'),
-
     class_room_name: '实验室',
   }
   // }
