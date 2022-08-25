@@ -74,7 +74,7 @@ $openBc: #eaf0fe;
   margin: 10px;
   // background-color: $openBc;
   position: relative;
-
+  overflow: hidden;
   &.open {
     background-color: $openBc;
   }

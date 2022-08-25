@@ -215,7 +215,7 @@ $outsideBc: #fbf5ff;
     // overflow: hidden;
     margin-bottom: 15px;
     // background-image: linear-gradient(0deg, #eaf0fe 0%, #d3e0ff 100%);
-
+    overflow: hidden;
     &.inside {
       background-color: $insideBc;
     }
