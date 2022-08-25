@@ -84,7 +84,7 @@ export default {
           pagePath: 'pages/index/HomePage',
           iconPath: 'static/img/today-course.png',
           selectedIconPath: 'static/img/today-course-active.png',
-          text: '今日公开课',
+          text: '今日听课',
         },
         {
           pagePath: 'pages/WantListen/WantListen',

@@ -32,30 +32,30 @@
         is-link
         @click="to('/packageECharts/pages/EvaluationStatistics/MyEvaluationStatistics')"
       ></nut-cell>
-      <template v-if="userRole === '1'">
-        <nut-cell
-          title="科组评课统计"
-          is-link
-          @click="to('/packageECharts/pages/EvaluationStatistics/DepartmentEvaluationStatistics')"
-        ></nut-cell>
-        <nut-cell
-          title="科组听评课记录"
-          is-link
-          @click="to('/pages/ListenEvaluationMemberList/SubjectGroupMemberList')"
-        ></nut-cell>
-      </template>
-      <template v-if="userRole === '2'">
-        <nut-cell
-          title="全校评课统计"
-          is-link
-          @click="to('/packageECharts/pages/EvaluationStatistics/AllEvaluationStatistics')"
-        ></nut-cell>
-        <nut-cell
-          title="全校听评课记录"
-          is-link
-          @click="to('/pages/ListenEvaluationMemberList/AllMemberList')"
-        ></nut-cell>
-      </template>
+      <!-- <template v-if="userRole === '1'"> -->
+      <nut-cell
+        title="科组评课统计"
+        is-link
+        @click="to('/packageECharts/pages/EvaluationStatistics/DepartmentEvaluationStatistics')"
+      ></nut-cell>
+      <nut-cell
+        title="科组听评课记录"
+        is-link
+        @click="to('/pages/ListenEvaluationMemberList/SubjectGroupMemberList')"
+      ></nut-cell>
+      <!-- </template> -->
+      <!-- <template v-if="userRole === '2'"> -->
+      <nut-cell
+        title="全校评课统计"
+        is-link
+        @click="to('/packageECharts/pages/EvaluationStatistics/AllEvaluationStatistics')"
+      ></nut-cell>
+      <nut-cell
+        title="全校听评课记录"
+        is-link
+        @click="to('/pages/ListenEvaluationMemberList/AllMemberList')"
+      ></nut-cell>
+      <!-- </template> -->
     </nut-cell-group>
 
     <nut-cell-group>
@@ -74,7 +74,7 @@
 </template>
 
 <script lang="ts" setup>
-import { getRoleType, /*  profile, */ userSubjectGroups } from '@/api/user'
+// import { getRoleType, /*  profile, */ userSubjectGroups } from '@/api/user'
 import { getStorage, removeStorage } from '@/utils/storage'
 import Taro from '@tarojs/taro'
 import { onMounted, reactive, ref } from 'vue'
@@ -102,17 +102,16 @@ onMounted(() => {
   //   userInfo.teacher_code = teacherInfo.teacher_code
   //   userInfo.school = teacherInfo.school_name
   // })
-
-  userSubjectGroups().then((res) => {
-    subjectGroups.value = res.subject_groups.map((group) => {
-      return group.subject_group_name
-    })
-  })
+  // userSubjectGroups().then((res) => {
+  //   subjectGroups.value = res.subject_groups.map((group) => {
+  //     return group.subject_group_name
+  //   })
+  // })
 })
 
-getRoleType().then((res) => {
-  userRole.value = res.role[0]?.role_type || '-1'
-})
+// getRoleType().then((res) => {
+//   userRole.value = res.role[0]?.role_type || '-1'
+// })
 
 function logout() {
   removeStorage('openid')

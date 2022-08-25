@@ -18,12 +18,16 @@ const max = computed(() => {
 <template>
   <div class="CustomChartBar">
     <div v-for="(item, key) of data" :key="key" class="row">
-      <div class="icon-cont">
-        <!-- <nut-icon name="tips"></nut-icon> -->
-      </div>
+      <!-- <div class="icon-cont">
+        <nut-icon name="tips"></nut-icon>
+      </div> -->
       <div class="name">{{ item.name }}</div>
       <div class="bar-cont">
-        <div class="bar" :style="{ width: (item.count / max) * 100 + '%' }">
+        <div
+          class="bar"
+          :class="key % 2 ? '' : 'even'"
+          :style="{ width: (item.count / max) * 100 + '%' }"
+        >
           <span class="v">{{ item.count }}</span>
         </div>
       </div>
@@ -48,6 +52,7 @@ const max = computed(() => {
   }
   .name {
     width: 50px;
+    font-size: 12px;
   }
   .bar-cont {
     flex: 1;
@@ -63,19 +68,24 @@ const max = computed(() => {
       right: -2px;
       transform: translateX(100%);
     }
+
+    &.even {
+      background-color: #3aa6ff9d;
+    }
   }
   .row:last-child {
     .bar-cont {
       border-bottom: 1px solid #3aa6ff;
       position: relative;
-      &::before,
-      &::after {
-        content: '次数';
-        position: absolute;
-        left: 0;
-        bottom: -4px;
-        transform: translateY(100%);
-      }
+      // &::before,
+      // &::after {
+      //   content: '次数';
+      //   position: absolute;
+      //   left: 0;
+      //   bottom: -4px;
+      //   transform: translateY(100%);
+      //   font-size: 12px;
+      // }
       &::after {
         // content: '次数';
         // position: absolute;

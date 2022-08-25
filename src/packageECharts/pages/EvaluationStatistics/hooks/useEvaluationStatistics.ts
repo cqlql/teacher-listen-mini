@@ -1,5 +1,4 @@
-import type { DateRangeType } from '@/api/statistic'
-import { getMyEvaluationStatistics } from '@/api/statistic'
+import type { GetMyEvaluationStatisticsResult } from '@/api/statistic'
 import type { ChartBarCustomItem } from '@/components/ChartBarCustom'
 import { ref } from 'vue'
 
@@ -7,22 +6,17 @@ export default function useEvaluationStatistics(userId) {
   const empty = ref(false)
   const chartBarData = ref<ChartBarCustomItem[]>([])
 
-  function update(dateRange: DateRangeType) {
-    return getMyEvaluationStatistics({
-      dateRange,
-    }).then((res) => {
-      const list: ChartBarCustomItem[] = []
-      res.evaluation_count.forEach((item) => {
-        item.evaluation_counts.forEach((childItem) => {
-          list.push({
-            name: childItem.dimension_item_name,
-            count: Number(childItem.count),
-          })
-        })
-      })
-      empty.value = list.length === 0
-      chartBarData.value = list
-    })
+  function update(rawData: GetMyEvaluationStatisticsResult) {
+    const list: ChartBarCustomItem[] = []
+
+    rawData.indicators.forEach((item) =>
+      list.push({
+        name: item.name,
+        count: item.num,
+      }),
+    )
+    empty.value = list.length === 0
+    chartBarData.value = list
   }
 
   return {
