@@ -29,6 +29,7 @@ export interface CourseItem {
 
 export interface AddedCourseItem {
   id: string
+  courses_id: string
   user_id: string
   // start_time: string
   // date_time: string

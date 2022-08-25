@@ -21,7 +21,7 @@ type Params = {
 // }
 
 export default function useCreateListen({ subjectData }: Params, form: Ref<OutsideCourseForm>) {
-  const { toastFail, toastSuccess } = useToastInject()
+  const { toastSuccess } = useToastInject()
 
   const isLoading = ref(false)
 
@@ -36,7 +36,8 @@ export default function useCreateListen({ subjectData }: Params, form: Ref<Outsi
     isLoading.value = true
     await requestOpenCourse({
       /**公开课名称ID */
-      id: formVal.id ? Number(formVal.id) : undefined,
+      // id: formVal.id ? Number(formVal.id) : undefined,
+      id: formVal.courses_id ? Number(formVal.courses_id) : undefined,
       /**'公开课测试'; // 公开课名称 */
       name: formVal.course_name,
 
@@ -56,7 +57,7 @@ export default function useCreateListen({ subjectData }: Params, form: Ref<Outsi
       isLoading.value = false
     })
     // if (res.success) {
-    toastSuccess((formVal.id ? '编辑' : '添加') + '成功')
+    toastSuccess((formVal.courses_id ? '编辑' : '添加') + '成功')
 
     setStorage('pageTemp', 'needReload')
     Taro.navigateBack()

@@ -102,6 +102,7 @@ function reqList({ page }) {
       return {
         // 新增用
         id: String(item.id),
+        courses_id: String(item.courses_id),
         user_id: String(item.teacher_user_id),
         teacher_name: item.teacher_name,
 
