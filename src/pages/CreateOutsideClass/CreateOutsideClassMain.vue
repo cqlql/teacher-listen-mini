@@ -59,16 +59,16 @@ function periodSelectBefore() {
 // 自动填充
 if (process.env.NODE_ENV !== 'production') {
   // console.s = function () {
-  // form.value = {
-  //   course_name: '校外课 test' + require('dayjs')().format('YYYY-MM-DD HH:mm'),
-  //   period: '1001',
-  //   school_name: '超人学校',
-  //   teacher_name: '超人A',
-  //   subject_id: '1',
-  //   teach_target: '二年级三班',
-  //   dateTime: require('dayjs')(new Date()).add(1, 'hour').format('YYYY-MM-DD HH:mm:ss'),
-  //   class_room_name: '实验室',
-  // }
+  form.value = {
+    course_name: '校外课 test' + require('dayjs')().format('YYYY-MM-DD HH:mm'),
+    period: '1001',
+    school_name: '超人学校',
+    teacher_name: '超人A',
+    subject_id: '1',
+    teach_target: '二年级三班',
+    dateTime: require('dayjs')(new Date()).add(1, 'hour').format('YYYY-MM-DD HH:mm:ss'),
+    class_room_name: '实验室',
+  }
   // }
 }
 </script>

@@ -11,6 +11,8 @@ import { getStorage, setStorage } from '@/utils/storage'
 import useLoadData from './hook/useLoadData'
 import { ref } from 'vue'
 import type { CourseItemType } from './types'
+import TagFlag from '@/components/Tag/TagFlag.vue'
+import CouresItemBg from '@/components/CouresItemBg.vue'
 
 const { isExpanded, weekDate, weekBtnText, isToday, weekItems } = useWeekDateSelect()
 const { vListLoad, myCourseList, reqList, handleWeekDayChange, goToday } = useLoadData(weekDate)
@@ -105,52 +107,58 @@ const vFixedButtons = ref({
               class="container"
               :class="course.type.type"
             >
-              <div class="title">
-                <span class="tag" :class="course.type.type">{{ course.sujectTag }}</span>
-                <span class="title-name">《{{ course.name }}》</span>
-              </div>
+              <div class="bd">
+                <div class="title">
+                  <span class="tag" :class="course.type.type">{{ course.sujectTag }}</span>
+                  <span class="title-name">《{{ course.name }}》</span>
+                </div>
 
-              <div class="main-info">
-                <span class="time">{{ course.start_time }}</span>
-                <!-- <span class="date">{{ course.startDate }}</span> -->
-                <span class="teacher">{{ course.user_name }}老师</span>
-              </div>
-              <!-- <div class="info-row">{{ course.school_name }}{{ course.campus_name }}</div> -->
-              <div class="info-row">授课班级：{{ course.grade_name }}{{ course.class_name }}</div>
-              <div class="info-row">授课地点：{{ course.class_room_name }}</div>
+                <div class="main-info">
+                  <span class="time">{{ course.start_time }}</span>
+                  <!-- <span class="date">{{ course.startDate }}</span> -->
+                  <span class="teacher">{{ course.user_name }}老师</span>
+                </div>
+                <!-- <div class="info-row">{{ course.school_name }}{{ course.campus_name }}</div> -->
+                <div class="info-row">授课班级：{{ course.grade_name }}{{ course.class_name }}</div>
+                <div class="info-row">授课地点：{{ course.class_room_name }}</div>
 
-              <div v-if="course.files.length" class="files">
-                <span v-for="file of course.files" :key="file.id" class="file">{{
-                  file.name
-                }}</span>
-              </div>
+                <div v-if="course.files.length" class="files">
+                  <span v-for="file of course.files" :key="file.id" class="file">{{
+                    file.name
+                  }}</span>
+                </div>
 
-              <span class="status" :class="course.status.type">{{ course.status.label }}</span>
+                <TagFlag class="status" :class="course.status.type">{{
+                  course.status.label
+                }}</TagFlag>
 
-              <div class="bottom">
-                <div class="tags">
-                  <span class="tag" :class="course.type.type">
-                    <nut-icon name="mask-close"></nut-icon>
-                    <span>{{ course.type.label }}</span>
-                  </span>
-                  <!-- <span class="tag">
+                <div class="bottom">
+                  <div class="tags">
+                    <span class="tag" :class="course.type.type">
+                      <nut-icon name="mask-close"></nut-icon>
+                      <span>{{ course.type.label }}</span>
+                    </span>
+                    <!-- <span class="tag">
                     <nut-icon name="mask-close"></nut-icon>
                     <span>公开课</span>
                   </span> -->
-                </div>
-                <div class="btn">
-                  <nut-button
-                    v-if="course.status.id === '2'"
-                    type="primary"
-                    size="small"
-                    @click="toProcessRecord(course)"
-                    >听课记录</nut-button
-                  >
-                  <nut-button v-else type="primary" size="small" @click="toProcessRecord(course)"
-                    >进入听课</nut-button
-                  >
+                  </div>
+                  <div class="btn">
+                    <nut-button
+                      v-if="course.status.id === '2'"
+                      type="primary"
+                      size="small"
+                      @click="toProcessRecord(course)"
+                      >听课记录</nut-button
+                    >
+                    <nut-button v-else type="primary" size="small" @click="toProcessRecord(course)"
+                      >进入听课</nut-button
+                    >
+                  </div>
                 </div>
               </div>
+
+              <CouresItemBg :type="(course.type.type as any)"></CouresItemBg>
             </div>
           </div>
         </div>
@@ -203,7 +211,6 @@ $outsideBc: #fbf5ff;
   .container {
     background-color: $openBc;
     border-radius: 10px;
-    padding: 12px 12px 15px;
     position: relative;
     // overflow: hidden;
     margin-bottom: 15px;
@@ -216,10 +223,17 @@ $outsideBc: #fbf5ff;
       background-color: $outsideBc;
       // background-image: linear-gradient(180deg, #f7dcff 0%, #fff 100%);
     }
+
+    .bd {
+      position: relative;
+      z-index: 1;
+      padding: 12px 12px 15px;
+    }
   }
 
   .title {
     // line-height: 25px;
+    margin-right: 50px;
     .tag {
       width: 22px;
       height: 22px;
@@ -289,34 +303,7 @@ $outsideBc: #fbf5ff;
   .status {
     position: absolute;
     top: 0;
-    right: 12px;
-    width: 50px;
-    height: 30px;
-    line-height: 26px;
-    background-color: #ffb21f;
-    border-radius: 0 0 2px 2px;
-    color: #fff;
-    font-size: 10px;
-    text-align: center;
-
-    &::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      border-style: solid;
-      border-width: 0 25px 4px 25px;
-      border-color: transparent transparent #d5effb transparent;
-    }
-
-    &.success {
-      background-color: #4fc08d;
-    }
-
-    &.info {
-      background-color: #e9e9e9;
-      color: #999;
-    }
+    // right: 12px;
   }
 
   .bottom {

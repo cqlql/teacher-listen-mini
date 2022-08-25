@@ -1,6 +1,6 @@
 <template>
   <ListLoad ref="vListLoad" :startPage="0" :reqList="reqList" refresher-background="#f1f9fe">
-    <template #default="{ list }: { list: CourseItem[] }">
+    <template #default="{ list }: OpenType">
       <div class="OpenClassList">
         <OpenClassPassedItem
           v-for="(item, index) of list"
@@ -46,6 +46,9 @@ const vListLoad = ref({
 })
 
 const topSearchParams = inject('topSearchParams') as TopSearchParams
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type OpenType = { list: CourseItem[] }
 
 topSearchParams.search = () => {
   vListLoad.value.firstPageLoad()
@@ -121,6 +124,8 @@ function reqList({ page }: { page: number }) {
         gradClass: getGrade(item.period, item.years) + item.class_name,
 
         is_add: item.is_add,
+
+        type: 'open',
       }
     })
     return newList
@@ -143,8 +148,12 @@ function onAddUserCourse(item: CourseItem, list: CourseItem[], index: number) {
   })
 }
 </script>
-<!-- <style lang="scss">
+<style lang="scss">
 .OpenClassList {
   // padding: 16px 0 16px;
+
+  // .OpenClassPassedItem:first-child {
+  //   margin-top: 0;
+  // }
 }
-</style> -->
+</style>

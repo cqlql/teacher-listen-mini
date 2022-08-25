@@ -170,15 +170,15 @@ $outsideBc: #fbf5ff;
     // position: relative;
     padding-right: 5px;
 
-    &.open {
-      background-color: $openBc;
-    }
-    &.inside {
-      background-color: $insideBc;
-    }
-    &.outside {
-      background-color: $outsideBc;
-    }
+    // &.open {
+    //   background-color: $openBc;
+    // }
+    // &.inside {
+    //   background-color: $insideBc;
+    // }
+    // &.outside {
+    //   background-color: $outsideBc;
+    // }
   }
 
   .TagFlag {

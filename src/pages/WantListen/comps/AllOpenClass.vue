@@ -81,6 +81,7 @@ const { show: showDatePicker, visible: datePickerVisible } = useShowDatePicker()
   .navBar2 {
     display: flex;
     padding: 12px;
+    height: 28px;
     .nut-radiogroup {
       flex: 1;
     }

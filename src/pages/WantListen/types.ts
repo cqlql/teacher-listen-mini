@@ -23,6 +23,8 @@ export interface CourseItem {
   gradClass: string
   /**0 未添加 1 已添加 */
   is_add: 0 | 1
+
+  type: 'open'
 }
 
 export interface AddedCourseItem {

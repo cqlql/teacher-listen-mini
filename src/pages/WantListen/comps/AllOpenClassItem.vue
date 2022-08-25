@@ -1,5 +1,6 @@
 <template>
-  <div class="OpenClassPassedItem">
+  <div class="OpenClassPassedItem" :class="data.type">
+    <CouresItemBg :type="data.type"></CouresItemBg>
     <div class="OpenClassPassedItem_detail">
       <div class="OpenClassPassedItem_name">
         <span class="o_tag">{{ data.subject[0] }}</span>
@@ -23,6 +24,7 @@
 </template>
 
 <script lang="ts" setup>
+import CouresItemBg from '@/components/CouresItemBg.vue'
 withDefaults(
   defineProps<{
     data: {
@@ -32,6 +34,7 @@ withDefaults(
       place: string
       date: string
       gradClass: string
+      type: 'open' | 'inside' | 'outside'
     }
   }>(),
   {
@@ -43,6 +46,7 @@ withDefaults(
         place: '七年级7班',
         date: '2020-12-12 21:00',
         gradClass: '七年级1班',
+        type: 'open',
       }
     },
   },
@@ -50,7 +54,14 @@ withDefaults(
 </script>
 <style lang="scss">
 $primary-color: #70abff;
-$gray-color: #888;
+$gray-color: #444;
+
+$openColor: #3aa6ff;
+$openBc: #eaf0fe;
+$insideColor: #ffb21f;
+$insideBc: #fff5dc;
+$outsideColor: #d295e4;
+$outsideBc: #fbf5ff;
 // $openColor: #3aa6ff;
 $openBc: #eaf0fe;
 .OpenClassPassedItem {
@@ -58,14 +69,26 @@ $openBc: #eaf0fe;
   // border: 1px solid #ddd;
   padding: 10px;
   background-color: #fff;
-  box-shadow: -1px 1px 13px 0 rgba(0, 0, 0, 0.2);
+  // box-shadow: -1px 1px 13px 0 rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   margin: 10px;
   // background-color: $openBc;
+  position: relative;
+
+  &.open {
+    background-color: $openBc;
+  }
+  &.inside {
+    background-color: $insideBc;
+  }
+  &.outside {
+    background-color: $outsideBc;
+  }
 }
 
 .OpenClassPassedItem_detail {
   flex: 1;
+  position: relative;
 }
 
 .OpenClassPassedItem_name {
@@ -83,7 +106,7 @@ $openBc: #eaf0fe;
 }
 
 .OpenClassPassedItem_course-name {
-  color: #faad14;
+  color: #000;
   font-size: 16px;
   padding: 8px 0;
 }
@@ -112,7 +135,7 @@ $openBc: #eaf0fe;
   align-items: center;
   flex-direction: column;
   justify-content: space-between;
-
+  position: relative;
   // .nut-button {
   //   // margin: 4px 0;
   // }
