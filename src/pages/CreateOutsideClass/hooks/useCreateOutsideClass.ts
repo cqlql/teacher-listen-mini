@@ -39,6 +39,9 @@ export default function useCreateListen({ subjectData }: Params, form: Ref<Outsi
       // id: formVal.course_id,
       /**'公开课测试'; // 公开课名称 */
       name: formVal.course_name,
+
+      out_school_name: formVal.school_name,
+      teacher_name: formVal.teacher_name,
       /**学段ID */
       period: Number(formVal.period),
       /**'1'; // 科目ID */
@@ -47,6 +50,7 @@ export default function useCreateListen({ subjectData }: Params, form: Ref<Outsi
       s_time: formVal.dateTime,
       classes_name: formVal.teach_target,
       address: formVal.class_room_name,
+
       type: 2,
     }).finally(() => {
       isLoading.value = false

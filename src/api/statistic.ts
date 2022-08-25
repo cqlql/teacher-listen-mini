@@ -10,3 +10,11 @@ export function getMyEvaluationStatistics(data: { dateRange: DateRangeType }) {
     data,
   })
 }
+
+/**全校评课统计 */
+export function getSchoolEvaluationStatistics(data: { dateRange: DateRangeType }) {
+  return httpV2.get({
+    url: '/219',
+    data,
+  })
+}

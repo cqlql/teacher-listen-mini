@@ -4,9 +4,11 @@ import EvaluationList from './comp/EvaluationList.vue'
 import TabsText from '@/components/Tabs/TabsText.vue'
 import ToastProvider from '@/components/ToastProvider/ToastProvider.vue'
 import SemesterRangePicker from './comp/SemesterRangePicker.vue'
-import type { SearchOptions } from './types'
+import type { SearchOptions, SemesterRangeOption } from './types'
 import { getStorage } from '@/utils/storage'
 import { getListenAndTeachStatistics } from '@/api/course'
+import { getSemesterSelectData } from '@/api/select'
+import dayjs from 'dayjs'
 
 const searchOptions = ref<SearchOptions>({
   listen: {
@@ -51,12 +53,46 @@ getListenAndTeachStatistics({
     tabList.value[1].value = `共(${user.teaching_num})节`
   }
 })
+const semesterSelectDataLoading = ref(true)
+const SemesterSelectOptions = ref<SemesterRangeOption[]>([])
+getSemesterSelectData()
+  .then((res) => {
+    function splitDateRange(rangeDate: string) {
+      let [start, end] = rangeDate.split('-')
+      return {
+        start: dayjs(start).format('YYYY/MM/DD'),
+        end: dayjs(end).format('YYYY/MM/DD'),
+      }
+    }
+
+    SemesterSelectOptions.value = [
+      {
+        label: '本学期',
+        ...splitDateRange(res.curSemester),
+      },
+      {
+        label: '上学期',
+        ...splitDateRange(res.lastSemester),
+      },
+      {
+        label: '本学年',
+        ...splitDateRange(res.curYearSemester),
+      },
+      {
+        label: '上学年',
+        ...splitDateRange(res.lastYearSemester),
+      },
+    ]
+  })
+  .finally(() => {
+    semesterSelectDataLoading.value = false
+  })
 </script>
 
 <template>
-  <ToastProvider>
+  <ToastProvider ref="vToastProvider">
     <div class="ListenEvaluationRecord">
-      <TabsText :tabs="tabList">
+      <TabsText v-if="!semesterSelectDataLoading" :tabs="tabList">
         <template #0="{ active }">
           <EvaluationList :active="active" type="listen"></EvaluationList>
         </template>
@@ -71,6 +107,7 @@ getListenAndTeachStatistics({
       v-model:label="searchOptions.listen.selectedName"
       v-model:visible="searchOptions.listen.visible"
       v-model:defaultIndex="searchOptions.listen.defaultIndex"
+      :options="SemesterSelectOptions"
       @ok="searchOptions.listen.search"
     ></SemesterRangePicker>
     <SemesterRangePicker
@@ -79,6 +116,7 @@ getListenAndTeachStatistics({
       v-model:label="searchOptions.teaching.selectedName"
       v-model:visible="searchOptions.teaching.visible"
       v-model:defaultIndex="searchOptions.listen.defaultIndex"
+      :options="SemesterSelectOptions"
       @ok="searchOptions.teaching.search"
     ></SemesterRangePicker>
   </ToastProvider>

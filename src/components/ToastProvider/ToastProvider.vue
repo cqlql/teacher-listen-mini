@@ -6,6 +6,10 @@ let toastOptions = useToast()
 let { toast } = toastOptions
 
 provide('toast', toastOptions)
+
+defineExpose({
+  toastOptions,
+})
 </script>
 <template>
   <slot></slot>

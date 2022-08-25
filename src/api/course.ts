@@ -173,6 +173,14 @@ export function getUserCourse(data?: GetUserCourseParams): Promise<userCourseLis
   })
 }
 
+/**getUserTeach */
+export function getUserTeach(data?: GetUserCourseParams): Promise<userCourseList> {
+  return httpV2.get({
+    url: '/218',
+    data,
+  })
+}
+
 /** 添加听课计划 */
 export function addUserCourse(data: AddUserCourse): Promise<{ usercourse: any[] }> {
   return httpV2.post({

@@ -38,3 +38,10 @@ export interface SearchOptions {
   listen: SearchItem
   teaching: SearchItem
 }
+
+export interface SemesterRangeOption {
+  label: string
+  value?: string
+  start: string
+  end: string
+}

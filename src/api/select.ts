@@ -7,6 +7,7 @@ import type {
   CampusinfoResult,
   ClassroomsResult,
   CreateListenSelectDataResult,
+  GetSemesterSelectDataResult,
   SubjectGroupsResult,
 } from './model/selectModel'
 
@@ -47,5 +48,12 @@ export function getCreateListenSelectData(id: 0 | number): Promise<CreateListenS
     data: {
       id,
     },
+  })
+}
+
+/**获取学期选择数据 */
+export function getSemesterSelectData(): Promise<GetSemesterSelectDataResult> {
+  return httpV2.get({
+    url: '/211',
   })
 }

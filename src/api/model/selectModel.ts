@@ -178,3 +178,14 @@ export interface CreateListenSelectDataResult {
     att_urls: { url: string }[]
   }
 }
+
+export interface GetSemesterSelectDataResult {
+  /**本学期 */
+  curSemester: string
+  /**本学年 */
+  curYearSemester: string
+  /**上学期 */
+  lastSemester: string
+  /**上学年 */
+  lastYearSemester: string
+}

@@ -6,11 +6,13 @@ import { inject, ref, watch } from 'vue'
 
 import EvaluationItem from './EvaluationItem.vue'
 import SearchBarSelect2 from '@/components/SearchBarSelect2.vue'
-import { coursesRecordList } from '@/api/course'
+import { getUserTeach, getUserCourse } from '@/api/course'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type { EvaluationDataItem, SearchOptions } from '../types'
 import Taro from '@tarojs/taro'
-import type { CoursesRecordListResultItem } from '@/api/model/courseModel'
+import dayjs from 'dayjs'
+import getCourseTypeMap from '@/data/get-course-type-map'
+import getGrade from '@/data/getGrade'
 
 const searchOptions = inject('searchOptions') as Ref<SearchOptions>
 
@@ -46,41 +48,32 @@ function firstPageLoad() {
   }
 }
 
-function resolveCoursesList(resultItem: CoursesRecordListResultItem) {
-  if (resultItem.is_open_courses === 'true') {
-    return '公开课'
-  }
-  if (resultItem.is_self === 'true') {
-    return '校内课'
-  }
-
-  return '校外课'
-}
-
 async function reqList({ page }) {
   let searchOptionValue = searchOption.value
-
-  return coursesRecordList({
-    list_mun: 10,
-    page: page * 10,
-    course_type: props.type === 'listen' ? '1' : '0',
-    role_type: '0',
-    power: '0',
-    user_id: searchOptionValue.userId,
-    search_name: searchOptionValue.keyword,
-    start_date: searchOptionValue.dateStart,
-    end_date: searchOptionValue.dateEnd,
+  const typeMap = getCourseTypeMap()
+  return (props.type === 'listen' ? getUserCourse : getUserTeach)({
+    pageSize: 10,
+    pageIndex: page,
+    // course_type: props.type === 'listen' ? '1' : '0',
+    // role_type: '0',
+    // power: '0',
+    // user_id: searchOptionValue.userId,
+    keyword: searchOptionValue.keyword,
+    dateRange:
+      dayjs(searchOptionValue.dateStart).format('YYYY/MM/DD') +
+      '-' +
+      dayjs(searchOptionValue.dateEnd).format('YYYY/MM/DD'),
   }).then((res) => {
-    return res.coursesList.map((resultItem) => {
+    return res.map((resultItem) => {
       return {
         id: resultItem.id,
-        dateTime: resultItem.lesson_date + ' ' + resultItem.start_time,
-        type: resolveCoursesList(resultItem), // 公开课
+        dateTime: resultItem.s_time,
+        type: typeMap[resultItem.type].label, // 公开课
         subjectShort: resultItem.subject_name[0],
-        name: resultItem.name,
-        teacher: resultItem.user_name,
-        className: resultItem.grade_name + resultItem.class_name,
-        userId: resultItem.user_id,
+        name: resultItem.courses_name,
+        teacher: resultItem.teacher_name,
+        className: getGrade(resultItem.period, resultItem.years),
+        userId: resultItem.teacher_user_id,
       }
     })
   })

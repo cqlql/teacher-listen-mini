@@ -6,19 +6,13 @@ import { computed, ref, watch } from 'vue'
 import SelectValue from '@/components/Select/SelectValue.vue'
 
 import { semesterRange } from '@/utils/date/semester-range'
-
-interface OptionType {
-  label: string
-  value?: string
-  start: string
-  end: string
-}
+import type { SemesterRangeOption } from '../types'
 
 const props = withDefaults(
   defineProps<{
     visible: boolean
     defaultIndex: number
-    options?: OptionType[]
+    options?: SemesterRangeOption[]
     noCustom?: boolean
   }>(),
   {
@@ -44,7 +38,7 @@ const safeOptions = computed(() => {
   if (props.options) {
     return props.options
   }
-  return semesterRange() as OptionType[]
+  return semesterRange() as SemesterRangeOption[]
 })
 
 watch([startDate, endDate], ([startDate, endDate]) => {
@@ -52,6 +46,18 @@ watch([startDate, endDate], ([startDate, endDate]) => {
     isCustom = true
   }
 })
+
+watch(
+  () => props.options,
+  (options) => {
+    if (options && options.length > 0 && props.defaultIndex > -1) {
+      updateSelect()
+    }
+  },
+  {
+    immediate: true,
+  },
+)
 
 function updateSelect() {
   let item = safeOptions.value[selectedIndex.value]
@@ -83,10 +89,6 @@ function ok() {
   emit('ok')
   emit('update:visible', false)
 }
-
-if (props.defaultIndex > -1) {
-  updateSelect()
-}
 </script>
 <template>
   <nut-popup
@@ -113,13 +115,23 @@ if (props.defaultIndex > -1) {
           <div class="tit"> 自定义时间： </div>
           <div class="dateInput">
             <div class="l">
-              <DatePicker v-model="startDate" :endDate="endDate" valueFormat="YYYY-MM-DD">
+              <DatePicker
+                v-model="startDate"
+                :endDate="endDate"
+                format="YYYY/MM/DD"
+                valueFormat="YYYY/MM/DD"
+              >
                 <SelectValue :value="startDate" placeholder="开始时间"></SelectValue>
               </DatePicker>
             </div>
             <div class="r">
               <!-- <input type="text" placeholder="结束时间" /> -->
-              <DatePicker v-model="endDate" :startDate="startDate" valueFormat="YYYY-MM-DD">
+              <DatePicker
+                v-model="endDate"
+                :startDate="startDate"
+                format="YYYY/MM/DD"
+                valueFormat="YYYY/MM/DD"
+              >
                 <SelectValue :value="endDate" placeholder="结束时间"></SelectValue>
               </DatePicker>
             </div>

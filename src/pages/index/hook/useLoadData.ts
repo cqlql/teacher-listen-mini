@@ -1,4 +1,5 @@
 import { getUserCourse } from '@/api/course'
+import getCourseTypeMap from '@/data/get-course-type-map'
 import getGrade from '@/data/getGrade'
 import type { Dayjs } from 'dayjs'
 import dayjs from 'dayjs'
@@ -50,20 +51,7 @@ function useGetList(weekDate: Ref<Dayjs>) {
           status = statusMap[0]
         }
 
-        const typeMap = {
-          0: {
-            type: 'success',
-            label: '公开课',
-          },
-          1: {
-            type: 'warning',
-            label: '校内课',
-          },
-          2: {
-            type: 'info',
-            label: '校外课',
-          },
-        }
+        const typeMap = getCourseTypeMap()
 
         return {
           id: item.id,

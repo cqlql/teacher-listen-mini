@@ -101,6 +101,11 @@ export interface RequestOutsideCourseParams {
   id?: number
   /** 公开课名称 */
   name: string
+  /**学校名称 */
+  out_school_name: string
+
+  teacher_name: string
+
   /**学段ID */
   period: number
   /**'1'; // 科目ID */
@@ -310,8 +315,9 @@ export type userCourseList = {
   /**老师/用户id */
   teacher_user_id: number //8040
   timetable_id: number //0
-  /** 0 校内课 1 校外课 */
-  type: 0 | 1
+  /**  类型 0：公开课1：推门听课 2：校外课*/
+  type: 0 | 1 | 2
+
   updated_date: string //'2022-08-20 00:40:55'
   updated_user_id: number //8040
   week: number //0
