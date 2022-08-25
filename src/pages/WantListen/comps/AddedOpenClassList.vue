@@ -128,7 +128,7 @@ function reqList({ page }) {
 }
 
 function onDeleteUserCourse(item: AddedCourseItem, list: AddedCourseItem[], index: number) {
-  delUserCourse(item.id).then(() => {
+  delUserCourse(Number(item.id)).then(() => {
     list.splice(index, 1)
     if (list.length === 0) {
       vListLoad.value.firstPageLoad()
