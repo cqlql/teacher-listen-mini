@@ -1,5 +1,6 @@
 export type FormType = Record<string, string>
 export interface OutsideCourseForm {
+  id?: string
   /**公开课ID */
   courses_id?: string
 
