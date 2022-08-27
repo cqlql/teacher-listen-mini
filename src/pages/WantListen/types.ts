@@ -54,3 +54,14 @@ export interface AddedCourseItem {
 //   teacher_name: string
 //   school_name: string
 // }
+
+export interface PushDoorCourseItemByTeacher {
+  id: string
+  // subjectId: string
+  // gradeId: string
+  subjectName: string
+  teacherName: string
+  lessonName: string
+  className: string
+  liveUrl: string
+}

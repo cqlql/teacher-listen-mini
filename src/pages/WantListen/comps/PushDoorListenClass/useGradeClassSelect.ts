@@ -34,13 +34,19 @@ export default function useGradeClassSelect() {
     },
   )
 
-  watch(classList, (classListValue) => {
-    const classInfo = classListValue[0]
-    if (classInfo) {
-      searchOptions.class = classInfo.value
-      search(classInfo)
-    }
-  })
+  watch(
+    classList,
+    (classListValue) => {
+      const classInfo = classListValue[0]
+      if (classInfo) {
+        searchOptions.class = classInfo.value
+        search(classInfo)
+      }
+    },
+    {
+      immediate: true,
+    },
+  )
 
   return {
     searchOptions,

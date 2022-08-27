@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { getCourseList } from '@/api/course'
+import { getPushDoorCourseList } from '@/api/course'
 import TabButtons from '@/components/TabButtons/TabButtons.vue'
 import { inject } from 'vue'
-import ListenClassCategoryList from '../ListenClassCategoryList/ListenClassCategoryList.vue'
+import ListenClassCategoryList from './CourseList.vue'
 import LayoutView from './LayoutView.vue'
 import useGradeClassSelect from './useGradeClassSelect'
 
@@ -15,14 +15,24 @@ const topSearchParams = inject('topSearchParams') as {
 topSearchParams.search = search
 
 function reqList({ page }) {
-  return getCourseList({
+  return getPushDoorCourseList({
     classId: Number(searchOptions.class),
     period: Number(searchOptions.period),
     pageSize: 10,
     pageIndex: page,
-    teacherName: '',
-    // lesson_date: topSearchParams.date,
-  })
+    teacher_name: '',
+  }).then((rawList) =>
+    rawList.map((item, index) => {
+      return {
+        id: String(index),
+        className: '三年级2班', //getGrade(item.period, item.years),
+        lessonName: '1',
+        liveUrl: '1',
+        subjectName: '语文',
+        teacherName: '超人A',
+      }
+    }),
+  )
 }
 </script>
 <template>

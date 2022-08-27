@@ -33,6 +33,7 @@ import type {
   GetEvaluationScoreResult,
   SaveEvaluationScoreReqParams,
   RequestOutsideCourseParams,
+  GetPushDoorCourseListResult,
 } from './model/courseModel'
 
 /** 获取听课、授课记录 */
@@ -103,7 +104,7 @@ export function openCourseListV1(
 
 interface GetCourseListParams {
   // campus_id?: string //校区
-  // subject_id?: string //科目ID
+
   // grade_id?: string //年级ID
   // class_id?: string //教室ID
 
@@ -115,13 +116,28 @@ interface GetCourseListParams {
 
   pageSize: number //每页大小
   pageIndex: number //当前页从0开始
+
+  subject_id?: number //科目ID
+  classId?: number //班级ID
+
   period: number // 学段ID 1001 小学 1002 初中 1003 高中
-  classId: number //班级ID
-  teacherName: string //老师名称
+  teacher_name: string //老师名称
 }
 
-/**根据条件获取课程 - 推门听课 - 课表数据 */
-export function getCourseList(data: GetCourseListParams): Promise<GetCourseListResult> {
+interface GetPushDoorCourseListParams {
+  pageSize: number //每页大小
+  pageIndex: number //当前页从0开始
+
+  subject_id?: number //科目ID
+  classId?: number //班级ID
+
+  period: number // 学段ID 1001 小学 1002 初中 1003 高中
+  teacher_name: string //老师名称
+}
+/**根据条件获取推门听课列表 - 课表数据 */
+export function getPushDoorCourseList(
+  data: GetPushDoorCourseListParams,
+): Promise<GetPushDoorCourseListResult[]> {
   return httpV2.get({
     url: '/203',
     data,

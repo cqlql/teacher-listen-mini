@@ -1,20 +1,19 @@
 <script lang="ts" setup>
 // import { reactive } from 'vue'
 
-import ListenClassCategoryList from '../ListenClassCategoryList/ListenClassCategoryList.vue'
+import ListenClassCategoryList from './CourseList.vue'
 import SearchBarSelect from '@/components/SearchBarSelect.vue'
 import TabButtons from '@/components/TabButtons/TabButtons.vue'
 import LayoutView from './LayoutView.vue'
 import { computed, inject, reactive, ref, watch } from 'vue'
 import SelectCheckPopup from '@/components/SelectCheck/SelectCheckPopup.vue'
 
-import { getCourseList } from '@/api/course'
-import type { TopSearchParams } from '../../types'
+import { getPushDoorCourseList } from '@/api/course'
+import type { PushDoorCourseItemByTeacher, TopSearchParams } from '../../types'
 import type { GradeClassDataType } from './useGradeClassData'
 const topSearchParams = inject('topSearchParams') as TopSearchParams
 
 const { periodList, subjectListByPeriodKey } = inject('gradeClassData') as GradeClassDataType
-// console.log('🚀 -- gradeClassData', gradeClassData)
 
 interface OptionType {
   label: string
@@ -75,6 +74,9 @@ function setInitValue() {
       }
       search()
     },
+    {
+      immediate: true,
+    },
   )
 }
 
@@ -82,15 +84,25 @@ function search() {
   searchOptions.search()
 }
 
-function reqList({ page }) {
-  return getCourseList({
+function reqList({ page }): Promise<PushDoorCourseItemByTeacher[]> {
+  return getPushDoorCourseList({
     pageSize: 10,
     pageIndex: page,
-    subject_id: searchOptions.subject,
+    subject_id: Number(searchOptions.subject),
     period: Number(searchOptions.period),
     teacher_name: searchOptions.keyword,
-    // lesson_date: topSearchParams.date,
-  })
+  }).then((rawList) =>
+    rawList.map((item, index) => {
+      return {
+        id: String(index),
+        className: '三年级2班', //getGrade(item.period, item.years),
+        lessonName: '第一节',
+        liveUrl: '1',
+        subjectName: '语文',
+        teacherName: '超人A',
+      }
+    }),
+  )
 }
 
 setInitValue()
