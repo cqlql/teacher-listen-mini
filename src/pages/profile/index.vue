@@ -147,6 +147,7 @@ function initUserInfoByToken() {
     } = JSON.parse(base64url.decode(infoStr))
 
     userInfo.name = userData.name
+    console.log('🚀 -- initUserInfoByToken -- userData', userData)
     userInfo.teacher_code = userData.login_name
     userInfo.school = userData.school_name
 

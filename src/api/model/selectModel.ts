@@ -163,6 +163,7 @@ export interface CreateListenSelectDataResult {
     id: number //14
     is_enable: true
     name: string //'test'
+    out_school_name: string //''
     period: number //1001
     role_id: number //4
     s_time: string //'2022-08-22 21:29:14'

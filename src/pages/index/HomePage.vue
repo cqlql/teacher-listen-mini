@@ -34,6 +34,7 @@ if (process.env.NODE_ENV !== 'production') {
   // url = '/pages/DingEvaluationRecord/DingEvaluationRecord'
   // url = '/packageECharts/pages/EvaluationStatistics/MyEvaluationStatistics'
   // url = '/packageECharts/pages/EvaluationStatistics/AllEvaluationStatistics'
+  // url = '/packageECharts/pages/EvaluationStatistics/DepartmentEvaluationStatistics'
   // tabUrl = '/pages/WantListen/WantListen'
 
   if (url) {

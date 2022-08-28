@@ -10,6 +10,7 @@ import useCountStatistics from './hooks/department/useCountStatistics'
 import useEvaluationStatistics from './hooks/department/useEvaluationStatistics'
 import { RadioGroup as NutRadiogroup, Radio as NutRadio } from '@nutui/nutui-taro'
 import { userSubjectGroups } from '@/api/user'
+import { getDepartmentEvaluationStatistics } from '@/api/statistic'
 
 const { toastLoading, toastClose } = useToastInject()
 
@@ -36,26 +37,29 @@ watch(groupId, reload)
 function reload() {
   toastLoading()
 
-  Promise.all([
-    countUpdate(rangeType.value, groupId.value),
-    updateChartBar(rangeType.value, groupId.value),
-  ]).finally(() => {
-    toastClose()
+  getDepartmentEvaluationStatistics({
+    dateRange: 2,
   })
+  // Promise.all([
+  //   countUpdate(rangeType.value, groupId.value),
+  //   updateChartBar(rangeType.value, groupId.value),
+  // ]).finally(() => {
+  //   toastClose()
+  // })
 }
 
 const subjectGroups = ref<{ id: string; name: string }[]>([{ id: '', name: '全部' }])
-userSubjectGroups().then((res) => {
-  const groups = (subjectGroups.value = res.subject_groups.map((group) => {
-    return {
-      id: group.subject_group_id,
-      name: group.subject_group_name,
-    }
-  }))
-  if (groups[0]) {
-    groupId.value = groups[0].id
-  }
-})
+// userSubjectGroups().then((res) => {
+//   const groups = (subjectGroups.value = res.subject_groups.map((group) => {
+//     return {
+//       id: group.subject_group_id,
+//       name: group.subject_group_name,
+//     }
+//   }))
+//   if (groups[0]) {
+//     groupId.value = groups[0].id
+//   }
+// })
 </script>
 <template>
   <div class="EvaluationStatistics">

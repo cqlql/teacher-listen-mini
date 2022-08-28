@@ -3,7 +3,9 @@ import { getCreateListenSelectData } from '@/api/select'
 import getPeriodMap from '@/data/get-period-map'
 import useRouterParams from '@/hooks/useRouterParams'
 import classify from '@/utils/each/classify'
+import type { Ref } from 'vue'
 import { ref } from 'vue'
+import type { OutsideCourseForm } from '../types'
 
 export interface SubjectDataType {
   [key: string]: SubjectInfo[]
@@ -17,7 +19,7 @@ interface SubjectInfo {
 }
 
 type Option = { id: string; name: string }
-export default function useInitDate() {
+export default function useInitDate(form: Ref<OutsideCourseForm>) {
   const { id } = useRouterParams<{ id?: string }>() // 公开课id
   const periodOptions = ref<Option[]>([])
   const subjectData = ref<SubjectDataType>({})
@@ -57,6 +59,8 @@ export default function useInitDate() {
         name: role.name,
       }
     })
+
+    form.value.school_name = res.entity.out_school_name
   })
 
   return {

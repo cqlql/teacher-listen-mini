@@ -85,6 +85,19 @@ export function getEvaluationStatistics(data: {
   })
 }
 
+/**
+ * 科组评课统计
+ *
+ */
+export function getDepartmentEvaluationStatistics(data: {
+  dateRange?: DateRangeType
+}): Promise<GetTeachRecordDetailsResult[]> {
+  return httpV2.get({
+    url: '/224',
+    data,
+  })
+}
+
 export interface GetSchoolAllEvaluationRecordParams {
   pageSize: number
   pageIndex: number
