@@ -55,6 +55,8 @@ export interface ScoreItem {
     id: string
     name: string
   }[]
+
+  dict: Record<string, ScoreItem>
 }
 
 export interface EvaluationScore {

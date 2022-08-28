@@ -1,13 +1,11 @@
-import { dimensionList } from '@/api/course'
-import type { GetEvaluationListResult, GetEvaluationScoreResult } from '@/api/model/courseModel'
-import { getStorage } from '@/utils/storage'
+import type { GetEvaluationScoreResult } from '@/api/model/courseModel'
+
 import { ref } from 'vue'
 import type { EvaluationScore, ScoreItem } from '../types'
-import type { RouteParams } from './useListenEvaluationStore'
 
 async function initEvaluationScore(
   res: GetEvaluationScoreResult,
-): Promise<{ record: Record<string, ScoreItem>; scoreList: ScoreItem[] }> {
+): Promise<{ scoreList: ScoreItem[] }> {
   // return dimensionList({
   //   subject_id: routeParams.subject_id,
   //   grade_id: routeParams.grade_id,
@@ -18,7 +16,7 @@ async function initEvaluationScore(
 
   scoreList.push({
     id: '',
-    ids: [],
+    ids: res.userEvalDetails.map((item) => String(item.eval_tmp_deatils_id)),
     name: '',
     weight: '', //item.weight,
     options: res.evalTmpDetails.map((item) => {
@@ -27,15 +25,18 @@ async function initEvaluationScore(
         name: item.name,
       }
     }),
+    dict: res.evalTmpDetails.reduce((acc, item) => {
+      acc[item.id] = item
+      return acc
+    }, {}),
   })
 
   return {
     scoreList,
-    record: {},
   }
 }
 
-export default function useEvaluationScoreStore(routeParams: RouteParams) {
+export default function useEvaluationScoreStore() {
   const evaluationScore = ref<EvaluationScore>({
     reviews: '',
     scoreList: [],
@@ -45,18 +46,10 @@ export default function useEvaluationScoreStore(routeParams: RouteParams) {
     evaluationScore,
     async editInit(res: GetEvaluationScoreResult) {
       const evaluationScoreValue = evaluationScore.value
-      const { record, scoreList } = await initEvaluationScore(res)
+      const { scoreList } = await initEvaluationScore(res)
       evaluationScoreValue.scoreList = scoreList
-      console.log('🚀 -- editInit -- scoreList', scoreList)
 
-      // res.scoreList?.forEach((scoreItem) => {
-      //   const currentRecord = record[scoreItem.dimension_id]
-      //   currentRecord.ids.push(scoreItem.dimension_item_id)
-      // })
-
-      // res.lessonRecordList?.forEach((record) => {
-      //   evaluationScoreValue.reviews = record.lesson_evaluation_text
-      // })
+      evaluationScoreValue.reviews = '!!没有'
     },
   }
 }

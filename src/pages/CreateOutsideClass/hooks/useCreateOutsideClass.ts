@@ -1,5 +1,4 @@
-import { addTempOpenCourse, requestOpenCourse } from '@/api/course'
-import type { AddTempOpenCourseParams } from '@/api/model/courseModel'
+import { requestOpenCourse } from '@/api/course'
 import type { SubjectDataType } from '@/pages/CreateListen/hooks/useGradeSubectData'
 import { setStorage } from '@/utils/storage'
 import Taro from '@tarojs/taro'

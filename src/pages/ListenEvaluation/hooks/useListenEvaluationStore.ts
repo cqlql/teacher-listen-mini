@@ -94,13 +94,15 @@ function useSave(
 
   function resolveEvaluationScoreRequestData(): SaveEvaluationScoreReqParams {
     const evaluationScoreVal = evaluationScore.value
+    const scoreItem = evaluationScoreVal.scoreList[0]
     return {
       id: Number(routeParams.id),
       comments: evaluationScoreVal.reviews,
-      eval_tmp_details: evaluationScoreVal.scoreList[0].options.map((option) => {
+      eval_tmp_details: scoreItem.ids.map((id) => {
+        const item = scoreItem.dict[id]
         return {
-          eval_tmp_deatils_id: Number(option.id),
-          name: option.name,
+          eval_tmp_deatils_id: Number(item.id),
+          name: item.name,
         }
       }),
     }
@@ -150,7 +152,7 @@ export default function useListenEvaluationStore(): ListenEvaluationStore {
 
   const processRecordStore = useProcessRecordStore()
 
-  const evaluationScoreStore = useEvaluationScoreStore(routeParams)
+  const evaluationScoreStore = useEvaluationScoreStore()
   const { evaluationScore } = evaluationScoreStore
 
   const { save, saveEvaluationScore } = useSave(routeParams, processRecordStore, evaluationScore)

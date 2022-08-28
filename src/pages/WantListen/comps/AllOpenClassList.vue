@@ -3,23 +3,17 @@
     <template #default="{ list }: OpenType">
       <div class="OpenClassList">
         <OpenClassPassedItem
-          v-for="(item, index) of list"
+          v-for="item of list"
           :key="item.course_id"
           :data="item"
           type="all"
           @refresh="refresh"
         >
           <template #btns>
-            <nut-button v-if="item.is_add === 0" size="small" disabled type="default"
+            <nut-button v-if="item.is_add === 1" size="small" disabled type="default"
               >已添加</nut-button
             >
-            <nut-button
-              v-else
-              size="small"
-              type="primary"
-              plain
-              @click="onAddUserCourse(item, list, index)"
-            >
+            <nut-button v-else size="small" type="primary" plain @click="onAddUserCourse(item)">
               添加到听课
             </nut-button>
           </template>
@@ -132,7 +126,7 @@ function reqList({ page }: { page: number }) {
   })
 }
 
-function onAddUserCourse(item: CourseItem, list: CourseItem[], index: number) {
+function onAddUserCourse(item: CourseItem) {
   addUserCourse({
     courses_id: item.course_id,
     // user_id: item.user_id,
@@ -140,10 +134,12 @@ function onAddUserCourse(item: CourseItem, list: CourseItem[], index: number) {
     // start_time: item.start_time,
     // status: '0',
   }).then(() => {
-    list.splice(index, 1)
-    if (list.length === 0) {
-      vListLoad.value.firstPageLoad()
-    }
+    // list.splice(index, 1)
+    // if (list.length === 0) {
+    //   vListLoad.value.firstPageLoad()
+    // }
+
+    item.is_add = 1
     toastSuccess('添加成功')
   })
 }

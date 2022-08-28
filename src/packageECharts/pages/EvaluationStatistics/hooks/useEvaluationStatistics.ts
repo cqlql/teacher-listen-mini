@@ -2,7 +2,7 @@ import type { GetMyEvaluationStatisticsResult } from '@/api/statistic'
 import type { ChartBarCustomItem } from '@/components/ChartBarCustom'
 import { ref } from 'vue'
 
-export default function useEvaluationStatistics(userId) {
+export default function useEvaluationStatistics() {
   const empty = ref(false)
   const chartBarData = ref<ChartBarCustomItem[]>([])
 

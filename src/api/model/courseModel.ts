@@ -756,7 +756,12 @@ export interface GetEvaluationScoreResult {
     order_index: number //0
   }[]
 
-  userEvalDetails: {}[]
+  userEvalDetails: {
+    eval_tmp_deatils_id: number // 4
+    // eval_tmp_id: 10
+    // id: 27
+    name: string //'互动积极'
+  }[]
 }
 
 export interface SaveEvaluationScoreReqParams {

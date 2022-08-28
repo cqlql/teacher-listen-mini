@@ -1,8 +1,9 @@
-import { getEvaluationStatistics, getSubjectGroupsMembers } from '@/api/course'
+import { getSubjectGroupsMembers } from '@/api/course'
 import type {
   GetListenAndTeachStatisticsParams,
   GetSubjectGroupsMembersResult,
 } from '@/api/model/courseModel'
+import { getEvaluationStatistics } from '@/api/statistic'
 import type { ChartBarCustomItem } from '@/components/ChartBarCustom'
 import useToastInject from '@/hooks/useToastInject'
 import { ref } from 'vue'
