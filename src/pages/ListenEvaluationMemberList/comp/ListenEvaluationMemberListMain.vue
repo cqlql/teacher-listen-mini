@@ -3,11 +3,9 @@ import ListLoad from '@/components/ListLoad/ListLoad.vue'
 import { reactive, ref } from 'vue'
 import SemesterRangePicker from '../../ListenEvaluationRecord/comp/SemesterRangePicker.vue'
 import SearchBarSelect2 from '@/components/SearchBarSelect2.vue'
-import type { GetListenAndTeachStatisticsResult } from '@/api/model/courseModel'
 import Taro from '@tarojs/taro'
-import type { DateRangeType } from '@/api/statistic'
+import type { GetSchoolAllEvaluationRecordResult } from '@/api/statistic'
 import { getSchoolAllEvaluationRecord } from '@/api/statistic'
-import useSemesterRange from '../hooks/useSemesterRange'
 import useSemesterRangeRemoteData from '@/hooks/useSemesterRangeRemoteData'
 import dayjs from 'dayjs'
 
@@ -41,22 +39,19 @@ async function reqList({ page }) {
       dayjs(searchOption.dateStart).format('YYYY/MM/DD') +
       '-' +
       dayjs(searchOption.dateEnd).format('YYYY/MM/DD'),
-  }).then((res) => {
-    return res.course_frequence_list
-  })
+  }).then((res) => res.data)
 }
 
-function toListenEvaluationRecord(
-  item: GetListenAndTeachStatisticsResult['course_frequence_list'][0],
-) {
-  let params = `?dateStart=${searchOption.dateStart}&dateEnd=${searchOption.dateEnd}&userId=${item.user_id}`
+function toListenEvaluationRecord(item: GetSchoolAllEvaluationRecordResult['data'][0]) {
+  let params = `?dateStart=${searchOption.dateStart}&dateEnd=${searchOption.dateEnd}&userId=${item.id}`
   Taro.navigateTo({
     url: '/pages/ListenEvaluationRecord/ListenEvaluationRecordNoSearch' + params,
   })
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface ListType {
-  list: GetListenAndTeachStatisticsResult['course_frequence_list']
+  list: GetSchoolAllEvaluationRecordResult['data']
 }
 </script>
 <template>
@@ -85,16 +80,16 @@ interface ListType {
           <div
             class="item"
             v-for="item of list"
-            :key="item.user_id"
+            :key="item.id"
             @click="toListenEvaluationRecord(item)"
           >
             <div class="avatar-icon">
               <nut-icon font-class-name="iconfont" class-prefix="icon" name="user-full"></nut-icon>
             </div>
-            <div class="name">{{ item.user_name }}</div>
+            <div class="name">{{ item.teacher_name }}</div>
             <div class="number"
               >听课 <span class="blue">{{ item.listen_num }}</span> 次/授课
-              <span class="red">{{ item.teaching_num }}</span> 次</div
+              <span class="red">{{ item.give_num }}</span> 次</div
             >
             <div class="arrow-icon">
               <nut-icon name="right"></nut-icon>

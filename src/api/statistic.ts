@@ -57,4 +57,12 @@ export interface GetSchoolAllEvaluationRecordParams {
   dateRange: string
 }
 
-export interface GetSchoolAllEvaluationRecordResult {}
+export interface GetSchoolAllEvaluationRecordResult {
+  data: {
+    give_num: number //62
+    id: number //8040
+    listen_num: number //34
+    teacher_name: string //"钟洁娜
+  }[]
+  totalRow: number
+}
