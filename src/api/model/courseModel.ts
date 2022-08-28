@@ -657,16 +657,10 @@ export interface GetListenAndTeachStatisticsResult {
 }
 
 export interface GetSubjectGroupsMembersResult {
-  count: number
-  data: {
-    classid: string
-    id: string
-    isleader: string
-    mainid: string
-    name: string
-    sno: string
-    userid: string
-  }[]
+  role_id: nubmer // 139
+  role_name: string // "中学低段语文"
+  sysuser_id: nubmer // 7790
+  teacher_name: string //"吴玉如"
 }
 
 export interface GetFullCourseStatisticsParams {

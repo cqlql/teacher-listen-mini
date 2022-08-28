@@ -1,9 +1,12 @@
-import { getEvaluationStatistics, getSubjectGroups, getSubjectGroupsMembers } from '@/api/course'
+import { getSubjectGroups, getSubjectGroupsMembers } from '@/api/course'
 import type {
   GetListenAndTeachStatisticsParams,
   GetSubjectGroupsResult,
 } from '@/api/model/courseModel'
+import type { DateRangeType, GetSchoolEvaluationStatisticsResult } from '@/api/statistic'
+import { getEvaluationStatistics } from '@/api/statistic'
 import type { ChartBarCustomItem } from '@/components/ChartBarCustom'
+import classify from '@/utils/each/classify'
 import OncePromise from '@/utils/once/once-promise'
 import testKeyword from '@/utils/search/test-keyword'
 import type { Ref } from 'vue'
@@ -11,9 +14,7 @@ import { reactive, ref } from 'vue'
 
 type IdName = { id: string; name: string }
 
-export default function useEvaluationStatistics(
-  rangeType: Ref<GetListenAndTeachStatisticsParams['range_type']>,
-) {
+export default function useEvaluationStatistics(rangeType: Ref<DateRangeType>) {
   const empty = ref(false)
   const chartBarData = ref<ChartBarCustomItem[]>([])
   const subjectGroups = ref<{ text: string; value: string }[]>([])
@@ -27,43 +28,42 @@ export default function useEvaluationStatistics(
 
   function updateEvaluationStatistics() {
     return getEvaluationStatistics({
-      user_id: subjectGroupMemberId.value,
-      range_type: rangeType.value,
+      userId: Number(subjectGroupMemberId.value),
+      dateRange: rangeType.value,
     }).then((res) => {
       const list: ChartBarCustomItem[] = []
-      res.evaluation_count.forEach((item) => {
-        item.evaluation_counts.forEach((childItem) => {
-          list.push({
-            name: childItem.dimension_item_name,
-            count: Number(childItem.count),
-          })
+      res.forEach((item) => {
+        list.push({
+          name: item.name,
+          count: item.num,
         })
       })
       empty.value = list.length === 0
       chartBarData.value = list
+      console.log('🚀 -- updateEvaluationStatistics -- chartBarData', chartBarData)
     })
   }
 
-  const onceGetSubjectGroupList = new OncePromise(() => {
-    return getSubjectGroups().then(({ data }: GetSubjectGroupsResult) => {
-      const list = (subjectGroups.value = data.map((item) => {
-        return {
-          text: item.name,
-          value: item.id,
-        }
-      }))
-      evaluationState.groupId = list[0]?.value
-    })
-  })
+  function initSubjectGroupList(rawData: GetSchoolEvaluationStatisticsResult) {
+    const list = (subjectGroups.value = rawData.group_total.map((group) => {
+      return {
+        text: group.role_name,
+        value: String(group.role_id),
+      }
+    }))
+
+    evaluationState.groupId = list[0]?.value
+  }
+
   const onceGetSubjectGroupMembers = new OncePromise(() => {
     return getSubjectGroupsMembers({
-      group_id: evaluationState.groupId,
+      roleId: Number(evaluationState.groupId),
     }).then((result) => {
       const userList: IdName[] = []
-      result.data.forEach((item) => {
+      result.forEach((item) => {
         userList.push({
-          id: item.userid,
-          name: item.name,
+          id: item.sysuser_id,
+          name: item.teacher_name,
         })
       })
       subjectGroupMembers.value = userList
@@ -72,9 +72,11 @@ export default function useEvaluationStatistics(
     })
   })
 
-  async function updateEvaluation() {
-    await onceGetSubjectGroupList.execute()
+  async function updateEvaluation(rawData: GetSchoolEvaluationStatisticsResult) {
+    await initSubjectGroupList(rawData)
+
     await onceGetSubjectGroupMembers.execute()
+
     return updateEvaluationStatistics()
   }
 
@@ -103,7 +105,7 @@ export default function useEvaluationStatistics(
       updateMembersByKeyword()
     },
     subjectGroupMemberChange() {
-      updateEvaluation()
+      updateEvaluationStatistics()
     },
     subjectGroupMembersSearchResults,
   }

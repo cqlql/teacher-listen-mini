@@ -259,31 +259,6 @@ export function allRecordList(data: {
   })
 }
 
-interface GetTeachRecordDetailsResult {
-  evaluation_count: {
-    dimension_name: string
-    evaluation_counts: {
-      count: string
-      dimension_item_name: string
-    }[]
-  }[]
-}
-
-/**
- * 授课评价统计
- *
- */
-export function getEvaluationStatistics(data: {
-  course_id?: string
-  user_id?: string
-  range_type?: GetListenAndTeachStatisticsParams['range_type']
-}): Promise<GetTeachRecordDetailsResult> {
-  return httpV1.get({
-    url: '/lecture/v1/evaluation_count_by_dimension_item',
-    data: data,
-  })
-}
-
 /**
  * 听课记录详情
  *
@@ -317,10 +292,10 @@ export function getSubjectGroups(): Promise<GetSubjectGroupsResult> {
 
 /**科组用户列表 */
 export function getSubjectGroupsMembers(data: {
-  group_id: string
-}): Promise<GetSubjectGroupsMembersResult> {
-  return httpV1.get({
-    url: '/lecture/v3/queryEvaluationGroupMember',
+  roleId: number
+}): Promise<GetSubjectGroupsMembersResult[]> {
+  return httpV2.get({
+    url: '/222',
     data,
   })
 }

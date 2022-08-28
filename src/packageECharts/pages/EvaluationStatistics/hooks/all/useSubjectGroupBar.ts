@@ -1,5 +1,4 @@
-import { getSubjectGroupsStatistics } from '@/api/course'
-import type { GetListenAndTeachStatisticsParams } from '@/api/model/courseModel'
+import type { GetSchoolEvaluationStatisticsResult } from '@/api/statistic'
 import { reactive } from 'vue'
 
 export default function useSubjectGroupBar() {
@@ -8,87 +7,82 @@ export default function useSubjectGroupBar() {
     chartOptions: {},
   })
 
-  function updateSubjectGroupBar(rangeType: GetListenAndTeachStatisticsParams['range_type']) {
-    return getSubjectGroupsStatistics({
-      range_type: rangeType,
-    }).then((result) => {
-      const barDataSource: string[][] = []
+  function updateSubjectGroupBar(rawData: GetSchoolEvaluationStatisticsResult) {
+    const barDataSource: string[][] = []
 
-      result.course_frequence.forEach((item) => {
-        barDataSource.push([item.evaluation_group_name, item.listen_num, item.teaching_num])
-      })
-      const totalNumber = barDataSource.length
-      const showNumber = 4
-      if (barDataSource.length) {
-        barDataSource.unshift(['group', '听课', '授课'])
+    const totalNumber = barDataSource.length
+    const showNumber = 4
+    if (rawData.group_total.length) {
+      barDataSource.unshift(['group', '听课', '授课'])
 
-        subjectGroupBar.chartOptions = {
-          legend: {
-            // orient: 'vertical',
-            // top: '10px',
-            bottom: '0',
+      subjectGroupBar.chartOptions = {
+        legend: {
+          // orient: 'vertical',
+          // top: '10px',
+          bottom: '0',
+        },
+        tooltip: {},
+        dataset: {
+          source: barDataSource,
+        },
+        grid: {
+          height: '52%',
+        },
+        xAxis: {
+          type: 'category',
+          axisTick: {
+            alignWithLabel: true,
           },
-          tooltip: {},
-          dataset: {
-            source: barDataSource,
+          axisLabel: {
+            interval: 0,
+            rotate: 20,
           },
-          grid: {
-            height: '52%',
+        },
+        yAxis: {
+          name: '次数',
+          nameTextStyle: {
+            align: 'right',
           },
-          xAxis: {
-            type: 'category',
-            axisTick: {
-              alignWithLabel: true,
-            },
-            axisLabel: {
-              interval: 0,
-              rotate: 20,
-            },
-          },
-          yAxis: {
-            name: '次数',
-            nameTextStyle: {
-              align: 'right',
-            },
 
-            // nameLocation: 'start',
-            // show: false,
-            // type: 'log',
+          // nameLocation: 'start',
+          // show: false,
+          // type: 'log',
+        },
+        dataZoom: [
+          {
+            show: true,
+            start: 0,
+            end: (showNumber / totalNumber) * 100,
+            height: 25,
+            zoomLock: true, //
+            brushSelect: false,
+            bottom: 22,
           },
-          dataZoom: [
-            {
+        ],
+        // Declare several bar series, each will be mapped
+        // to a column of dataset.source by default.
+        series: [
+          {
+            type: 'bar',
+            label: {
               show: true,
-              start: 0,
-              end: (showNumber / totalNumber) * 100,
-              height: 25,
-              zoomLock: true, //
-              brushSelect: false,
-              bottom: 22,
+              position: 'inside',
             },
-          ],
-          // Declare several bar series, each will be mapped
-          // to a column of dataset.source by default.
-          series: [
-            {
-              type: 'bar',
-              label: {
-                show: true,
-                position: 'inside',
-              },
+          },
+          {
+            type: 'bar',
+            label: {
+              show: true,
+              position: 'inside',
             },
-            {
-              type: 'bar',
-              label: {
-                show: true,
-                position: 'inside',
-              },
-            },
-          ],
-        }
-      } else {
-        subjectGroupBar.empty = true
+          },
+        ],
       }
-    })
+
+      rawData.group_total.forEach((item) => {
+        barDataSource.push([item.role_name, String(item.listen_num), String(item.give_num)])
+      })
+    }
   }
   return {
     subjectGroupBar,

@@ -1,40 +1,40 @@
 <script lang="ts" setup>
 import CardPlus from '@/components/CardPlus.vue'
 import EChart from '@/packageECharts/components/EChart.vue'
-// import ChartBarCustom from '@/components/ChartBarCustom.vue'
+import ChartBarCustom from '@/components/ChartBarCustom.vue'
 import { ref } from 'vue'
 import { Empty } from '@nutui/nutui-taro'
 import useToastInject from '@/hooks/useToastInject'
 
-// import useEvaluationStatistics from './hooks/all/useEvaluationStatistics'
-// import { RadioGroup as NutRadiogroup, Radio as NutRadio } from '@nutui/nutui-taro'
+import useEvaluationStatistics from './hooks/all/useEvaluationStatistics'
+import { RadioGroup as NutRadiogroup, Radio as NutRadio } from '@nutui/nutui-taro'
 
 // import SearchBarSelect2 from '@/components/SearchBarSelect2.vue'
 import useCountPieChart from './hooks/all/useCountPieChart'
-// import useSubjectGroupBar from './hooks/all/useSubjectGroupBar'
-// import GroupSelectAndUserSearch from './components/GroupSelectAndUserSearch.vue'
+import useSubjectGroupBar from './hooks/all/useSubjectGroupBar'
+import GroupSelectAndUserSearch from './components/GroupSelectAndUserSearch.vue'
 import type { DateRangeType } from '@/api/statistic'
 import { getSchoolEvaluationStatistics } from '@/api/statistic'
 const { toastLoading, toastClose } = useToastInject()
 
 const rangeType = ref<DateRangeType>(2)
 
-// const {
-//   empty: chartBarEmpty,
-//   chartBarData,
-//   updateEvaluation,
-//   subjectGroups,
-//   subjectGroupMembersSearchResults,
-//   subjectGroupMemberId,
-//   evaluationState,
-//   evaluationGroupConfirm,
-//   evaluationTearchSearch,
-//   subjectGroupMemberChange,
-// } = useEvaluationStatistics(rangeType)
+const {
+  empty: chartBarEmpty,
+  chartBarData,
+  updateEvaluation,
+  subjectGroups,
+  subjectGroupMembersSearchResults,
+  subjectGroupMemberId,
+  evaluationState,
+  evaluationGroupConfirm,
+  evaluationTearchSearch,
+  subjectGroupMemberChange,
+} = useEvaluationStatistics(rangeType)
 
 const { countPieState, updateCountPie } = useCountPieChart()
 
-// const { subjectGroupBar, updateSubjectGroupBar } = useSubjectGroupBar()
+const { subjectGroupBar, updateSubjectGroupBar } = useSubjectGroupBar()
 
 function reload() {
   toastLoading()
@@ -42,8 +42,8 @@ function reload() {
   getSchoolEvaluationStatistics({ dateRange: rangeTypeValue })
     .then((result) => {
       updateCountPie(result)
-      // updateSubjectGroupBar(rangeTypeValue),
-      // updateEvaluation(),
+      updateSubjectGroupBar(result)
+      updateEvaluation(result)
     })
     .finally(() => {
       toastClose()
@@ -72,7 +72,7 @@ reload()
       <EChart v-else ref="vEChart" :option="countPieState.chartOptions"> </EChart>
     </CardPlus>
 
-    <!-- <CardPlus title2="各科组听授课次数统计：">
+    <CardPlus title2="各科组听授课次数统计：">
       <Empty v-if="subjectGroupBar.empty"></Empty>
       <EChart v-else class="charBar" :option="subjectGroupBar.chartOptions"> </EChart>
     </CardPlus>
@@ -105,7 +105,7 @@ reload()
           <ChartBarCustom v-else :data="chartBarData"></ChartBarCustom>
         </div>
       </div>
-    </CardPlus> -->
+    </CardPlus>
   </div>
 </template>
 

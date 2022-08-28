@@ -10,16 +10,37 @@ export interface GetMyEvaluationStatisticsResult {
 }
 
 export interface GetSchoolEvaluationStatisticsResult {
-  give_num: number
-  g_subject: {
-    'count(1)': number
-    subject_name: string
+  // give_num: number
+  // g_subject: {
+  //   'count(1)': number
+  //   subject_name: string
+  // }[]
+  // l_subject: {
+  //   'count(1)': number
+  //   subject_name: string
+  // }
+  // listen_num: number
+  group_total: {
+    give_num: number // 62
+    listen_num: number //34
+    role_id: number //139
+    role_name: string //'中学低段语文'
+    sys_user_id: number //8040
+    teacher_name: string //'钟洁娜'
   }[]
-  l_subject: {
-    'count(1)': number
-    subject_name: string
-  }
-  listen_num: number
+  roles: {
+    created_date: string //'2022-08-26 16:39:17'
+    created_user_id: number //7842
+    id: number //5
+    is_enable: true
+    name: string //'科组'
+    remarks: string //''
+    updated_user_id: number //0
+  }[]
+  total: {
+    give_num_tot: number //65
+    listen_num_tot: number //34
+  }[]
 }
 
 /**我的评课统计 */
@@ -37,7 +58,7 @@ export function getSchoolEvaluationStatistics(data: {
   dateRange: DateRangeType
 }): Promise<GetSchoolEvaluationStatisticsResult> {
   return httpV2.get({
-    url: '/219',
+    url: '/221',
     data,
   })
 }
@@ -46,6 +67,20 @@ export function getSchoolAllEvaluationRecord(
 ): Promise<GetSchoolAllEvaluationRecordResult> {
   return httpV2.get({
     url: '/220',
+    data,
+  })
+}
+
+/**
+ * 授课评价统计
+ *
+ */
+export function getEvaluationStatistics(data: {
+  userId?: number
+  dateRange?: DateRangeType
+}): Promise<GetTeachRecordDetailsResult[]> {
+  return httpV2.get({
+    url: '/223',
     data,
   })
 }
@@ -65,4 +100,9 @@ export interface GetSchoolAllEvaluationRecordResult {
     teacher_name: string //"钟洁娜
   }[]
   totalRow: number
+}
+
+interface GetTeachRecordDetailsResult {
+  name: string
+  num: number
 }

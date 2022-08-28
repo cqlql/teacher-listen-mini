@@ -44,7 +44,7 @@ function reload() {
   })
 }
 
-const subjectGroups = ref<{ id: string; name: string }[]>([])
+const subjectGroups = ref<{ id: string; name: string }[]>([{ id: '', name: '全部' }])
 userSubjectGroups().then((res) => {
   const groups = (subjectGroups.value = res.subject_groups.map((group) => {
     return {
@@ -66,7 +66,7 @@ userSubjectGroups().then((res) => {
     </nut-tabs>
 
     <!-- <div style="padding: 10px"> -->
-    <nut-radiogroup v-model="groupId" direction="horizontal">
+    <nut-radiogroup direction="horizontal">
       <nut-radio v-for="group of subjectGroups" :key="group.id" shape="button" :label="group.id">{{
         group.name
       }}</nut-radio>
