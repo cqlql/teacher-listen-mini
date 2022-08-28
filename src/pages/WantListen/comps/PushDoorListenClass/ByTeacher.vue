@@ -94,7 +94,7 @@ function reqList({ page }): Promise<PushDoorCourseItemByTeacher[]> {
   }).then((rawList) =>
     rawList.map((item, index) => {
       return {
-        id: String(index),
+        id: String(item.id),
         className: '三年级2班', //getGrade(item.period, item.years),
         lessonName: '第一节',
         liveUrl: '1',

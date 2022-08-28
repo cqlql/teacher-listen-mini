@@ -41,3 +41,20 @@ export function getSchoolEvaluationStatistics(data: {
     data,
   })
 }
+export function getSchoolAllEvaluationRecord(
+  data: GetSchoolAllEvaluationRecordParams,
+): Promise<GetSchoolAllEvaluationRecordResult> {
+  return httpV2.get({
+    url: '/220',
+    data,
+  })
+}
+
+export interface GetSchoolAllEvaluationRecordParams {
+  pageSize: number
+  pageIndex: number
+  keyword: string
+  dateRange: string
+}
+
+export interface GetSchoolAllEvaluationRecordResult {}

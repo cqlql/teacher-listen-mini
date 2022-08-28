@@ -25,11 +25,11 @@ watch(vListLoad, (vListLoad) => {
 })
 
 function toProcessRecord(item: PushDoorCourseItemByTeacher) {
-  const currentUserId = getStorage('userId')
+  // const currentUserId = getStorage('userId')
   Taro.navigateTo({
-    url: `/pages/ListenEvaluation/ListenEvaluation?user_id=${currentUserId}&course_id=${
-      item.id
-    }&live_url=${encodeURIComponent(item.liveUrl)}`,
+    url: `/pages/ListenEvaluation/ListenEvaluation?id=${item.id}&live_url=${encodeURIComponent(
+      item.liveUrl,
+    )}`,
   })
 }
 

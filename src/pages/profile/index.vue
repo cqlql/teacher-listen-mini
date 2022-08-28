@@ -142,12 +142,15 @@ function initUserInfoByToken() {
       mobile: string
       name: string //"陈理"
       // nbf: 1660232077
+      roles: string
       school_name: string //"深圳市龙岗区扬美实验学校"
     } = JSON.parse(base64url.decode(infoStr))
-    console.log('🚀 -- initUserInfoByToken -- userData', userData)
+
     userInfo.name = userData.name
     userInfo.teacher_code = userData.login_name
     userInfo.school = userData.school_name
+
+    subjectGroups.value = userData.roles.split(',')
   }
 }
 </script>

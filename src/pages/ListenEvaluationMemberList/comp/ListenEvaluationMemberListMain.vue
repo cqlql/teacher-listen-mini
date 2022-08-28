@@ -3,9 +3,13 @@ import ListLoad from '@/components/ListLoad/ListLoad.vue'
 import { reactive, ref } from 'vue'
 import SemesterRangePicker from '../../ListenEvaluationRecord/comp/SemesterRangePicker.vue'
 import SearchBarSelect2 from '@/components/SearchBarSelect2.vue'
-import { getListenAndTeachStatistics } from '@/api/course'
 import type { GetListenAndTeachStatisticsResult } from '@/api/model/courseModel'
 import Taro from '@tarojs/taro'
+import type { DateRangeType } from '@/api/statistic'
+import { getSchoolAllEvaluationRecord } from '@/api/statistic'
+import useSemesterRange from '../hooks/useSemesterRange'
+import useSemesterRangeRemoteData from '@/hooks/useSemesterRangeRemoteData'
+import dayjs from 'dayjs'
 
 defineProps<{
   // 是列出科组还是全校
@@ -27,15 +31,16 @@ const searchOption = reactive({
     vListLoad.value?.firstPageLoad()
   },
 })
-
+const { semesterSelectOptions, semesterSelectDataLoading } = useSemesterRangeRemoteData()
 async function reqList({ page }) {
-  let pageSize = 10
-  return getListenAndTeachStatistics({
-    start_date: searchOption.dateStart,
-    end_date: searchOption.dateEnd,
-    search_name: searchOption.keyword,
-    offset: page * pageSize,
-    list_mun: pageSize,
+  return getSchoolAllEvaluationRecord({
+    pageIndex: page,
+    pageSize: 10,
+    keyword: '',
+    dateRange:
+      dayjs(searchOption.dateStart).format('YYYY/MM/DD') +
+      '-' +
+      dayjs(searchOption.dateEnd).format('YYYY/MM/DD'),
   }).then((res) => {
     return res.course_frequence_list
   })
@@ -49,6 +54,10 @@ function toListenEvaluationRecord(
     url: '/pages/ListenEvaluationRecord/ListenEvaluationRecordNoSearch' + params,
   })
 }
+
+interface ListType {
+  list: GetListenAndTeachStatisticsResult['course_frequence_list']
+}
 </script>
 <template>
   <SemesterRangePicker
@@ -57,6 +66,7 @@ function toListenEvaluationRecord(
     v-model:label="searchOption.selectedName"
     v-model:visible="searchOption.visible"
     :defaultIndex="searchOption.defaultIndex"
+    :options="semesterSelectOptions"
     @ok="searchOption.search"
   ></SemesterRangePicker>
   <div class="ListenEvaluationList">
@@ -69,11 +79,9 @@ function toListenEvaluationRecord(
         @search="searchOption.search"
       ></SearchBarSelect2>
     </div>
-    <div class="list">
+    <div v-if="!semesterSelectDataLoading" class="list">
       <ListLoad ref="vListLoad" :startPage="0" :reqList="reqList">
-        <template
-          #default="{ list }: { list: GetListenAndTeachStatisticsResult['course_frequence_list'] }"
-        >
+        <template #default="{ list }: ListType">
           <div
             class="item"
             v-for="item of list"

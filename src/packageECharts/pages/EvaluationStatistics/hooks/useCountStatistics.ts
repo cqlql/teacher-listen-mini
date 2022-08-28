@@ -1,7 +1,7 @@
 import type { GetMyEvaluationStatisticsResult } from '@/api/statistic'
 import { ref } from 'vue'
 
-export default function useCountStatistics(userId) {
+export default function useCountStatistics() {
   const empty = ref(false)
   const chartOptions = ref<any>()
 

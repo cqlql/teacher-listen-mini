@@ -69,3 +69,12 @@ export interface ListenEvaluationStore {
   evaluationScore: Ref<EvaluationScore>
   processRecordStore: ProcessRecordStore
 }
+
+export interface ProcessRecordUrlParams {
+  id: string
+  // course_id: string
+  // subject_id: string
+  // grade_id: string
+  // user_id: string
+  live_url: string
+}

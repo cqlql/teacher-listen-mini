@@ -13,7 +13,6 @@ import type {
   DimensionListResult,
   GetAllEvaluationResult,
   GetAttachListResult,
-  GetCourseListResult,
   GetFullCourseStatisticsParams,
   GetFullCourseStatisticsResult,
   GetListenAndTeachStatisticsParams,
@@ -100,28 +99,6 @@ export function openCourseListV1(
     },
     config,
   )
-}
-
-interface GetCourseListParams {
-  // campus_id?: string //校区
-
-  // grade_id?: string //年级ID
-  // class_id?: string //教室ID
-
-  // list_mun: number //条数
-  // page: string //页数
-  // user_name?: string //授课老师名
-  // period_id?: string // 学段ID 1001 小学 1002 初中 1003 高中
-  // lesson_date: string
-
-  pageSize: number //每页大小
-  pageIndex: number //当前页从0开始
-
-  subject_id?: number //科目ID
-  classId?: number //班级ID
-
-  period: number // 学段ID 1001 小学 1002 初中 1003 高中
-  teacher_name: string //老师名称
 }
 
 interface GetPushDoorCourseListParams {

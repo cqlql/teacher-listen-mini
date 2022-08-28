@@ -10,7 +10,6 @@ import useCountStatistics from './hooks/useCountStatistics'
 import useEvaluationStatistics from './hooks/useEvaluationStatistics'
 import type { DateRangeType } from '@/api/statistic'
 import { getMyEvaluationStatistics } from '@/api/statistic'
-import { getListenAndTeachStatistics } from '@/api/course'
 const { toastLoading, toastClose } = useToastInject()
 
 const rangeType = ref<DateRangeType>(2)
@@ -20,7 +19,7 @@ const {
   empty: countEmpty,
   update: countUpdate,
   chartOptions: countChartOptions,
-} = useCountStatistics(userId)
+} = useCountStatistics()
 
 const {
   empty: chartBarEmpty,
@@ -37,13 +36,8 @@ function tabChange() {
     .then((result) => {
       countUpdate(result)
       updateChartBar(result)
-      console.log('🚀 -- .then -- result', countChartOptions)
     })
     .finally(toastClose)
-
-  // Promise.all([countUpdate(rangeType.value), updateChartBar(rangeType.value)]).finally(() => {
-  //   toastClose()
-  // })
 }
 
 tabChange()

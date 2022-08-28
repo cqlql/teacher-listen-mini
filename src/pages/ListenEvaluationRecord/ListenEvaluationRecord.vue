@@ -4,11 +4,10 @@ import EvaluationList from './comp/EvaluationList.vue'
 import TabsText from '@/components/Tabs/TabsText.vue'
 import ToastProvider from '@/components/ToastProvider/ToastProvider.vue'
 import SemesterRangePicker from './comp/SemesterRangePicker.vue'
-import type { SearchOptions, SemesterRangeOption } from './types'
+import type { SearchOptions } from './types'
 import { getStorage } from '@/utils/storage'
 import { getListenAndTeachStatistics } from '@/api/course'
-import { getSemesterSelectData } from '@/api/select'
-import dayjs from 'dayjs'
+import useSemesterRangeRemoteData from '@/hooks/useSemesterRangeRemoteData'
 
 const searchOptions = ref<SearchOptions>({
   listen: {
@@ -53,31 +52,7 @@ getListenAndTeachStatistics({
     tabList.value[1].value = `共(${user.teaching_num})节`
   }
 })
-const semesterSelectDataLoading = ref(true)
-const SemesterSelectOptions = ref<SemesterRangeOption[]>([])
-getSemesterSelectData()
-  .then((res) => {
-    function splitDateRange(rangeDate: string) {
-      let [start, end] = rangeDate.split('-')
-      return {
-        start: dayjs(start).format('YYYY/MM/DD'),
-        end: dayjs(end).format('YYYY/MM/DD'),
-      }
-    }
-
-    let options: SemesterRangeOption[] = []
-    for (let [, item] of Object.entries(res)) {
-      options.push({
-        label: item.name,
-        ...splitDateRange(item.val),
-      })
-    }
-
-    SemesterSelectOptions.value = options
-  })
-  .finally(() => {
-    semesterSelectDataLoading.value = false
-  })
+const { semesterSelectDataLoading, SemesterSelectOptions } = useSemesterRangeRemoteData()
 </script>
 
 <template>

@@ -1,4 +1,9 @@
-import type { EvaluationScore, ListenEvaluationStore, RecordChildItem } from '../types'
+import type {
+  EvaluationScore,
+  ListenEvaluationStore,
+  ProcessRecordUrlParams,
+  RecordChildItem,
+} from '../types'
 import {
   getEvaluationScore,
   getProcessRecord,
@@ -22,17 +27,8 @@ import type {
 } from '@/api/model/courseModel'
 import type { Ref } from 'vue'
 
-export interface RouteParams {
-  id: string
-  course_id: string
-  subject_id: string
-  grade_id: string
-  user_id: string
-  live_url: string
-}
-
 function useSave(
-  routeParams: RouteParams,
+  routeParams: ProcessRecordUrlParams,
   processRecordStore: ProcessRecordStore,
   evaluationScore: Ref<EvaluationScore>,
 ) {
@@ -141,7 +137,7 @@ function useSave(
 }
 
 export default function useListenEvaluationStore(): ListenEvaluationStore {
-  const routeParams = useRouterParams<RouteParams>()
+  const routeParams = useRouterParams<ProcessRecordUrlParams>()
 
   // if (process.env.NODE_ENV !== 'production') {
   //   routeParams = {
