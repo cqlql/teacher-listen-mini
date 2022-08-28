@@ -15,6 +15,8 @@ tagline: false
 
 听课记录 详情页对接
 
+/206 保存听课评价 500
+
 ## 导航
 
 <HomeView></HomeView>
