@@ -51,7 +51,7 @@ function firstPageLoad() {
 async function reqList({ page }) {
   let searchOptionValue = searchOption.value
   const typeMap = getCourseTypeMap()
-  return (props.type === 'listen' ? getUserCourse : getUserTeach)({
+  let reqParams = {
     pageSize: 10,
     pageIndex: page,
     // course_type: props.type === 'listen' ? '1' : '0',
@@ -63,20 +63,37 @@ async function reqList({ page }) {
       dayjs(searchOptionValue.dateStart).format('YYYY/MM/DD') +
       '-' +
       dayjs(searchOptionValue.dateEnd).format('YYYY/MM/DD'),
-  }).then((res) => {
-    return res.map((resultItem) => {
+  }
+  if (props.type === 'listen') {
+    return getUserCourse(reqParams).then((res) =>
+      res.map((resultItem) => {
+        return {
+          id: resultItem.id,
+          dateTime: resultItem.s_time,
+          type: typeMap[resultItem.type].label, // 公开课
+          subjectShort: resultItem.subject_name[0],
+          name: resultItem.courses_name,
+          teacher: resultItem.teacher_name,
+          className: getGrade(resultItem.period, resultItem.years),
+          userId: resultItem.teacher_user_id,
+        }
+      }),
+    )
+  }
+  return getUserTeach(reqParams).then((res) =>
+    res.map((resultItem) => {
       return {
         id: resultItem.id,
         dateTime: resultItem.s_time,
         type: typeMap[resultItem.type].label, // 公开课
         subjectShort: resultItem.subject_name[0],
-        name: resultItem.courses_name,
+        name: resultItem.name,
         teacher: resultItem.teacher_name,
         className: getGrade(resultItem.period, resultItem.years),
-        userId: resultItem.teacher_user_id,
+        userId: resultItem.teacher_id,
       }
-    })
-  })
+    }),
+  )
 }
 
 function to(item: EvaluationDataItem) {

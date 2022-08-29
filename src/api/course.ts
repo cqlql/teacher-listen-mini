@@ -157,8 +157,29 @@ export function getUserCourse(data?: GetUserCourseParams): Promise<userCourseLis
   })
 }
 
+interface GetUserTeachResult {
+  class_name: string //'1班'
+  class_room_address: string //'B栋一楼六（8）班'
+  created_date: string //'2022-08-29 00:17:25'
+  created_user_id: number //8040
+  e_time: string //'2022-08-29 23:59:59'
+  id: number //64
+  is_enable: number //1
+  name: string //'test8888'
+  period: number //1001
+  s_time: string //'2022-08-29 23:59:59'
+  school_id: number //19
+  status: number //10
+  subject_id: number //64
+  subject_name: string //'英语'
+  teacher_id: number //9360
+  teacher_name: string //'钟洁娜'
+  type: number //0
+  years: number //2020
+}
+
 /**getUserTeach */
-export function getUserTeach(data?: GetUserCourseParams): Promise<userCourseList> {
+export function getUserTeach(data?: GetUserCourseParams): Promise<GetUserTeachResult[]> {
   return httpV2.get({
     url: '/218',
     data,

@@ -249,44 +249,6 @@ export interface GetUserCourseResult {
 // 我的听课计划列表
 
 export type userCourseList = {
-  // campus_id: string
-  // campus_name: string
-  // class_id: string
-  // class_name: string
-  // class_room_name: string
-  // course_id: string
-  // end_time: string
-  // evaluation_type: string
-  // grade_id: string
-  // grade_name: string
-  // is_self: string
-  // lesson_date: string
-  // /**直播听课url */
-  // live_url: string
-  // /**课程名 */
-  // name: string
-  // record_platform: string
-  // relation: string
-  // school_id: string
-  // school_name: string
-  // start_time: string
-  // status: string
-  // subject_id: string
-  // subject_name: string
-  // user_course_id: '0' | string
-  // user_evaluation: string
-  // user_id: string
-  // /**老师名 */
-  // user_name: string
-  // /**附件 */
-  // LA: {
-  //   display_order: string
-  //   file_type: string
-  //   id: string
-  //   name: string
-  //   url: string
-  // }[]
-
   campus_id: number //7
   classes_id: number //40
   classes_name: string //'1班'
