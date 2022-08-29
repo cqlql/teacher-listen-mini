@@ -3,6 +3,7 @@ import { getPushDoorCourseList } from '@/api/course'
 import TabButtons from '@/components/TabButtons/TabButtons.vue'
 import getGrade from '@/data/getGrade'
 import { inject } from 'vue'
+import type { PushDoorCourseItemByTeacher } from '../../types'
 import ListenClassCategoryList from './CourseList.vue'
 import LayoutView from './LayoutView.vue'
 import useGradeClassSelect from './useGradeClassSelect'
@@ -15,7 +16,7 @@ const topSearchParams = inject('topSearchParams') as {
 }
 topSearchParams.search = search
 
-function reqList({ page }) {
+function reqList({ page }): Promise<PushDoorCourseItemByTeacher[]> {
   return getPushDoorCourseList({
     classId: Number(searchOptions.class),
     period: Number(searchOptions.period),
@@ -31,6 +32,7 @@ function reqList({ page }) {
         liveUrl: '',
         subjectName: item.subject_name,
         teacherName: item.teacher_name,
+        eval_id: String(item.eval_id),
       }
     }),
   )

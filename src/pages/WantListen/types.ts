@@ -64,4 +64,6 @@ export interface PushDoorCourseItemByTeacher {
   lessonName: string
   className: string
   liveUrl: string
+  /**只要保存过听课过程记录才会有值，没有保存过就是0 */
+  eval_id: string //
 }

@@ -424,7 +424,9 @@ export interface GetUserCourseParams {
 
 export interface AddUserCourse {
   /** 课程ID*/
-  courses_id: string
+  courses_id?: string
+  /**课表ID*/
+  timetable_id?: number
   // /** 用户ID*/
   // user_id: string
   // /** 上课日期*/
@@ -715,6 +717,8 @@ export interface GetPushDoorCourseListResult {
   week_id: number //78
   years: number //2017
   teacher_name: string
+  /**只要保存过听课过程记录才会有值，没有保存过就是0 */
+  eval_id: number //
 }
 
 export interface GetEvaluationScoreResult {

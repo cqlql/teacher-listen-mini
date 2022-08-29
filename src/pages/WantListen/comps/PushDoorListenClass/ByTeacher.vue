@@ -101,6 +101,7 @@ function reqList({ page }): Promise<PushDoorCourseItemByTeacher[]> {
         liveUrl: '',
         subjectName: item.subject_name,
         teacherName: item.teacher_name,
+        eval_id: String(item.eval_id),
       }
     }),
   )

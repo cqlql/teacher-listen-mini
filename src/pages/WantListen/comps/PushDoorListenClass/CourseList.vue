@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { addUserCourse } from '@/api/course'
 import ListLoad from '@/components/ListLoad/ListLoad.vue'
 
 import Taro from '@tarojs/taro'
@@ -24,12 +25,30 @@ watch(vListLoad, (vListLoad) => {
   })
 })
 
-function toProcessRecord(item: PushDoorCourseItemByTeacher) {
-  // const currentUserId = getStorage('userId')
-  Taro.navigateTo({
-    url: `/pages/ListenEvaluation/ListenEvaluation?id=${item.id}&live_url=${encodeURIComponent(
-      item.liveUrl,
-    )}`,
+// function toProcessRecord(item: PushDoorCourseItemByTeacher) {
+//   // const currentUserId = getStorage('userId')
+//   Taro.navigateTo({
+//     url: `/pages/ListenEvaluation/ListenEvaluation?id=${item.eval_id}&live_url=${encodeURIComponent(
+//       item.liveUrl,
+//     )}`,
+//   })
+// }
+
+function onAddUserCourse(item: PushDoorCourseItemByTeacher) {
+  addUserCourse({
+    timetable_id: Number(item.id),
+  }).then(() => {
+    // list.splice(index, 1)
+    // if (list.length === 0) {
+    //   vListLoad.value.firstPageLoad()
+    // }
+
+    item.is_add = 1
+    Taro.showToast({
+      title: '添加成功',
+      icon: 'success',
+      duration: 2000,
+    })
   })
 }
 
@@ -49,13 +68,17 @@ interface ListType {
         <span class="cell" v-if="type === 'teacher'">{{ item.className }}</span>
         <span class="cell">{{ item.lessonName }}</span>
         <span class="cell">
-          <!-- <nut-button plain type="primary" size="mini" @click="onAddUserCourse(item, list, index)"
+          <nut-button plain type="primary" size="mini" @click="onAddUserCourse(item)"
             >添加到听课</nut-button
-          > -->
-          <nut-button plain type="primary" size="mini" @click="toProcessRecord(item)"
-            >进入听课</nut-button
           >
-          <!-- <nut-button type="primary" size="small" @click="toProcessRecord(course)"
+
+          <!-- <nut-button v-if="item.is_add === 1" size="small" disabled type="default"
+            >已添加</nut-button
+          >
+          <nut-button v-else size="small" type="primary" plain @click="onAddUserCourse(item)">
+            添加到听课
+          </nut-button> -->
+          <!-- <nut-button plain type="primary" size="mini" @click="toProcessRecord(item)"
             >进入听课</nut-button
           > -->
         </span>
