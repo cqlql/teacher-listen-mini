@@ -41,6 +41,7 @@ function useSave(
 
     return {
       id: userEvalId,
+      comments: '',
       process_list: processRecordList.value.map((record, i) => {
         const details: SaveListenProcessParamsDetail[] = []
         let orderIndex = 0

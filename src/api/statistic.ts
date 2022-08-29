@@ -90,8 +90,9 @@ export function getEvaluationStatistics(data: {
  *
  */
 export function getDepartmentEvaluationStatistics(data: {
+  roleId: number
   dateRange?: DateRangeType
-}): Promise<GetTeachRecordDetailsResult[]> {
+}): Promise<GetDepartmentEvaluationStatisticsResult> {
   return httpV2.get({
     url: '/224',
     data,
@@ -118,4 +119,25 @@ export interface GetSchoolAllEvaluationRecordResult {
 interface GetTeachRecordDetailsResult {
   name: string
   num: number
+}
+
+export interface GetDepartmentEvaluationStatisticsResult {
+  group_total: {
+    give_num: number // 33
+    listen_num: number //18
+    sysuser_id: number //8040
+    teacher_name: string //"钟洁娜"
+  }[]
+
+  roles: {
+    role_id: number //139
+    role_name: string //"中学低段语文"
+    sysuser_id: number // 8040
+    teacher_name: string //"钟洁娜"
+  }[]
+
+  total: {
+    give_num_tot: number //33
+    listen_num_tot: number //18
+  }[]
 }

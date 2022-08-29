@@ -2,12 +2,13 @@
 import InfoBox from '@/components/InfoBox.vue'
 import CardPlus from '@/components/CardPlus.vue'
 import ChartBarCustom from '@/components/ChartBarCustom.vue'
-import { allRecordList, getAttachList, getEvaluationStatistics } from '@/api/course'
+import { allRecordList, getAttachList } from '@/api/course'
 import useRouterParams from '@/hooks/useRouterParams'
 import type { EvaluationDataItem } from '../ListenEvaluationRecord/types'
 import type { Ref } from 'vue'
 import { ref } from 'vue'
 import type { ChartBarCustomItem } from '@/components/ChartBarCustom'
+import { getEvaluationStatistics } from '@/api/statistic'
 
 let courseInfo = useRouterParams<EvaluationDataItem>()
 

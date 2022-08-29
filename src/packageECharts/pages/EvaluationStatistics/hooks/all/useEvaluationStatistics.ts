@@ -1,12 +1,9 @@
-import { getSubjectGroups, getSubjectGroupsMembers } from '@/api/course'
-import type {
-  GetListenAndTeachStatisticsParams,
-  GetSubjectGroupsResult,
-} from '@/api/model/courseModel'
+import { getSubjectGroupsMembers } from '@/api/course'
+
 import type { DateRangeType, GetSchoolEvaluationStatisticsResult } from '@/api/statistic'
 import { getEvaluationStatistics } from '@/api/statistic'
 import type { ChartBarCustomItem } from '@/components/ChartBarCustom'
-import classify from '@/utils/each/classify'
+
 import OncePromise from '@/utils/once/once-promise'
 import testKeyword from '@/utils/search/test-keyword'
 import type { Ref } from 'vue'
@@ -40,7 +37,6 @@ export default function useEvaluationStatistics(rangeType: Ref<DateRangeType>) {
       })
       empty.value = list.length === 0
       chartBarData.value = list
-      console.log('🚀 -- updateEvaluationStatistics -- chartBarData', chartBarData)
     })
   }
 
@@ -62,7 +58,7 @@ export default function useEvaluationStatistics(rangeType: Ref<DateRangeType>) {
       const userList: IdName[] = []
       result.forEach((item) => {
         userList.push({
-          id: item.sysuser_id,
+          id: String(item.sysuser_id),
           name: item.teacher_name,
         })
       })

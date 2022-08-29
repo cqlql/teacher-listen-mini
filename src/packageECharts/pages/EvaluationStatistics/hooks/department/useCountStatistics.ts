@@ -1,8 +1,4 @@
-import { getListenAndTeachStatistics } from '@/api/course'
-import type {
-  GetListenAndTeachStatisticsParams,
-  GetListenAndTeachStatisticsResult,
-} from '@/api/model/courseModel'
+import type { GetDepartmentEvaluationStatisticsResult } from '@/api/statistic'
 import { reactive } from 'vue'
 import { ref } from 'vue'
 
@@ -19,17 +15,19 @@ export default function useCountStatistics() {
     },
   })
 
-  function chartOptionsGenerate(list: GetListenAndTeachStatisticsResult['course_frequence_list']) {
+  function update(result: GetDepartmentEvaluationStatisticsResult) {
     const barDataSource: any[] = [['product', '听课', '授课']]
-    const totalNumber = list.length
+    const totalNumber = result.group_total.length
     const showNumber = 5
     let listenTotal = 0
     let teachTotal = 0
-    list.forEach((item) => {
-      listenTotal += Number(item.listen_num)
-      teachTotal += Number(item.teaching_num)
+    result.total.forEach((item) => {
+      listenTotal += Number(item.listen_num_tot)
+      teachTotal += Number(item.give_num_tot)
+    })
 
-      barDataSource.push([item.user_name, item.listen_num, item.teaching_num])
+    result.group_total.forEach((item) => {
+      barDataSource.push([item.teacher_name, item.listen_num, item.give_num])
       // barDataSource.push([
       //   String(~~(Math.random() * 10)),
       //   String(Math.random() * 10),
@@ -126,20 +124,6 @@ export default function useCountStatistics() {
         },
       ],
     }
-  }
-
-  function update(rangeType: GetListenAndTeachStatisticsParams['range_type'], groupId: string) {
-    return getListenAndTeachStatistics({
-      group_id: groupId,
-      range_type: rangeType,
-    }).then((res) => {
-      const list = res.course_frequence_list
-      if (list.length) {
-        chartOptionsGenerate(list)
-      } else {
-        countStatistics.empty = true
-      }
-    })
   }
 
   return {

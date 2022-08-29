@@ -1,50 +1,44 @@
 import { getSubjectGroupsMembers } from '@/api/course'
-import type {
-  GetListenAndTeachStatisticsParams,
-  GetSubjectGroupsMembersResult,
-} from '@/api/model/courseModel'
+
+import type { DateRangeType } from '@/api/statistic'
 import { getEvaluationStatistics } from '@/api/statistic'
 import type { ChartBarCustomItem } from '@/components/ChartBarCustom'
-import useToastInject from '@/hooks/useToastInject'
-import { ref } from 'vue'
+import OncePromise from '@/utils/once/once-promise'
+import testKeyword from '@/utils/search/test-keyword'
+import type { Ref } from 'vue'
+import { reactive, ref } from 'vue'
 
-export default function useEvaluationStatistics() {
+type IdName = { id: string; name: string }
+
+export default function useEvaluationStatistics(rangeType: Ref<DateRangeType>) {
   const empty = ref(false)
   const chartBarData = ref<ChartBarCustomItem[]>([])
-  const memberId = ref('')
-  const subjectGroupMembers = ref<GetSubjectGroupsMembersResult['data']>([])
+  const groupId = ref('0')
+  // const subjectGroups = ref<{ text: string; value: string }[]>([])
+  const subjectGroups = ref<{ id: string; name: string }[]>([
+    // { id: '', name: '领导' },
+    // {
+    //   id: '2',
+    //   name: '高级语文',
+    // },
+  ])
+  const evaluationState = reactive({
+    keyword: '',
+  })
+  const subjectGroupMembers = ref<IdName[]>([])
+  const subjectGroupMembersSearchResults = ref<IdName[]>([])
+  const subjectGroupMemberId = ref('')
 
-  const { toastLoading, toastClose } = useToastInject()
-
-  let currentRangeType: GetListenAndTeachStatisticsParams['range_type'] = 'first_semester'
-
-  async function updateByRangeType(
-    rangeType: GetListenAndTeachStatisticsParams['range_type'],
-    groupId: string,
-  ) {
-    const members = (subjectGroupMembers.value = await getSubjectGroupsMembers({
-      group_id: groupId,
-    }).then((res) => res.data))
-
-    memberId.value = members[0]?.userid
-
-    currentRangeType = rangeType
-
-    return updateByMember()
-  }
-
-  function updateByMember() {
+  function updateEvaluationStatistics() {
     return getEvaluationStatistics({
-      user_id: memberId.value,
-      range_type: currentRangeType,
+      userId: Number(subjectGroupMemberId.value),
+      dateRange: rangeType.value,
     }).then((res) => {
       const list: ChartBarCustomItem[] = []
-      res.evaluation_count.forEach((item) => {
-        item.evaluation_counts.forEach((childItem) => {
-          list.push({
-            name: childItem.dimension_item_name,
-            count: Number(childItem.count),
-          })
+      res.forEach((item) => {
+        list.push({
+          name: item.name,
+          count: item.num,
         })
       })
       empty.value = list.length === 0
@@ -52,17 +46,58 @@ export default function useEvaluationStatistics() {
     })
   }
 
+  const onceGetSubjectGroupMembers = new OncePromise(() => {
+    return getSubjectGroupsMembers({
+      roleId: Number(groupId.value),
+    }).then((result) => {
+      const userList: IdName[] = []
+      result.forEach((item) => {
+        userList.push({
+          id: String(item.sysuser_id),
+          name: item.teacher_name,
+        })
+      })
+      subjectGroupMembers.value = userList
+      updateMembersByKeyword()
+      subjectGroupMemberId.value = subjectGroupMembersSearchResults.value[0]?.id
+    })
+  })
+
+  async function updateEvaluation() {
+    if (groupId.value !== '0') {
+      await onceGetSubjectGroupMembers.execute()
+    }
+
+    return updateEvaluationStatistics()
+  }
+
+  function updateMembersByKeyword() {
+    const keyword = evaluationState.keyword
+    subjectGroupMembersSearchResults.value = subjectGroupMembers.value.filter((member) => {
+      return testKeyword(keyword, member.name)
+    })
+  }
+
   return {
     empty,
     chartBarData,
-    updateByRangeType,
-    memberId,
+    groupId,
+    updateEvaluation,
+    subjectGroups,
     subjectGroupMembers,
-    memberChange() {
-      toastLoading()
-      updateByMember().finally(() => {
-        toastClose()
-      })
+    subjectGroupMemberId,
+
+    evaluationState,
+    evaluationGroupConfirm() {
+      onceGetSubjectGroupMembers.clear()
+      onceGetSubjectGroupMembers.execute()
     },
+    evaluationTearchSearch() {
+      updateMembersByKeyword()
+    },
+    subjectGroupMemberChange() {
+      updateEvaluationStatistics()
+    },
+    subjectGroupMembersSearchResults,
   }
 }
