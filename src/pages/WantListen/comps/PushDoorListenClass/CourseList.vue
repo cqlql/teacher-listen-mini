@@ -25,14 +25,12 @@ watch(vListLoad, (vListLoad) => {
   })
 })
 
-// function toProcessRecord(item: PushDoorCourseItemByTeacher) {
-//   // const currentUserId = getStorage('userId')
-//   Taro.navigateTo({
-//     url: `/pages/ListenEvaluation/ListenEvaluation?id=${item.eval_id}&live_url=${encodeURIComponent(
-//       item.liveUrl,
-//     )}`,
-//   })
-// }
+function toProcessRecord(item: PushDoorCourseItemByTeacher) {
+  // const currentUserId = getStorage('userId')
+  Taro.navigateTo({
+    url: `/pages/ListenEvaluation/ListenEvaluation?id=${item.eval_id}&live_url=`,
+  })
+}
 
 function onAddUserCourse(item: PushDoorCourseItemByTeacher) {
   addUserCourse({
@@ -43,12 +41,13 @@ function onAddUserCourse(item: PushDoorCourseItemByTeacher) {
     //   vListLoad.value.firstPageLoad()
     // }
 
-    item.is_add = 1
     Taro.showToast({
       title: '添加成功',
       icon: 'success',
       duration: 2000,
     })
+
+    vListLoad.value.firstPageLoad()
   })
 }
 
@@ -68,8 +67,16 @@ interface ListType {
         <span class="cell" v-if="type === 'teacher'">{{ item.className }}</span>
         <span class="cell">{{ item.lessonName }}</span>
         <span class="cell">
-          <nut-button plain type="primary" size="mini" @click="onAddUserCourse(item)"
+          <nut-button
+            v-if="item.eval_id === '0'"
+            plain
+            type="primary"
+            size="mini"
+            @click="onAddUserCourse(item)"
             >添加到听课</nut-button
+          >
+          <nut-button v-else plain type="primary" size="mini" @click="toProcessRecord(item)"
+            >进入听课</nut-button
           >
 
           <!-- <nut-button v-if="item.is_add === 1" size="small" disabled type="default"

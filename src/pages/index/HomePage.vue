@@ -121,7 +121,9 @@ const vFixedButtons = ref({
                 </div>
                 <!-- <div class="info-row">{{ course.school_name }}{{ course.campus_name }}</div> -->
                 <div class="info-row">授课班级：{{ course.grade_name }}{{ course.class_name }}</div>
-                <div class="info-row">授课地点：{{ course.class_room_name }}</div>
+                <div v-if="course.class_room_name" class="info-row"
+                  >授课地点：{{ course.class_room_name }}</div
+                >
 
                 <div v-if="course.files.length" class="files">
                   <span v-for="file of course.files" :key="file.id" class="file">{{
