@@ -3,7 +3,6 @@ import CardPlus from '@/components/CardPlus.vue'
 import EChart from '@/packageECharts/components/EChart.vue'
 import ChartBarCustom from '@/components/ChartBarCustom.vue'
 import { ref } from 'vue'
-import { getStorage } from '@/utils/storage'
 import { Empty } from '@nutui/nutui-taro'
 import useToastInject from '@/hooks/useToastInject'
 import useCountStatistics from './hooks/useCountStatistics'
@@ -13,19 +12,13 @@ import { getMyEvaluationStatistics } from '@/api/statistic'
 const { toastLoading, toastClose } = useToastInject()
 
 const rangeType = ref<DateRangeType>(2)
-const userId = getStorage('userId')
-
 const {
   empty: countEmpty,
   update: countUpdate,
   chartOptions: countChartOptions,
 } = useCountStatistics()
 
-const {
-  empty: chartBarEmpty,
-  chartBarData,
-  update: updateChartBar,
-} = useEvaluationStatistics(userId)
+const { empty: chartBarEmpty, chartBarData, update: updateChartBar } = useEvaluationStatistics()
 
 function tabChange() {
   toastLoading()

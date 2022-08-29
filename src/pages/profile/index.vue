@@ -88,7 +88,7 @@ const userInfo = reactive({
   school: '',
 })
 
-const userRole = ref('-1')
+// const userRole = ref('-1')
 
 const subjectGroups = ref<string[]>([])
 
@@ -147,7 +147,6 @@ function initUserInfoByToken() {
     } = JSON.parse(base64url.decode(infoStr))
 
     userInfo.name = userData.name
-    console.log('🚀 -- initUserInfoByToken -- userData', userData)
     userInfo.teacher_code = userData.login_name
     userInfo.school = userData.school_name
 

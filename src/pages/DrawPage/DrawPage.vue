@@ -128,6 +128,7 @@ function onSave() {
       fileUpload(
         res.tempFilePath,
         {
+          bizType: 'OCProcess',
           thmType: 2,
           bizId: 0,
         },
