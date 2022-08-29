@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import ListLoad from '@/components/ListLoad/ListLoad.vue'
-import { getStorage } from '@/utils/storage'
+
 import Taro from '@tarojs/taro'
 import { ref, watch } from 'vue'
 import type { PushDoorCourseItemByTeacher } from '../../types'

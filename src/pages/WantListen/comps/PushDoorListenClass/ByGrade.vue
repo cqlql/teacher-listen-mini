@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { getPushDoorCourseList } from '@/api/course'
 import TabButtons from '@/components/TabButtons/TabButtons.vue'
+import getGrade from '@/data/getGrade'
 import { inject } from 'vue'
 import ListenClassCategoryList from './CourseList.vue'
 import LayoutView from './LayoutView.vue'
@@ -22,14 +23,14 @@ function reqList({ page }) {
     pageIndex: page,
     teacher_name: '',
   }).then((rawList) =>
-    rawList.map((item, index) => {
+    rawList.map((item) => {
       return {
-        id: String(index),
-        className: '三年级2班', //getGrade(item.period, item.years),
-        lessonName: '1',
-        liveUrl: '1',
-        subjectName: '语文',
-        teacherName: '超人A',
+        id: String(item.id),
+        className: getGrade(item.period, item.years) + item.classes_name,
+        lessonName: item.section_name,
+        liveUrl: '',
+        subjectName: item.subject_name,
+        teacherName: item.teacher_name,
       }
     }),
   )

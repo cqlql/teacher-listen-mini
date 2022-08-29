@@ -49,7 +49,7 @@ export default function useEvaluationScoreStore() {
       const { scoreList } = await initEvaluationScore(res)
       evaluationScoreValue.scoreList = scoreList
 
-      evaluationScoreValue.reviews = '!!没有'
+      // evaluationScoreValue.reviews = '!!没有'
     },
   }
 }

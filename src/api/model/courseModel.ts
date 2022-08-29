@@ -360,6 +360,7 @@ export interface SaveListenProcessParams {
   // //过程记录打分表
   // Lesson_score: LessonScoreParam[]
   id: number
+  comments: string
   process_list: {
     // id?: number // 0
     /**用户听评课计划ID */
@@ -657,9 +658,9 @@ export interface GetListenAndTeachStatisticsResult {
 }
 
 export interface GetSubjectGroupsMembersResult {
-  role_id: nubmer // 139
+  role_id: number // 139
   role_name: string // "中学低段语文"
-  sysuser_id: nubmer // 7790
+  sysuser_id: number // 7790
   teacher_name: string //"吴玉如"
 }
 
@@ -734,18 +735,24 @@ export interface GetSubjectGroupsResult {
 // }
 
 export interface GetPushDoorCourseListResult {
-  campus_id: number // 7
-  grade: number //6
-  grade_id: number //65
-  id: number //10541
-  lesson_num: number //9
+  id: number //
+  classes_id: number //833
+  classes_name: string //"2班"
+  classes_no: string //"2"
+  e_time: string //"2022-06-24 00:00:00"
+  grade: number //4
+  grade_id: number //345
+  lesson_num: number //8
   period: number //1001
-  school_id: number //19
-  section_id: number //152
-  subject_id: number //33
-  subject_name: string //'自习'
-  week: number //5
-  week_id: number //82
+  s_time: string //"2022-06-24 00:00:00"
+  section_id: number //151
+  section_name: string //"第八节"
+  subject_id: number //3
+  subject_name: string //"英语"
+  week: number //1
+  week_id: number //78
+  years: number //2017
+  teacher_name: string
 }
 
 export interface GetEvaluationScoreResult {

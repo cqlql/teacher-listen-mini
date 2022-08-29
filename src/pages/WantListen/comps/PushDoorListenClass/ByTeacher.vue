@@ -11,6 +11,7 @@ import SelectCheckPopup from '@/components/SelectCheck/SelectCheckPopup.vue'
 import { getPushDoorCourseList } from '@/api/course'
 import type { PushDoorCourseItemByTeacher, TopSearchParams } from '../../types'
 import type { GradeClassDataType } from './useGradeClassData'
+import getGrade from '@/data/getGrade'
 const topSearchParams = inject('topSearchParams') as TopSearchParams
 
 const { periodList, subjectListByPeriodKey } = inject('gradeClassData') as GradeClassDataType
@@ -92,14 +93,14 @@ function reqList({ page }): Promise<PushDoorCourseItemByTeacher[]> {
     period: Number(searchOptions.period),
     teacher_name: searchOptions.keyword,
   }).then((rawList) =>
-    rawList.map((item, index) => {
+    rawList.map((item) => {
       return {
         id: String(item.id),
-        className: '三年级2班', //getGrade(item.period, item.years),
-        lessonName: '第一节',
-        liveUrl: '1',
-        subjectName: '语文',
-        teacherName: '超人A',
+        className: getGrade(item.period, item.years) + item.classes_name,
+        lessonName: item.section_name,
+        liveUrl: '',
+        subjectName: item.subject_name,
+        teacherName: item.teacher_name,
       }
     }),
   )

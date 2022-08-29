@@ -163,6 +163,9 @@ export default function useListenEvaluationStore(): ListenEvaluationStore {
     id: Number(routeParams.id),
   }).then((res) => {
     processRecordStore.editInit(res)
+
+    // 单独初始打分评价
+    evaluationScore.value.reviews = res.comments
   })
 
   // 评价选项/编辑 初始 - 听课评价
