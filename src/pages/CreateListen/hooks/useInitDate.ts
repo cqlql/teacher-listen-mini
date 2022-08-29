@@ -1,5 +1,5 @@
+import { getCreatedCourseInitData } from '@/api/course'
 import type { CreateListenSelectDataResult } from '@/api/model/selectModel'
-import { getCreateListenSelectData } from '@/api/select'
 import getPeriodMap from '@/data/get-period-map'
 import useRouterParams from '@/hooks/useRouterParams'
 // import { getSubjectGroups } from '@/api/select'
@@ -30,7 +30,7 @@ export default function useInitDate(formRef: Ref<OpenCourseForm>) {
   const classRawData = ref<CreateListenSelectDataResult['schoolGradeClasses']>([])
   const classRoomsRawDate = ref<CreateListenSelectDataResult['classRooms']>([])
 
-  getCreateListenSelectData(id ? Number(id) : 0).then((res) => {
+  getCreatedCourseInitData(id ? Number(id) : 0).then((res) => {
     const periodMap = getPeriodMap()
     periodOptions.value = res.periods.map((periodItem) => {
       const id = periodItem.period
