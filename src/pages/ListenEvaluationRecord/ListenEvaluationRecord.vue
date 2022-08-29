@@ -52,7 +52,7 @@ getListenAndTeachStatistics({
     tabList.value[1].value = `共(${user.teaching_num})节`
   }
 })
-const { semesterSelectDataLoading, SemesterSelectOptions } = useSemesterRangeRemoteData()
+const { semesterSelectDataLoading, semesterSelectOptions } = useSemesterRangeRemoteData()
 </script>
 
 <template>
@@ -73,7 +73,7 @@ const { semesterSelectDataLoading, SemesterSelectOptions } = useSemesterRangeRem
       v-model:label="searchOptions.listen.selectedName"
       v-model:visible="searchOptions.listen.visible"
       v-model:defaultIndex="searchOptions.listen.defaultIndex"
-      :options="SemesterSelectOptions"
+      :options="semesterSelectOptions"
       @ok="searchOptions.listen.search"
     ></SemesterRangePicker>
     <SemesterRangePicker
@@ -82,7 +82,7 @@ const { semesterSelectDataLoading, SemesterSelectOptions } = useSemesterRangeRem
       v-model:label="searchOptions.teaching.selectedName"
       v-model:visible="searchOptions.teaching.visible"
       v-model:defaultIndex="searchOptions.listen.defaultIndex"
-      :options="SemesterSelectOptions"
+      :options="semesterSelectOptions"
       @ok="searchOptions.teaching.search"
     ></SemesterRangePicker>
   </ToastProvider>
