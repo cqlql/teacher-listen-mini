@@ -52,7 +52,8 @@ import type { AddedCourseItem } from '../types'
 import AllOpenClassItem from './AllOpenClassItem.vue'
 import TagFlag from '@/components/Tag/TagFlag.vue'
 import { getStorage, setStorage } from '@/utils/storage'
-
+import useToastInject from '@/hooks/useToastInject'
+const { toastFail } = useToastInject()
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface ReqListResultType {
   list: AddedCourseItem[]
@@ -129,7 +130,10 @@ function reqList({ page }) {
 }
 
 function onDeleteUserCourse(item: AddedCourseItem, list: AddedCourseItem[], index: number) {
-  delUserCourse(Number(item.id)).then(() => {
+  delUserCourse(Number(item.id), {
+    showErrorToast: false,
+    fail: toastFail,
+  }).then(() => {
     list.splice(index, 1)
     if (list.length === 0) {
       vListLoad.value.firstPageLoad()

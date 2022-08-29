@@ -198,11 +198,14 @@ export function addUserCourse(data: AddUserCourse): Promise<{ usercourse: any[] 
  * 移出听课计划
  * @param id 课程id*
  */
-export function delUserCourse(id: number) {
-  return httpV2.get({
-    url: '/210',
-    data: { id },
-  })
+export function delUserCourse(id: number, requestOptions?: RequestOptionsNullable) {
+  return httpV2.get(
+    {
+      url: '/210',
+      data: { id },
+    },
+    requestOptions,
+  )
 }
 
 /** 保存听课过程（过程记录和打分） */
