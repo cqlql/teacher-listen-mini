@@ -2,24 +2,24 @@
 import ListLoad from '@/components/ListLoad/ListLoad.vue'
 import Taro from '@tarojs/taro'
 import useRouterParams from '@/hooks/useRouterParams'
-import { allRecordList } from '@/api/course'
+import type { GetListenTeacherListResult } from '@/api/course'
+import { getListenTeacherList } from '@/api/course'
 import { ref } from 'vue'
-import type { LessonRecordResult } from '@/api/model/courseModel'
 
 let routeQuery = useRouterParams<{ courseId: string }>()
 
-const list = ref<LessonRecordResult[]>([])
+const list = ref<GetListenTeacherListResult[]>([])
 
 async function reqList() {
-  return allRecordList({
-    course_id: routeQuery.courseId,
+  return getListenTeacherList({
+    id: Number(routeQuery.courseId),
   }).then((result) => {
-    return (list.value = result.lessonRecordList)
+    return (list.value = result)
   })
 }
-function to(item: LessonRecordResult) {
+function to(item: GetListenTeacherListResult) {
   Taro.navigateTo({
-    url: `/pages/ListenEvaluationDetails/EvaluationDetails?courseId=${routeQuery.courseId}&userId=${item.user_id}&userName=${item.user_name}`,
+    url: `/pages/ListenEvaluationDetails/EvaluationDetails?courseId=${routeQuery.courseId}&userId=${item.sys_user_id}&userName=${item.num}`,
   })
 }
 </script>
@@ -29,11 +29,11 @@ function to(item: LessonRecordResult) {
     <div class="list">
       <ListLoad :scrollLowerEnabled="false" :reqList="reqList">
         <template #default>
-          <div class="item" v-for="item of list" :key="item.user_id" @click="to(item)">
+          <div class="item" v-for="(item, index) of list" :key="index" @click="to(item)">
             <div class="avatar-icon">
               <nut-icon font-class-name="iconfont" class-prefix="icon" name="user-full"></nut-icon>
             </div>
-            <div class="name">{{ item.user_name }}</div>
+            <div class="name">{{ item.num }}</div>
             <div class="arrow-icon">
               <nut-icon name="right"></nut-icon>
             </div>

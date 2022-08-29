@@ -3,9 +3,7 @@ import CardPlus from '@/components/CardPlus.vue'
 import TitleContent from './comp/TitleContent.vue'
 import TagView from '@/components/Tag/TagView.vue'
 import { ref } from 'vue'
-import { getRecordList } from '@/api/course'
-import classify from '@/utils/each/classify'
-import type { LessonScoreItem } from '@/api/model/courseModel'
+import { getListenTeacherEvaluationDetails } from '@/api/course'
 import useRouterParams from '@/hooks/useRouterParams'
 type PointList = {
   name: string
@@ -21,32 +19,23 @@ const evaluationText = ref('')
 
 let routeQuery = useRouterParams<{ userId: string; userName: string; courseId: string }>()
 
-getRecordList({
-  course_id: routeQuery.courseId,
-  user_id: routeQuery.userId,
+getListenTeacherEvaluationDetails({
+  courseId: Number(routeQuery.courseId),
+  sysUserId: Number(routeQuery.userId),
 }).then((res) => {
-  let newList: PointList = []
-  res.scoreList &&
-    classify<LessonScoreItem>(
-      res.scoreList,
-      'dimension_id',
-      (item) => {
-        let children = []
-        newList.push({
-          name: item.dimension_name,
-          children,
-        })
-        return children
-      },
-      (item) => {
+  pointList.value = [
+    {
+      name: '',
+      children: res.eval_tmp_details.map((item) => {
         return {
           type: '',
-          name: item.dimension_item_name,
+          name: item.name,
         }
-      },
-    )
+      }),
+    },
+  ]
 
-  pointList.value = newList
+  evaluationText.value = res.comments
 })
 </script>
 <template>
@@ -54,7 +43,7 @@ getRecordList({
     <CardPlus :title2="routeQuery.userName + '的听课评价'">
       <TitleContent title="已选亮点：">
         <div v-for="(point, index) of pointList" :key="index" class="tags-list">
-          <span class="name">{{ point.name }}:</span>
+          <!-- <span class="name">{{ point.name }}:</span> -->
           <TagView v-for="(tag, i) of point.children" :key="i" :class="tag.type">{{
             tag.name
           }}</TagView>

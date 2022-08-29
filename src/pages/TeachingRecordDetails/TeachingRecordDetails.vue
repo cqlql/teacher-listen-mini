@@ -2,13 +2,14 @@
 import InfoBox from '@/components/InfoBox.vue'
 import CardPlus from '@/components/CardPlus.vue'
 import ChartBarCustom from '@/components/ChartBarCustom.vue'
-import { allRecordList, getAttachList } from '@/api/course'
+import { getTeachRecordDetails } from '@/api/course'
 import useRouterParams from '@/hooks/useRouterParams'
 import type { EvaluationDataItem } from '../ListenEvaluationRecord/types'
 import type { Ref } from 'vue'
 import { ref } from 'vue'
 import type { ChartBarCustomItem } from '@/components/ChartBarCustom'
-import { getEvaluationStatistics } from '@/api/statistic'
+import { getFileNameByPath } from '@/utils/file'
+import { Empty } from '@nutui/nutui-taro'
 
 let courseInfo = useRouterParams<EvaluationDataItem>()
 
@@ -39,35 +40,30 @@ const files = ref<{ name: string }[]>([])
 const numberListen = ref(0)
 
 const evaluationChart: Ref<ChartBarCustomItem[]> = ref([])
+const evaluationChartIsEmpty = ref(false)
 
-// 加载授课文件列表
-getAttachList(courseInfo.id).then((res) => {
-  let attrs: { name: string }[] = []
-  res.attachList.forEach((att) => {
-    attrs.push(att)
+getTeachRecordDetails({
+  id: Number(courseInfo.id),
+}).then((res) => {
+  evaluationChart.value = res.evals.map((e) => {
+    return {
+      name: e.name,
+      count: Number(e.num),
+    }
   })
-  files.value = attrs
-})
 
-allRecordList({
-  course_id: courseInfo.id,
-}).then((res) => {
-  numberListen.value = res.lessonRecordList.length
-})
+  evaluationChartIsEmpty.value = res.evals.length === 0
 
-getEvaluationStatistics({
-  course_id: courseInfo.id,
-}).then((res) => {
-  let list: ChartBarCustomItem[] = []
-  res.evaluation_count.forEach((item) => {
-    item.evaluation_counts.forEach((childItem) => {
-      list.push({
-        name: childItem.dimension_item_name,
-        count: Number(childItem.count),
-      })
+  numberListen.value = res.total
+
+  // 授课附件列表
+  if (res.entity.att_urls) {
+    files.value = res.entity.att_urls.map((att) => {
+      return {
+        name: getFileNameByPath(att.url),
+      }
     })
-  })
-  evaluationChart.value = list
+  }
 })
 </script>
 <template>
@@ -87,6 +83,7 @@ getEvaluationStatistics({
         </div>
       </template>
       <ChartBarCustom :data="evaluationChart"></ChartBarCustom>
+      <Empty v-if="evaluationChartIsEmpty"></Empty>
     </CardPlus>
   </div>
 </template>

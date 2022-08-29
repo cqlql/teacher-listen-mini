@@ -508,3 +508,126 @@ export function getCreatedCourseInitData(id: 0 | number): Promise<GetCreatedCour
     data: { id },
   })
 }
+
+interface GetTeachRecordDetailsResult {
+  entity: {
+    campus_id: number //7
+    classes_id: number //2124
+    classes_name: string //'1班'
+    classes_no: string //'1'
+    classes_room_id: number //17
+    created_date: string //'2022-08-29 10:58:24'
+    created_user_id: number //8040
+    e_time: string //'2022-08-30 12:43:00'
+    grade_id: number //52
+    id: number //68
+    is_enable: number //true
+    name: string //'test'
+    period: number //1001
+    role_id: number //4
+    s_time: string //'2022-08-30 11:58:00'
+    school_id: number //19
+    status: number //10
+    subject_id: number //3
+    type: number //0
+    updated_date: string //'2022-08-29 10:58:30'
+    updated_user_id: number //8040
+    years: number //2020
+    att_urls?: { url: string }[]
+  }
+  evals: {
+    name: string // "准备充分"
+    num: string //1
+  }[]
+  total: number //1
+}
+
+/**
+ * 授课记录
+ */
+export function getTeachRecordDetails(data: {
+  /**课程ID */
+  id: number
+}): Promise<GetTeachRecordDetailsResult> {
+  return httpV2.get({
+    url: '/226',
+    data,
+  })
+}
+
+export interface GetListenTeacherListResult {
+  num: string //"钟洁娜"
+  sys_user_id: number //8040
+}
+
+/**听课老师名单 */
+export function getListenTeacherList(data: {
+  /**课程ID */
+  id: number
+}): Promise<GetListenTeacherListResult[]> {
+  return httpV2.get({
+    url: '/227',
+    data,
+  })
+}
+
+interface GetListenTeacherEvaluationDetails {
+  campus_id: number //7
+  classes_id: number //2124
+  classes_name: string //"1班"
+  classes_no: string //"1"
+  classes_room_id: number //17
+  comments: string //"点评50"
+  courses_id: number //70
+  courses_name: string //"test"
+  created_date: string //"2022-08-30 00:32:19"
+  created_user_id: number //8040
+  e_time: string //"2022-08-30 02:17:02"
+  eval_tmp_id: number //10
+  grade_id: number //52
+  id: number //61
+  is_add_process: number //true
+  lesson_num: number //0
+  period: number //1001
+  role_id: number //5
+  s_time: string //"2022-08-30 01:32:02"
+  school_id: number //19
+  section_id: number //0
+  subject_id: number //3
+  subject_name: string //"英语"
+  teacher_name: string //"钟洁娜"
+  teacher_no: string //"ym115"
+  teacher_user_id: number //8040
+  timetable_id: number //0
+  type: number //0
+  updated_date: string //"2022-08-30 00:32:19"
+  updated_user_id: number //8040
+  week: number //0
+  week_id: number //0
+  years: number //2020
+
+  eval_tmp_details: {
+    created_date: string //'2022-08-30 00:32:42'
+    created_user_id: number //8040
+    eval_tmp_deatils_id: number //4
+    eval_tmp_id: number //10
+    id: number //36
+    name: string //'互动积极'
+    updated_date: string //'2022-08-30 00:32:42'
+    updated_user_id: number //8040
+    user_eval_id: number //61
+  }[]
+}
+
+/**听课老师评价详情 */
+export function getListenTeacherEvaluationDetails(data: {
+  /**课程ID */
+  courseId: number
+  /**用户ID */
+  sysUserId: number
+}): Promise<GetListenTeacherEvaluationDetails> {
+  return httpV2.get({
+    url: '/228',
+    data,
+  })
+}
