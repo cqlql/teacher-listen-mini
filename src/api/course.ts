@@ -33,6 +33,7 @@ import type {
   SaveEvaluationScoreReqParams,
   RequestOutsideCourseParams,
   GetPushDoorCourseListResult,
+  GetListenDetailsResult,
 } from './model/courseModel'
 
 /** 获取听课、授课记录 */
@@ -270,6 +271,19 @@ export function getRecordList(data: { course_id: string; user_id: string }): Pro
   return httpV3.get({
     url: '/lecture/v1/list',
     data: data,
+  })
+}
+
+interface GetListenDetailsParams {
+  // 听课记录ID
+  id: number
+}
+
+/**听课详情 */
+export function getListenDetails(data: GetListenDetailsParams): Promise<GetListenDetailsResult> {
+  return httpV2.get({
+    url: '/219',
+    data,
   })
 }
 

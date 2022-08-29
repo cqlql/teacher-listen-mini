@@ -30,6 +30,12 @@ const searchOptions = ref<SearchOptions>({
   },
 })
 
+if (process.env.NODE_ENV !== 'production') {
+  searchOptions.value.listen.dateStart = '2022/07/01'
+  searchOptions.value.listen.dateEnd = '2022/09/01'
+  searchOptions.value.listen.defaultIndex = -1
+}
+
 provide('searchOptions', searchOptions)
 
 const tabList = ref([

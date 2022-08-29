@@ -779,3 +779,49 @@ export interface SaveEvaluationScoreReqParams {
     name: string
   }[]
 }
+
+export interface GetListenDetailsResult {
+  /**点评 */
+  comments: string
+  campus_id: number //7
+  classes_id: number //0
+  classes_name: string //'2008班'
+  classes_room_id: number //0
+  courses_id: number //67
+  courses_name: string //'校外课1'
+  created_date: string //'2022-08-29 10:42:14'
+  created_user_id: number //8040
+  e_time: string //'2022-08-29 11:15:00'
+  eval_tmp_details: {
+    eval_tmp_deatils_id: number // 0
+    name: string
+  }[]
+  eval_tmp_id: number //10
+  grade_id: number //0
+  id: number //38
+  lesson_num: number //0
+  period: number //1001
+  process_list: {
+    // id?: number // 0
+    /**用户听评课计划ID */
+    user_eval_id: number //0
+    title: string //'string'
+    order_index: number //0
+    details: SaveListenProcessParamsDetail[]
+  }[]
+  role_id: number //0
+  s_time: string //'2022-08-29 10:30:00'
+  school_id: number //19
+  section_id: number //0
+  subject_id: number //3
+  subject_name: string //'英语'
+  teacher_name: string //'唐昊'
+  teacher_user_id: number //8040
+  timetable_id: number //0
+  type: number //2
+  updated_date: string //'2022-08-29 10:42:14'
+  updated_user_id: number //8040
+  week: number //0
+  week_id: number //0
+  years: number //0
+}

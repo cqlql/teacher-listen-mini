@@ -7,11 +7,8 @@ import ImgList from '@/components/ImgView/ImgList.vue'
 import VideoList from '@/components/VideoView/VideoList.vue'
 import TagView from '@/components/Tag/TagView.vue'
 import useRouterParams from '@/hooks/useRouterParams'
-import { getRecordList } from '@/api/course'
-import { getStorage } from '@/utils/storage'
+import { getListenDetails } from '@/api/course'
 import type { EvaluationDataItem } from '../ListenEvaluationRecord/types'
-import type { LessonScoreItem } from '@/api/model/courseModel'
-import classify from '@/utils/each/classify'
 import { ref } from 'vue'
 
 let courseInfo = useRouterParams<EvaluationDataItem>()
@@ -69,99 +66,101 @@ const recordList = ref<
   }[]
 >([])
 
-getRecordList({
-  course_id: courseInfo.id,
-  user_id: getStorage('userId'),
+getListenDetails({
+  id: Number(courseInfo.id),
 }).then((res) => {
-  let newList: PointList = []
-  res.scoreList &&
-    classify<LessonScoreItem>(
-      res.scoreList,
-      'dimension_id',
-      (item) => {
-        let children = []
-        newList.push({
-          name: item.dimension_name,
-          children,
-        })
-        return children
-      },
-      (item) => {
+  pointList.value = [
+    {
+      name: '',
+      children: res.eval_tmp_details.map((item) => {
         return {
           type: '',
-          name: item.dimension_item_name,
+          name: item.name,
         }
-      },
-    )
+      }),
+    },
+  ]
 
-  pointList.value = newList
-
-  res.lessonRecordList?.forEach((item) => {
-    evaluationText.value = item.lesson_evaluation_text
-    recordList.value = item.lesson_records.map((record, index) => {
-      let text = ''
-      const contentList: ContentType[] = []
-      record.contents.forEach((content) => {
-        switch (content.content_label_type) {
-          case 'body':
-            text = content.content
-            break
-          case 'think':
-            contentList.push({
-              tag: '思考',
-              type: 'warning',
-              text: content.content,
-              imgs: [],
-              videos: [],
-            })
-            break
-          case 'picture':
-            contentList.push({
+  evaluationText.value = res.comments
+  recordList.value = res.process_list.map((record, index) => {
+    let text = record.title
+    const contentList: ContentType[] = []
+    let grouping: {
+      pictureItem: any
+      drawingItem: any
+      videoItem: any
+    } = {
+      pictureItem: null,
+      drawingItem: null,
+      videoItem: null,
+    }
+    record.details.forEach((content) => {
+      switch (content.type) {
+        case 1:
+          contentList.push({
+            tag: '思考',
+            type: 'warning',
+            text: content.val,
+            imgs: [],
+            videos: [],
+          })
+          break
+        case 5:
+          let pictureItem = grouping.pictureItem
+          if (!pictureItem) {
+            pictureItem = {
               tag: '照片',
               type: 'cyan',
               text: '',
-              imgs: content.contents.map((item) => {
-                return {
-                  url: item.url,
-                }
-              }),
+              imgs: [],
               videos: [],
-            })
-            break
-          case 'handwriting':
-            contentList.push({
+            }
+            contentList.push(pictureItem)
+          }
+          pictureItem.imgs.push({
+            url: content.val,
+          })
+          break
+        case 10:
+          let drawingItem = grouping.drawingItem
+          if (!drawingItem) {
+            drawingItem = {
               tag: '手写',
               type: '',
               text: '',
-              imgs: content.contents.map((item) => {
-                return {
-                  url: item.url,
-                }
-              }),
+              imgs: [],
               videos: [],
-            })
-            break
-          case 'video':
-            contentList.push({
+            }
+            contentList.push(drawingItem)
+          }
+          drawingItem.imgs.push({
+            url: content.val,
+          })
+
+          break
+        case 15:
+          let videoItem = grouping.videoItem
+          if (!videoItem) {
+            videoItem = {
               tag: '视频',
               type: '',
               text: '',
               imgs: [],
-              videos: content.contents.map((item) => {
-                return {
-                  url: item.url,
-                }
-              }),
-            })
-            break
-        }
-      })
-      return {
-        name: '课程记录' + (index + 1),
-        text,
-        contentList,
+              videos: [],
+            }
+            contentList.push(videoItem)
+          }
+          videoItem.videos.push({
+            url: content.val,
+          })
+          break
       }
     })
+    return {
+      name: '课程记录' + (index + 1),
+      text,
+      contentList,
+    }
   })
 })
 </script>
@@ -172,7 +171,7 @@ getRecordList({
     <CardPlus title2="听课评价">
       <TitleContent title="已选亮点：">
         <div v-for="(point, index) of pointList" :key="index" class="tags-list">
-          <span class="name">{{ point.name }}:</span>
+          <!-- <span class="name">{{ point.name }}:</span> -->
           <TagView v-for="(tag, i) of point.children" :key="i" :class="tag.type">{{
             tag.name
           }}</TagView>
