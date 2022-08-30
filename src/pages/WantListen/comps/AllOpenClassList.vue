@@ -1,6 +1,6 @@
 <template>
   <ListLoad ref="vListLoad" :startPage="0" :reqList="reqList" refresher-background="#f1f9fe">
-    <template #default="{ list }: OpenType">
+    <template #default="{ list }: { list: CourseItem[] }">
       <div class="OpenClassList">
         <OpenClassPassedItem
           v-for="item of list"
@@ -40,9 +40,6 @@ const vListLoad = ref({
 })
 
 const topSearchParams = inject('topSearchParams') as TopSearchParams
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-type OpenType = { list: CourseItem[] }
 
 topSearchParams.search = () => {
   vListLoad.value.firstPageLoad()

@@ -50,15 +50,10 @@ function onAddUserCourse(item: PushDoorCourseItemByTeacher) {
     vListLoad.value.firstPageLoad()
   })
 }
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface ListType {
-  list: PushDoorCourseItemByTeacher[]
-}
 </script>
 <template>
   <ListLoad :startPage="0" ref="vListLoad" class="PushDoorListenClassList" :reqList="reqList">
-    <template #default="{ list }: ListType">
+    <template #default="{ list }: { list: PushDoorCourseItemByTeacher[] }">
       <div v-for="item of list" :key="item.id" class="row">
         <span v-if="type === 'grade'" class="cell">
           <nut-tag type="primary" plain>{{ item.subjectName[0] }}</nut-tag></span

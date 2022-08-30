@@ -48,11 +48,6 @@ function toListenEvaluationRecord(item: GetSchoolAllEvaluationRecordResult['data
     url: '/pages/ListenEvaluationRecord/ListenEvaluationRecordNoSearch' + params,
   })
 }
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface ListType {
-  list: GetSchoolAllEvaluationRecordResult['data']
-}
 </script>
 <template>
   <SemesterRangePicker
@@ -76,7 +71,7 @@ interface ListType {
     </div>
     <div v-if="!semesterSelectDataLoading" class="list">
       <ListLoad ref="vListLoad" :startPage="0" :reqList="reqList">
-        <template #default="{ list }: ListType">
+        <template #default="{ list }: { list: GetSchoolAllEvaluationRecordResult['data'] }">
           <div
             class="item"
             v-for="item of list"

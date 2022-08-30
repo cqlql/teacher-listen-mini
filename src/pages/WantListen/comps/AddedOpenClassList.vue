@@ -1,45 +1,3 @@
-<template>
-  <ListLoad
-    ref="vListLoad"
-    :immediate="false"
-    :startPage="0"
-    :reqList="reqList"
-    refresher-background="#f1f9fe"
-    :scrollLowerEnabled="false"
-  >
-    <template #default="{ list: listCurrent }: ReqListResultType">
-      <div class="OpenClassList">
-        <AllOpenClassItem
-          v-for="(item, index) of listCurrent"
-          :key="item.id"
-          :data="item"
-          type="all"
-          :class="item.type"
-          @refresh="refresh"
-        >
-          <template #btns>
-            <TagFlag :class="item.type">{{ item.typeName }}</TagFlag>
-            <nut-button
-              size="small"
-              type="danger"
-              plain
-              @click="onDeleteUserCourse(item, listCurrent, index)"
-              >移出计划</nut-button
-            >
-            <nut-button
-              v-if="item.type === 'outside'"
-              size="small"
-              plain
-              @click="onEditOutsideCourse(item)"
-              >修改</nut-button
-            >
-          </template>
-        </AllOpenClassItem>
-      </div>
-    </template>
-  </ListLoad>
-</template>
-
 <script lang="ts" setup>
 import { delUserCourse, getUserCourse } from '@/api/course'
 import ListLoad from '@/components/ListLoad/ListLoad.vue'
@@ -55,9 +13,6 @@ import { getStorage, setStorage } from '@/utils/storage'
 import useToastInject from '@/hooks/useToastInject'
 const { toastFail } = useToastInject()
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface ReqListResultType {
-  list: AddedCourseItem[]
-}
 
 const vListLoad = ref({
   firstPageLoad() {},
@@ -160,6 +115,47 @@ useDidShow(() => {
   setStorage('pageTemp', '')
 })
 </script>
+<template>
+  <ListLoad
+    ref="vListLoad"
+    :immediate="false"
+    :startPage="0"
+    :reqList="reqList"
+    refresher-background="#f1f9fe"
+    :scrollLowerEnabled="false"
+  >
+    <template #default="{ list: listCurrent }: { list: AddedCourseItem[] }">
+      <div class="OpenClassList">
+        <AllOpenClassItem
+          v-for="(item, index) of listCurrent"
+          :key="item.id"
+          :data="item"
+          type="all"
+          :class="item.type"
+          @refresh="refresh"
+        >
+          <template #btns>
+            <TagFlag :class="item.type">{{ item.typeName }}</TagFlag>
+            <nut-button
+              size="small"
+              type="danger"
+              plain
+              @click="onDeleteUserCourse(item, listCurrent, index)"
+              >移出计划</nut-button
+            >
+            <nut-button
+              v-if="item.type === 'outside'"
+              size="small"
+              plain
+              @click="onEditOutsideCourse(item)"
+              >修改</nut-button
+            >
+          </template>
+        </AllOpenClassItem>
+      </div>
+    </template>
+  </ListLoad>
+</template>
 
 <style lang="scss">
 $openColor: #3aa6ff;
