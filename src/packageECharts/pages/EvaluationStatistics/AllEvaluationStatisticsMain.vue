@@ -17,7 +17,7 @@ import type { DateRangeType } from '@/api/statistic'
 import { getSchoolEvaluationStatistics } from '@/api/statistic'
 const { toastLoading, toastClose } = useToastInject()
 
-const rangeType = ref<DateRangeType>(2)
+const rangeType = ref<DateRangeType>(3)
 
 const {
   empty: chartBarEmpty,
@@ -78,31 +78,33 @@ reload()
     </CardPlus>
 
     <CardPlus title2="授课评价统计：">
-      <GroupSelectAndUserSearch
-        v-model="evaluationState.groupId"
-        v-model:keyword="evaluationState.keyword"
-        :columns="subjectGroups"
-        placeholder="请输入老师名称搜索"
-        @confirm="evaluationGroupConfirm"
-        @search="evaluationTearchSearch"
-      ></GroupSelectAndUserSearch>
-      <nut-radiogroup
-        v-model="subjectGroupMemberId"
-        @change="subjectGroupMemberChange"
-        direction="horizontal"
-      >
-        <nut-radio
-          v-for="group of subjectGroupMembersSearchResults"
-          :key="group.id"
-          shape="button"
-          :label="group.id"
-          >{{ group.name }}</nut-radio
+      <Empty v-if="chartBarEmpty"></Empty>
+      <div v-else>
+        <GroupSelectAndUserSearch
+          v-model="evaluationState.groupId"
+          v-model:keyword="evaluationState.keyword"
+          :columns="subjectGroups"
+          placeholder="请输入老师名称搜索"
+          @confirm="evaluationGroupConfirm"
+          @search="evaluationTearchSearch"
+        ></GroupSelectAndUserSearch>
+        <nut-radiogroup
+          v-model="subjectGroupMemberId"
+          @change="subjectGroupMemberChange"
+          direction="horizontal"
         >
-      </nut-radiogroup>
-      <div class="safe-padding-bottom">
-        <div class="teaching">
-          <Empty v-if="chartBarEmpty"></Empty>
-          <ChartBarCustom v-else :data="chartBarData"></ChartBarCustom>
+          <nut-radio
+            v-for="group of subjectGroupMembersSearchResults"
+            :key="group.id"
+            shape="button"
+            :label="group.id"
+            >{{ group.name }}</nut-radio
+          >
+        </nut-radiogroup>
+        <div class="safe-padding-bottom">
+          <div class="teaching">
+            <ChartBarCustom :data="chartBarData"></ChartBarCustom>
+          </div>
         </div>
       </div>
     </CardPlus>

@@ -11,7 +11,7 @@ import type { DateRangeType } from '@/api/statistic'
 import { getMyEvaluationStatistics } from '@/api/statistic'
 const { toastLoading, toastClose } = useToastInject()
 
-const rangeType = ref<DateRangeType>(2)
+const rangeType = ref<DateRangeType>(3)
 const {
   empty: countEmpty,
   update: countUpdate,

@@ -39,8 +39,8 @@ export default function useCountPieChart() {
             color: '#fff',
           },
           data: [
-            { value: rawData.total[0]?.listen_num_tot, name: '听课次数' },
-            { value: rawData.total[0]?.give_num_tot, name: '授课次数' },
+            { value: rawData.total[0]?.listen_num_tot || 0, name: '听课次数' },
+            { value: rawData.total[0]?.give_num_tot || 0, name: '授课次数' },
           ],
           // emphasis: {
           //   itemStyle: {

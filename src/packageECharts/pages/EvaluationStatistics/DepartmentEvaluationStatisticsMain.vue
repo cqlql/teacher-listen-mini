@@ -15,7 +15,7 @@ import { getDepartmentEvaluationStatistics } from '@/api/statistic'
 
 const { toastLoading, toastClose } = useToastInject()
 
-const rangeType = ref<DateRangeType>(2)
+const rangeType = ref<DateRangeType>(3)
 
 const {
   empty: chartBarEmpty,
@@ -77,9 +77,9 @@ function reload() {
 <template>
   <div class="EvaluationStatistics">
     <nut-tabs class="nut-tabs3 blue" v-model="rangeType" @change="reload">
-      <nut-tabpane pane-key="this_semester" title="本学期"></nut-tabpane>
-      <nut-tabpane pane-key="this_month" title="本月"></nut-tabpane>
-      <nut-tabpane pane-key="this_week" title="本周"></nut-tabpane>
+      <nut-tabpane :pane-key="3" title="本学期"></nut-tabpane>
+      <nut-tabpane :pane-key="2" title="本月"></nut-tabpane>
+      <nut-tabpane :pane-key="1" title="本周"></nut-tabpane>
     </nut-tabs>
 
     <!-- <div style="padding: 10px"> -->

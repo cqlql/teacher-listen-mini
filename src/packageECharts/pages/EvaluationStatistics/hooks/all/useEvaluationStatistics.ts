@@ -4,7 +4,6 @@ import type { DateRangeType, GetSchoolEvaluationStatisticsResult } from '@/api/s
 import { getEvaluationStatistics } from '@/api/statistic'
 import type { ChartBarCustomItem } from '@/components/ChartBarCustom'
 
-import OncePromise from '@/utils/once/once-promise'
 import testKeyword from '@/utils/search/test-keyword'
 import type { Ref } from 'vue'
 import { reactive, ref } from 'vue'
@@ -13,6 +12,7 @@ type IdName = { id: string; name: string }
 
 export default function useEvaluationStatistics(rangeType: Ref<DateRangeType>) {
   const empty = ref(false)
+  // const groupEmpty = ref(false)
   const chartBarData = ref<ChartBarCustomItem[]>([])
   const subjectGroups = ref<{ text: string; value: string }[]>([])
   const evaluationState = reactive({
@@ -24,7 +24,7 @@ export default function useEvaluationStatistics(rangeType: Ref<DateRangeType>) {
   const subjectGroupMemberId = ref('')
 
   function updateEvaluationStatistics() {
-    return getEvaluationStatistics({
+    getEvaluationStatistics({
       userId: Number(subjectGroupMemberId.value),
       dateRange: rangeType.value,
     }).then((res) => {
@@ -51,7 +51,7 @@ export default function useEvaluationStatistics(rangeType: Ref<DateRangeType>) {
     evaluationState.groupId = list[0]?.value
   }
 
-  const onceGetSubjectGroupMembers = new OncePromise(() => {
+  function initSubjectGroupMembers() {
     return getSubjectGroupsMembers({
       roleId: Number(evaluationState.groupId),
     }).then((result) => {
@@ -66,12 +66,13 @@ export default function useEvaluationStatistics(rangeType: Ref<DateRangeType>) {
       updateMembersByKeyword()
       subjectGroupMemberId.value = subjectGroupMembersSearchResults.value[0]?.id
     })
-  })
+  }
 
   async function updateEvaluation(rawData: GetSchoolEvaluationStatisticsResult) {
+    if ((empty.value = rawData.group_total.length === 0)) return
     await initSubjectGroupList(rawData)
 
-    await onceGetSubjectGroupMembers.execute()
+    await initSubjectGroupMembers()
 
     return updateEvaluationStatistics()
   }
@@ -94,8 +95,8 @@ export default function useEvaluationStatistics(rangeType: Ref<DateRangeType>) {
 
     evaluationState,
     evaluationGroupConfirm() {
-      onceGetSubjectGroupMembers.clear()
-      onceGetSubjectGroupMembers.execute()
+      // onceGetSubjectGroupMembers.clear()
+      // onceGetSubjectGroupMembers.execute()
     },
     evaluationTearchSearch() {
       updateMembersByKeyword()

@@ -12,7 +12,9 @@ export default function useSubjectGroupBar() {
 
     const totalNumber = barDataSource.length
     const showNumber = 4
+    subjectGroupBar.empty = true
     if (rawData.group_total.length) {
+      subjectGroupBar.empty = false
       barDataSource.unshift(['group', '听课', '授课'])
 
       subjectGroupBar.chartOptions = {
