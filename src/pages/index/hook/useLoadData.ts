@@ -67,7 +67,8 @@ function useGetList(weekDate: Ref<Dayjs>) {
           // end_time: item.e_time,
           // school_name: item.school_name,
           // campus_name: item.campus_name,
-          grade_name: getGrade(item.period, item.years),
+          /**校外课没有年级 */
+          grade_name: item.type === 2 ? '' : getGrade(item.period, item.years),
           class_name: item.classes_name,
           class_room_name: item.class_room_address,
           // files: item.LA,
