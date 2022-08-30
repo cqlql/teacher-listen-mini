@@ -5,12 +5,14 @@ import TabsText from '@/components/Tabs/TabsText.vue'
 import ToastProvider from '@/components/ToastProvider/ToastProvider.vue'
 // import type { SearchOptions } from './types'
 import useRouterParams from '@/hooks/useRouterParams'
-import { getListenAndTeachStatistics } from '@/api/course'
+// import { getListenAndTeachStatistics } from '@/api/course'
 
 interface ParamsType {
   dateStart: string
   dateEnd: string
   userId: string
+  listen_num: string
+  teaching_num: string
 }
 
 interface SearchOptions {
@@ -30,25 +32,25 @@ provide('searchOptions', searchOptions)
 const tabList = ref([
   {
     name: '听课记录',
-    value: '共(-)节',
+    value: `共(${routeQuery.listen_num})节`,
   },
   {
     name: '授课记录',
-    value: '共(-)节',
+    value: `共(${routeQuery.teaching_num})节`,
   },
 ])
 
-getListenAndTeachStatistics({
-  user_id: routeQuery.userId,
-  start_date: routeQuery.dateStart,
-  end_date: routeQuery.dateEnd,
-}).then((res) => {
-  let user = res.course_frequence_list[0]
-  if (user) {
-    tabList.value[0].value = `共(${user.listen_num})节`
-    tabList.value[1].value = `共(${user.teaching_num})节`
-  }
-})
+// getListenAndTeachStatistics({
+//   user_id: routeQuery.userId,
+//   start_date: routeQuery.dateStart,
+//   end_date: routeQuery.dateEnd,
+// }).then((res) => {
+//   let user = res.course_frequence_list[0]
+//   if (user) {
+//     tabList.value[0].value = `共(${user.listen_num})节`
+//     tabList.value[1].value = `共(${user.teaching_num})节`
+//   }
+// })
 </script>
 
 <template>

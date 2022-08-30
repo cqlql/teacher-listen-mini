@@ -43,7 +43,8 @@ async function reqList({ page }) {
 }
 
 function toListenEvaluationRecord(item: GetSchoolAllEvaluationRecordResult['data'][0]) {
-  let params = `?dateStart=${searchOption.dateStart}&dateEnd=${searchOption.dateEnd}&userId=${item.id}`
+  let params = `?dateStart=${searchOption.dateStart}&dateEnd=${searchOption.dateEnd}&userId=${item.id}&listen_num=${item.listen_num}&teaching_num=${item.give_num}`
+
   Taro.navigateTo({
     url: '/pages/ListenEvaluationRecord/ListenEvaluationRecordNoSearch' + params,
   })
