@@ -5,7 +5,6 @@ import TabsText from '@/components/Tabs/TabsText.vue'
 import ToastProvider from '@/components/ToastProvider/ToastProvider.vue'
 import SemesterRangePicker from './comp/SemesterRangePicker.vue'
 import type { SearchOptions } from './types'
-import { getStorage } from '@/utils/storage'
 import { getListenAndTeachStatistics } from '@/api/course'
 import useSemesterRangeRemoteData from '@/hooks/useSemesterRangeRemoteData'
 
@@ -52,7 +51,7 @@ const tabList = ref([
   },
 ])
 
-getListenAndTeachStatistics({}).then((res) => {
+getListenAndTeachStatistics().then((res) => {
   let user = res[0]
   tabList.value[0].value = `共(${user.listen_num_tot})节`
   tabList.value[1].value = `共(${user.give_num_tot})节`
