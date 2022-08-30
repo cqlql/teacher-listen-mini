@@ -9,7 +9,7 @@
 import type { UploadTask } from '@tarojs/taro'
 import Taro, { uploadFile } from '@tarojs/taro'
 import { getStorage } from '@/utils/storage'
-import { refreshToken } from '@/utils/http'
+import { refreshToken, resourceUrlBase } from '@/utils/http'
 import { clearLoginInfoJumpLogin, TOKEN_KEY } from '@/utils/http/CreateHttp'
 import getSign from '@/utils/http/getSign'
 
@@ -18,7 +18,6 @@ export interface UploadResult {
   url: string
 }
 
-const UploadUrlBase = 'http://ting.res.weifos.com'
 const UploadApi = '/100'
 
 // export async function getQiniuToken(): Promise<QiniuTokenResult> {
@@ -64,7 +63,7 @@ export function fileUpload(
   }
 
   return new Promise(function (resolve, reject) {
-    const uploadApiUrl = UploadUrlBase + UploadApi
+    const uploadApiUrl = resourceUrlBase + UploadApi
     const token = getStorage('token')
     const uploadTask = uploadFile({
       url: uploadApiUrl,
