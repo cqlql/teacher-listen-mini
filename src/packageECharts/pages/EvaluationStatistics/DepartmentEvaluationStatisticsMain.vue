@@ -34,28 +34,27 @@ const {
   countStatistics,
 } = useCountStatistics()
 
-watch(
-  groupId,
-  async (groupIdVal, prevGroupIdVal) => {
-    if (prevGroupIdVal !== '0') {
-      await reload()
-    }
+watch(groupId, async () => {
+  if (isFirst) {
+    isFirst = false
+    return
+  }
+  reload()
+})
 
-    if (groupIdVal !== '0') {
-      updateChartBar()
-    }
-  },
-  {
-    immediate: true,
-  },
-)
+async function reload() {
+  await updateDepartmentEvaluationStatistics()
+  return updateChartBar()
+}
 
-function reload() {
+function updateDepartmentEvaluationStatistics(
+  cb?: (groups: { id: string; name: string }[]) => void,
+) {
   toastLoading()
 
   return getDepartmentEvaluationStatistics({
     roleId: Number(groupId.value),
-    dateRange: 2,
+    dateRange: rangeType.value,
   })
     .then((result) => {
       countUpdate(result)
@@ -66,13 +65,16 @@ function reload() {
           name: group.role_name,
         }
       }))
-
-      if (groups[0]) {
-        groupId.value = groups[0].id
-      }
+      cb?.(groups)
     })
     .finally(toastClose)
 }
+
+let isFirst = true
+updateDepartmentEvaluationStatistics((groups) => {
+  groupId.value = groups[0].id
+  updateChartBar()
+})
 </script>
 <template>
   <div class="EvaluationStatistics">
@@ -81,9 +83,8 @@ function reload() {
       <nut-tabpane :pane-key="2" title="本月"></nut-tabpane>
       <nut-tabpane :pane-key="1" title="本周"></nut-tabpane>
     </nut-tabs>
-
     <!-- <div style="padding: 10px"> -->
-    <nut-radiogroup direction="horizontal">
+    <nut-radiogroup direction="horizontal" v-model="groupId">
       <nut-radio v-for="group of subjectGroups" :key="group.id" shape="button" :label="group.id">{{
         group.name
       }}</nut-radio>
@@ -91,8 +92,7 @@ function reload() {
     <!-- </div> -->
 
     <CardPlus title2="科组听授课次数统计：">
-      <Empty v-if="countStatistics.empty"></Empty>
-      <EChart v-else :option="countStatistics.pie.chartOptions"> </EChart>
+      <EChart :option="countStatistics.pie.chartOptions"> </EChart>
     </CardPlus>
 
     <CardPlus title2="科组人员听授课次数统计：">
@@ -134,6 +134,9 @@ function reload() {
 .EvaluationStatistics {
   & > .nut-radiogroup {
     padding: 10px;
+  }
+  .CustomChartBar {
+    min-height: 238px;
   }
 }
 </style>

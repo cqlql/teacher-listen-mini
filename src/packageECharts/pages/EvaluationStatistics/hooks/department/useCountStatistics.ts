@@ -19,6 +19,8 @@ export default function useCountStatistics() {
     const barDataSource: any[] = [['product', '听课', '授课']]
     const totalNumber = result.group_total.length
     const showNumber = 5
+    countStatistics.empty = result.group_total.length === 0
+
     let listenTotal = 0
     let teachTotal = 0
     result.total.forEach((item) => {
@@ -52,8 +54,8 @@ export default function useCountStatistics() {
             color: '#fff',
           },
           data: [
-            { value: listenTotal, name: '听课次数' },
-            { value: teachTotal, name: '授课次数' },
+            { value: listenTotal || 0, name: '听课次数' },
+            { value: teachTotal || 0, name: '授课次数' },
           ],
           // emphasis: {
           //   itemStyle: {
