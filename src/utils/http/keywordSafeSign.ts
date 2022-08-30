@@ -1,5 +1,9 @@
 export default function keywordSafeSign(keyword: string) {
-  const keywordNumber = Number(keyword)
+  if (keyword) {
+    const keywordNumber = Number(keyword)
 
-  return isNaN(keywordNumber) ? keyword : keywordNumber
+    return isNaN(keywordNumber) ? keyword : keywordNumber
+  }
+
+  return ''
 }
