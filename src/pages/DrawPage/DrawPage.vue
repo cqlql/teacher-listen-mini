@@ -46,23 +46,25 @@ useReady(() => {
           size: true,
         },
         function (res) {
-          const windowInfo = getWindowInfo()
+          wx.getSystemInfo({
+            success(systemInfo) {
+              const width = systemInfo.windowWidth
+              const height = systemInfo.windowHeight
+              dpr = wx.getSystemInfoSync().pixelRatio
+              canvas = res.node as Canvas
+              ctx = canvas.getContext('2d') as CanvasContext
 
-          const width = windowInfo.windowWidth
-          const height = windowInfo.windowHeight
-          dpr = wx.getSystemInfoSync().pixelRatio
-          canvas = res.node as Canvas
-          ctx = canvas.getContext('2d') as CanvasContext
+              canvas.width = width * dpr
+              canvas.height = height * dpr
 
-          canvas.width = width * dpr
-          canvas.height = height * dpr
+              canvasStyle.value = {
+                width: width + 'px',
+                height: height + 'px',
+              }
 
-          canvasStyle.value = {
-            width: width + 'px',
-            height: height + 'px',
-          }
-
-          setBrush()
+              setBrush()
+            },
+          })
         },
       )
       .exec()
