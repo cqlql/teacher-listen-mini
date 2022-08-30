@@ -59,8 +59,10 @@ export default function useInitDate(form: Ref<OutsideCourseForm>) {
         name: role.name,
       }
     })
-
-    form.value.school_name = res.entity.out_school_name
+    // 编辑初始
+    if (id) {
+      form.value.school_name = res.entity.out_school_name
+    }
   })
 
   return {
