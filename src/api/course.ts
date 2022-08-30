@@ -110,7 +110,7 @@ interface GetPushDoorCourseListParams {
   classId?: number //班级ID
 
   period: number // 学段ID 1001 小学 1002 初中 1003 高中
-  teacher_name: string //老师名称
+  teacher_name: string | number //老师名称
 }
 /**根据条件获取推门听课列表 - 课表数据 */
 export function getPushDoorCourseList(

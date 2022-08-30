@@ -12,6 +12,7 @@ import { getPushDoorCourseList } from '@/api/course'
 import type { PushDoorCourseItemByTeacher, TopSearchParams } from '../../types'
 import type { GradeClassDataType } from './useGradeClassData'
 import getGrade from '@/data/getGrade'
+import keywordSafeSign from '@/utils/http/keywordSafeSign'
 const topSearchParams = inject('topSearchParams') as TopSearchParams
 
 const { periodList, subjectListByPeriodKey } = inject('gradeClassData') as GradeClassDataType
@@ -91,7 +92,7 @@ function reqList({ page }): Promise<PushDoorCourseItemByTeacher[]> {
     pageIndex: page,
     subject_id: Number(searchOptions.subject),
     period: Number(searchOptions.period),
-    teacher_name: searchOptions.keyword,
+    teacher_name: keywordSafeSign(searchOptions.keyword),
   }).then((rawList) =>
     rawList.map((item) => {
       return {
