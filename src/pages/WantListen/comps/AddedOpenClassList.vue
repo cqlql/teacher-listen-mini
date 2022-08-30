@@ -78,6 +78,8 @@ function reqList({ page }) {
 
         type: ['open', 'inside', 'outside'][item.type] as AddedCourseItem['type'],
         typeName: ['公开课', '校内课', '校外课'][item.type] as AddedCourseItem['type'],
+
+        is_add_process: item.is_add_process,
       }
     })
     return newList
@@ -136,7 +138,9 @@ useDidShow(() => {
         >
           <template #btns>
             <TagFlag :class="item.type">{{ item.typeName }}</TagFlag>
+            <nut-tag v-if="item.is_add_process" type="primary">已有听课过程</nut-tag>
             <nut-button
+              v-else
               size="small"
               type="danger"
               plain

@@ -48,6 +48,9 @@ export interface AddedCourseItem {
   typeName: string
 
   school_name: string
+
+  /**是否有听课过程评价 0 没有 1 有 */
+  is_add_process: 0 | 1
 }
 
 // export interface AddedOutsideCourseItem extends AddedCourseItem {

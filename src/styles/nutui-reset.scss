@@ -2,6 +2,10 @@
   margin-left: 5px;
 }
 
+.nut-tag--primary {
+  background: $primary-color !important;
+}
+
 .nut-tag--primary.nut-tag--plain {
   color: $primary-color !important;
   background: #fff;

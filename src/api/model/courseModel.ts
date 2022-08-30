@@ -289,6 +289,9 @@ export type userCourseList = {
   years: number //2020
   class_room_address: string
   playback_address: string
+
+  /**是否有听课过程评价 0 没有 1 有 */
+  is_add_process: 0 | 1
 }[]
 // 听课过程子项
 export interface SaveListenProcessParamsDetail {
