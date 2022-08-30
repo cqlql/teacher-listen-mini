@@ -612,13 +612,8 @@ export interface GetListenAndTeachStatisticsParams {
 }
 
 export interface GetListenAndTeachStatisticsResult {
-  course_frequence_list: {
-    listen_num: string
-    teaching_num: string
-    total_num: string
-    user_id: string
-    user_name: string
-  }[]
+  give_num_tot: 0
+  listen_num_tot: 0
 }
 
 export interface GetSubjectGroupsMembersResult {

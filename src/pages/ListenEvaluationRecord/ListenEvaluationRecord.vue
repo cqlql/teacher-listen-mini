@@ -52,14 +52,10 @@ const tabList = ref([
   },
 ])
 
-getListenAndTeachStatistics({
-  user_id: getStorage('userId'),
-}).then((res) => {
-  let user = res.course_frequence_list[0]
-  if (user) {
-    tabList.value[0].value = `共(${user.listen_num})节`
-    tabList.value[1].value = `共(${user.teaching_num})节`
-  }
+getListenAndTeachStatistics({}).then((res) => {
+  let user = res[0]
+  tabList.value[0].value = `共(${user.listen_num_tot})节`
+  tabList.value[1].value = `共(${user.give_num_tot})节`
 })
 const { semesterSelectDataLoading, semesterSelectOptions } = useSemesterRangeRemoteData()
 </script>

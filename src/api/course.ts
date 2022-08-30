@@ -312,12 +312,9 @@ export function getListenDetails(data: GetListenDetailsParams): Promise<GetListe
 }
 
 /**听授课次数统计 */
-export function getListenAndTeachStatistics(
-  data: GetListenAndTeachStatisticsParams,
-): Promise<GetListenAndTeachStatisticsResult> {
-  return httpV1.get({
-    url: '/lecture/v1/statsCoursesFrequenceOfACampus',
-    data,
+export function getListenAndTeachStatistics(): Promise<GetListenAndTeachStatisticsResult[]> {
+  return httpV2.get({
+    url: '/229',
   })
 }
 
