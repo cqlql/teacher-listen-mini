@@ -1,7 +1,7 @@
 import { getStorage, setStorage } from '../storage'
 import CreateHttp from './CreateHttp'
 
-export const resourceUrlBase = 'http://ting.res.weifos.com'
+export const resourceUrlBase = 'https://lecture.res.shenduedu.com'
 // const apiUrl = 'https://app.shenduedu.com'
 export const apiUrl = 'https://lecture.api.shenduedu.com'
 
