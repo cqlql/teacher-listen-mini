@@ -13,6 +13,7 @@ import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import getCourseTypeMap from '@/data/get-course-type-map'
 import getGrade from '@/data/getGrade'
+import keywordSafeSign from '@/utils/http/keywordSafeSign'
 
 const searchOptions = inject('searchOptions') as Ref<SearchOptions>
 
@@ -54,11 +55,7 @@ async function reqList({ page }) {
   let reqParams = {
     pageSize: 10,
     pageIndex: page,
-    // course_type: props.type === 'listen' ? '1' : '0',
-    // role_type: '0',
-    // power: '0',
-    // user_id: searchOptionValue.userId,
-    keyword: searchOptionValue.keyword,
+    keyword: keywordSafeSign(searchOptionValue.keyword),
     dateRange:
       dayjs(searchOptionValue.dateStart).format('YYYY/MM/DD') +
       '-' +

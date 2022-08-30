@@ -419,7 +419,7 @@ export interface GetUserCourseParams {
   pageSize: number
   pageIndex: number
   dateRange?: string
-  keyword: string
+  keyword: string | number
 }
 
 export interface AddUserCourse {
