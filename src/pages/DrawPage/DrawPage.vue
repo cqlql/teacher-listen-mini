@@ -1,13 +1,7 @@
 <!-- canvas 画笔 -->
 <script lang="ts" setup>
 import type { Canvas, CanvasContext } from '@tarojs/taro'
-import Taro, {
-  nextTick,
-  useReady,
-  createSelectorQuery,
-  getWindowInfo,
-  canvasToTempFilePath,
-} from '@tarojs/taro'
+import Taro, { nextTick, useReady, createSelectorQuery, canvasToTempFilePath } from '@tarojs/taro'
 import { ref } from 'vue'
 
 import usePage from '@/hooks/usePage'
