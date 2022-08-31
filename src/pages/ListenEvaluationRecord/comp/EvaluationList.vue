@@ -55,7 +55,7 @@ async function reqList({ page }) {
   let reqParams = {
     pageSize: 10,
     pageIndex: page,
-    keyword: keywordSafeSign(searchOptionValue.keyword),
+    keyword: keywordSafeSign(searchOptionValue.keyword) || '',
     dateRange:
       dayjs(searchOptionValue.dateStart).format('YYYY/MM/DD') +
       '-' +

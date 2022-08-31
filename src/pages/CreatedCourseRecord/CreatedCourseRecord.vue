@@ -30,18 +30,17 @@ import { getStorage, setStorage } from '@/utils/storage'
 
 import OpenClassList from './components/CreatedCourseList.vue'
 import BtnFixedBottom from '@/components/BtnFixedBottom.vue'
+import { isRole } from '@/utils/auth/auth'
 
 const tabVal = ref<ApprovalStatus>('pending')
 const vOpenClassList1 = ref({ refresh() {} })
 const vOpenClassList2 = ref({ refresh() {} })
 const vOpenClassList3 = ref({ refresh() {} })
 
-// 是否有审批权限
-const isLeader = ref(true)
-provide('isLeader', isLeader)
-// reqIsLeader().then((res) => {
-//   isLeader.value = res.is_leader
-// })
+// 审批权限
+provide('isLeader', isRole('Cou_001_003'))
+// 编辑权限
+provide('hasEdit', isRole('Cou_001_002'))
 
 // 需要刷新的列表类型
 const needRefreshType = ref<ApprovalStatus | ''>('')

@@ -31,7 +31,13 @@
         >
           通过
         </nut-button>
-        <nut-button v-if="type !== 'passed'" type="primary" plain size="small" @click="onEdit">
+        <nut-button
+          v-if="hasEdit && type !== 'passed'"
+          type="primary"
+          plain
+          size="small"
+          @click="onEdit"
+        >
           编辑
         </nut-button>
         <nut-button
@@ -89,6 +95,7 @@ const emits = defineEmits<{
 }>()
 
 const isLeader = inject('isLeader')
+const hasEdit = inject('hasEdit')
 const needRefreshType: Ref<ApprovalStatus> = inject('needRefreshType') as Ref<ApprovalStatus>
 
 function reviewBefore() {
