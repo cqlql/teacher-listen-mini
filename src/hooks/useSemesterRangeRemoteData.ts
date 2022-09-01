@@ -1,5 +1,7 @@
+import type { GetSemesterSelectDataResult } from '@/api/model/selectModel'
 import { getSemesterSelectData } from '@/api/select'
 import type { SemesterRangeOption } from '@/pages/ListenEvaluationRecord/types'
+import eachBySort from '@/utils/each/each-by-sort'
 import dayjs from 'dayjs'
 import { ref } from 'vue'
 
@@ -17,12 +19,16 @@ export default function useSemesterRangeRemoteData() {
       }
 
       const options: SemesterRangeOption[] = []
-      for (const [, item] of Object.entries(res)) {
-        options.push({
-          label: item.name,
-          ...splitDateRange(item.val),
-        })
-      }
+      eachBySort(
+        res,
+        function (item: GetSemesterSelectDataResult['curSemester']) {
+          options.push({
+            label: item.name,
+            ...splitDateRange(item.val),
+          })
+        },
+        ['curSemester', 'curYearSemester', 'semester', 'yearSemester'],
+      )
 
       semesterSelectOptions.value = options
     })
