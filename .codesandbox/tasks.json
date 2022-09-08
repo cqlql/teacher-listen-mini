@@ -1,0 +1,118 @@
+{
+  // These tasks will run in order when initializing your CodeSandbox project.
+  "setupTasks": [
+    {
+      "name": "Install Dependencies",
+      "command": "npm install"
+    }
+  ],
+
+  // These tasks can be run from CodeSandbox. Running one will open a log in the app.
+  "tasks": {
+    "build:weapp": {
+      "name": "build:weapp",
+      "command": "npm run build:weapp",
+      "runAtStart": false
+    },
+    "build-watch:weapp": {
+      "name": "build-watch:weapp",
+      "command": "npm run build-watch:weapp",
+      "runAtStart": false
+    },
+    "build:swan": {
+      "name": "build:swan",
+      "command": "npm run build:swan",
+      "runAtStart": false
+    },
+    "build:alipay": {
+      "name": "build:alipay",
+      "command": "npm run build:alipay",
+      "runAtStart": false
+    },
+    "build:tt": {
+      "name": "build:tt",
+      "command": "npm run build:tt",
+      "runAtStart": false
+    },
+    "build:h5": {
+      "name": "build:h5",
+      "command": "npm run build:h5",
+      "runAtStart": false
+    },
+    "build:rn": {
+      "name": "build:rn",
+      "command": "npm run build:rn",
+      "runAtStart": false
+    },
+    "build:qq": {
+      "name": "build:qq",
+      "command": "npm run build:qq",
+      "runAtStart": false
+    },
+    "build:quickapp": {
+      "name": "build:quickapp",
+      "command": "npm run build:quickapp",
+      "runAtStart": false
+    },
+    "dev:weapp": {
+      "name": "dev:weapp",
+      "command": "npm run dev:weapp",
+      "runAtStart": true
+    },
+    "dev:swan": {
+      "name": "dev:swan",
+      "command": "npm run dev:swan",
+      "runAtStart": false
+    },
+    "dev:alipay": {
+      "name": "dev:alipay",
+      "command": "npm run dev:alipay",
+      "runAtStart": false
+    },
+    "dev:tt": {
+      "name": "dev:tt",
+      "command": "npm run dev:tt",
+      "runAtStart": false
+    },
+    "dev:h5": {
+      "name": "dev:h5",
+      "command": "npm run dev:h5",
+      "runAtStart": false
+    },
+    "dev:rn": {
+      "name": "dev:rn",
+      "command": "npm run dev:rn",
+      "runAtStart": false
+    },
+    "dev:qq": {
+      "name": "dev:qq",
+      "command": "npm run dev:qq",
+      "runAtStart": false
+    },
+    "dev:quickapp": {
+      "name": "dev:quickapp",
+      "command": "npm run dev:quickapp",
+      "runAtStart": false
+    },
+    "download:iconfont": {
+      "name": "download:iconfont",
+      "command": "npm run download:iconfont",
+      "runAtStart": false
+    },
+    "doctor": {
+      "name": "doctor",
+      "command": "npm run doctor",
+      "runAtStart": false
+    },
+    "lint": {
+      "name": "lint",
+      "command": "npm run lint",
+      "runAtStart": false
+    },
+    "tsc": {
+      "name": "tsc",
+      "command": "npm run tsc",
+      "runAtStart": false
+    }
+  }
+}
